@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class ConnectionManager {
     private Connection connection;
-    public static final String ConnectionString = "jdbc:sqlite:DatabaseLoopwedstrijd.db";
+    public static final String ConnectionString = "jdbc:sqlite:DatabaseLoopwedstrijd2.db";
 
     public Connection getConnection() {
         return connection;
@@ -31,7 +31,7 @@ public class ConnectionManager {
             // auto-creates if not exists
             connection = DriverManager.getConnection(ConnectionString);
             connection.setAutoCommit(false);
-            //initTables();
+            initTables();
         } catch (Exception e) {
             System.out.println("Db connection handle failure");
             e.printStackTrace();
@@ -40,11 +40,11 @@ public class ConnectionManager {
     }
 
     private void initTables() throws Exception {
-        /*URI uri = ClassLoader.getSystemResource("be.kuleuven.vrolijkezweter/resources/dbcreate.sql").toURI();
-        String mainPath = Paths.get(uri).toString();
-        Path path = Paths.get(mainPath ,"dbcreate.sql");*/
-        var sql = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader().getResource("dbcreate.sql").getPath())));
-        System.out.println(sql);
+
+        var uri = ConnectionManager.class.getResource("/dbcreate.sql").toURI();
+        var sql = new String(Files.readAllBytes(Paths.get(uri)));
+
+        //System.out.println(sql);
 
         var s = connection.createStatement();
         s.executeUpdate(sql);

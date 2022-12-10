@@ -37,8 +37,9 @@ public class ProjectMain extends Application {
     public static void main(String[] args) {
         try {
             var s = connection.createStatement();
-            //s.executeUpdate("CREATE TABLE Loper (studnr INT);");
-            s.executeQuery("INSERT INTO EtappeLoper(EtappeLoperId, LoperId, EtappeId,Tijd) VALUES (2,2,2,2);");
+            /*s.executeUpdate("CREATE TABLE Wedstrijd (WedstrijdId INT, Plaats VARCHAR(200), Afstand INT, InschrijvingsGeld INT, Datum VARCHAR(200), BeginUur INT);");
+            s.executeUpdate("CREATE TABLE EtappeLoper (EtappeLoperId INT, LoperId INT, EtappeId INT, Tijd INT);");
+            s.executeUpdate("INSERT INTO EtappeLoper (EtappeLoperId, LoperId, EtappeId, Tijd) VALUES (2,2,2,2);");*/
             connection.commit();
             s.close();
         } catch (SQLException e) {
