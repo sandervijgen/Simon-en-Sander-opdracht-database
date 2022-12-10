@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="475.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.vrolijkezweters.controller.LoperToevoegController">
+<AnchorPane prefHeight="475.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.vrolijkezweters.controller.LoperToevoegenController">
     <children>
         <Button fx:id="voeg_toe" layoutX="342.0" layoutY="369.0" mnemonicParsing="false" text="Voeg Toe" />
         <TextField fx:id="loper_id_text" layoutX="74.0" layoutY="107.0" promptText="0" />
@@ -28,5 +28,6 @@
       <Text fx:id="wedstrijdText43" layoutX="447.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Punten" wrappingWidth="137.13671875" />
       <ListView fx:id="geslacht_text" layoutX="262.0" layoutY="186.0" prefHeight="25.0" prefWidth="161.0" />
       <ListView fx:id="fysiek_text" layoutX="262.0" layoutY="267.0" prefHeight="25.0" prefWidth="161.0" />
+      <Text fx:id="statusBalk_text" layoutX="216.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="318.1367492675781" />
     </children>
 </AnchorPane>

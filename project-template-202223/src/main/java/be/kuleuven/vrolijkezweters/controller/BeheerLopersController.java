@@ -23,10 +23,10 @@ public class BeheerLopersController {
     private void addNewLoper() {
         try {
             var stage = new Stage();
-            var root = (AnchorPane) FXMLLoader.load(getClass().getClassLoader().getResource("loperToevoegen.fxml"));
+            var root = (AnchorPane) FXMLLoader.load(getClass().getClassLoader().getResource("toevoegenLoper.fxml"));
             var scene = new Scene(root);
             stage.setScene(scene);
-            stage.setTitle("Loper Toeveogen");
+            stage.setTitle("Loper Toevoegen");
             stage.initOwner(ProjectMain.getRootStage());
             stage.initModality(Modality.WINDOW_MODAL);
             stage.show();
