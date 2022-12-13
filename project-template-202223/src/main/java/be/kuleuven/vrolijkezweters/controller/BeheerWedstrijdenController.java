@@ -1,6 +1,8 @@
 package be.kuleuven.vrolijkezweters.controller;
 
 import be.kuleuven.vrolijkezweters.ProjectMain;
+import be.kuleuven.vrolijkezweters.RepoJDBC;
+import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -46,23 +49,27 @@ public class BeheerWedstrijdenController {
     private void initTable() {
         tblConfigs.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         tblConfigs.getColumns().clear();
-
-        // TODO verwijderen en "echte data" toevoegen!
-        int colIndex = 0;
-        for(var colName : new String[]{"Naam", "Categorie", "Prijs", "Kilometers"}) {
-            TableColumn<ObservableList<String>, String> col = new TableColumn<>(colName);
-            final int finalColIndex = colIndex;
-            col.setCellValueFactory(f -> new ReadOnlyObjectWrapper<>(f.getValue().get(finalColIndex)));
-            tblConfigs.getColumns().add(col);
-            colIndex++;
-        }
+        TableColumn wedstrijdId = new TableColumn("WedstrijdId");
+        TableColumn plaats = new TableColumn("Plaats");
+        TableColumn afstand = new TableColumn("Afstand");
+        TableColumn inschrijvingsgeld = new TableColumn("Inschrijvingsgeld");
+        TableColumn datum = new TableColumn("Datum");
+        TableColumn beginUur = new TableColumn("Begin uur");
+        tblConfigs.getColumns().addAll(wedstrijdId,plaats,afstand,inschrijvingsgeld,datum,beginUur);
 
 
-        for(int i = 0; i < 10; i++) {
+        wedstrijdId.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("WestrijdId"));
+        plaats.setCellValueFactory(new PropertyValueFactory<Wedstrijd, String>("plaats"));
+        afstand.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("afstand"));
+        inschrijvingsgeld.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("inschrijvingsGeld"));
+        datum.setCellValueFactory(new PropertyValueFactory<Wedstrijd, String>("datum"));
+        beginUur.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("beginUur"));
 
-            tblConfigs.getItems().add(FXCollections.observableArrayList("Kleine wedstrijd " + i, "categorie 1", i*10 + "", i * 33 + ""));
-        }
+        RepoJDBC.getWedstrijden();
+        //tblConfigs.setItems(RepoJDBC.getWedstrijden());
+
     }
+
 
     private void addNewRow() {
             try {
