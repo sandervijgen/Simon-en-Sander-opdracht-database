@@ -53,7 +53,8 @@ public class EtappeBewerkenController {
 
     }
     private void voegToe(){
-        wedstrijd = new Wedstrijd(1,"1",10,1,"1",1);
+        wedstrijd = new Wedstrijd(1,"1",10,1,"1",1);//moet vervangen door wedstrijd die die meekrijgt
+
         for (int i = 0; i <= afstandWaardes.size(); i++) {
             if(i == 0){
                 TextField textFieldEinde = afstandWaardes.get(i);
