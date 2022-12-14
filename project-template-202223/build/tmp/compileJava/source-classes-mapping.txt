@@ -18,8 +18,8 @@ be/kuleuven/vrolijkezweters/ProjectMain.java
  be.kuleuven.vrolijkezweters.ProjectMain
 be/kuleuven/vrolijkezweters/properties/Etappe.java
  be.kuleuven.vrolijkezweters.properties.Etappe
-be/kuleuven/vrolijkezweters/controller/BeheerLopersController.java
- be.kuleuven.vrolijkezweters.controller.BeheerLopersController
+be/kuleuven/vrolijkezweters/controller/EtappeBewerkenController.java
+ be.kuleuven.vrolijkezweters.controller.EtappeBewerkenController
 be/kuleuven/vrolijkezweters/controller/WedstrijdBewerkController.java
  be.kuleuven.vrolijkezweters.controller.WedstrijdBewerkController
 be/kuleuven/vrolijkezweters/controller/WedstrijdToevoegenController.java
@@ -30,5 +30,5 @@ be/kuleuven/vrolijkezweters/controller/LoperToevoegenController.java
  be.kuleuven.vrolijkezweters.controller.LoperToevoegenController
 be/kuleuven/vrolijkezweters/RepoJDBC.java
  be.kuleuven.vrolijkezweters.RepoJDBC
-be/kuleuven/vrolijkezweters/controller/EtappeBewerkenController.java
- be.kuleuven.vrolijkezweters.controller.EtappeBewerkenController
+be/kuleuven/vrolijkezweters/controller/BeheerLopersController.java
+ be.kuleuven.vrolijkezweters.controller.BeheerLopersController

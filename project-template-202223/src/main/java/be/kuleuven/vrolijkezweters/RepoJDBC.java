@@ -20,7 +20,7 @@ public class RepoJDBC {
     try
     {
         var s = connection.createStatement();
-        s.executeUpdate("INSERT INTO Wedstrijd(WedstrijdId, Plaats, Afstand, InschrijvingsGeld, Datum, BeginUur) VALUES ("+wedstrijd.getWedstrijdId()+",'" + wedstrijd.getPlaats() + "'," + wedstrijd.getAfstand() + "," + wedstrijd.getInschrijvingsGeld() + ",'" + wedstrijd.getDatum() + "'," + wedstrijd.getBeginUur() + ");");
+        s.executeUpdate("INSERT INTO Wedstrijd(Plaats, Afstand, InschrijvingsGeld, Datum, BeginUur) VALUES ('" + wedstrijd.getPlaats() + "'," + wedstrijd.getAfstand() + "," + wedstrijd.getInschrijvingsGeld() + ",'" + wedstrijd.getDatum() + "'," + wedstrijd.getBeginUur() + ");");
         connection.commit();
         s.close();
     } catch(SQLException e)
@@ -93,7 +93,7 @@ public class RepoJDBC {
         try
         {
             var s = connection.createStatement();
-            s.executeUpdate("INSERT INTO Loper(LoperId, Naam, Leeftijd, Geslacht, Gewicht, Fysiek, Club, ContactMedewerkerId, Punten) VALUES ("+loper.getLoperId()+",'" + loper.getNaam() + "'," + loper.getLeeftijd() + ",'" + loper.getGeslacht() + "'," + loper.getGewicht() + ",'" + loper.getFysiek() + "','" + loper.getClub() + "'," + loper.getContactMedewerkerId() + "," + loper.getPunten() + ");");
+            s.executeUpdate("INSERT INTO Loper( Naam, Leeftijd, Geslacht, Gewicht, Fysiek, Club, ContactMedewerkerId, Punten) VALUES ('" + loper.getNaam() + "'," + loper.getLeeftijd() + ",'" + loper.getGeslacht() + "'," + loper.getGewicht() + ",'" + loper.getFysiek() + "','" + loper.getClub() + "'," + loper.getContactMedewerkerId() + "," + loper.getPunten() + ");");
             connection.commit();
             s.close();
         } catch(SQLException e)
@@ -145,7 +145,7 @@ public class RepoJDBC {
         try
         {
             var s = connection.createStatement();
-            s.executeUpdate("INSERT INTO Etappe(EtappeId, WedstrijdId, Afstand, BeginKm) VALUES ("+etappe.getEtappeID()+"," + etappe.getWedstrijdId() + "," + etappe.getAfstand() + "," + etappe.getBeginKm() + ");");
+            s.executeUpdate("INSERT INTO Etappe( WedstrijdId, Afstand, BeginKm) VALUES (" + etappe.getWedstrijdId() + "," + etappe.getAfstand() + "," + etappe.getBeginKm() + ");");
             connection.commit();
             s.close();
         } catch(SQLException e)
