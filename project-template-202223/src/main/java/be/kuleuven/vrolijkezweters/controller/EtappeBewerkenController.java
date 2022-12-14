@@ -53,13 +53,13 @@ public class EtappeBewerkenController {
 
     }
     private void voegToe(){
-        wedstrijd = new Wedstrijd(1,"1",1,1,"1",1);
-        for (int i = 0; i < afstandWaardes.size(); i++) {
+        wedstrijd = new Wedstrijd(1,"1",10,1,"1",1);
+        for (int i = 0; i <= afstandWaardes.size(); i++) {
             if(i == 0){
                 TextField textFieldEinde = afstandWaardes.get(i);
                 int beginKm = 0;
                 int eindKm = Integer.parseInt(textFieldEinde.getText());
-                Etappe etappe = new Etappe(0, wedstrijd.getWedstrijdId(), (eindKm -beginKm) , beginKm);
+                Etappe etappe = new Etappe(3, wedstrijd.getWedstrijdId(), (eindKm -beginKm) , beginKm);
                 if(!RepoJDBC.voegEtappeToe(etappe)){
                     System.out.println("Er is iets mis met etappe" + (i+1));
                 };
@@ -71,8 +71,7 @@ public class EtappeBewerkenController {
                 TextField textFieldBegin = afstandWaardes.get(i-1);
                 int beginKm = Integer.parseInt(textFieldBegin.getText());
                 int eindKm = wedstrijd.getAfstand();
-                Etappe etappe = new Etappe(0, wedstrijd.getWedstrijdId(), (eindKm -beginKm) , beginKm);
-                RepoJDBC.voegEtappeToe(etappe);
+                Etappe etappe = new Etappe(5, wedstrijd.getWedstrijdId(), (eindKm -beginKm) , beginKm);
                 if(!RepoJDBC.voegEtappeToe(etappe)){
                     System.out.println("Er is iets mis met etappe" + (i+1));
                 };
@@ -82,7 +81,7 @@ public class EtappeBewerkenController {
                 TextField textFieldEinde = afstandWaardes.get(i);
                 int beginKm = Integer.parseInt(textFieldBegin.getText());
                 int eindKm = Integer.parseInt(textFieldEinde.getText());
-                Etappe etappe = new Etappe(0, wedstrijd.getWedstrijdId(), (eindKm -beginKm) , beginKm);
+                Etappe etappe = new Etappe(4, wedstrijd.getWedstrijdId(), (eindKm -beginKm) , beginKm);
                 if(!RepoJDBC.voegEtappeToe(etappe)){
                     System.out.println("Er is iets mis met etappe" + (i+1));
                 };

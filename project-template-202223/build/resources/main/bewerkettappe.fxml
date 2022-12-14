@@ -13,6 +13,6 @@
         <Text fx:id="statusBalk_text" layoutX="216.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="318.1367492675781" />
       <Button fx:id="btnPasToe" layoutX="464.0" layoutY="109.0" mnemonicParsing="false" text="Pas toe " />
       <Text fx:id="textBegin" layoutX="135.0" layoutY="224.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0 km" />
-      <Text fx:id="textEinde" layoutX="578.0" layoutY="224.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0 km" />
+      <Text fx:id="textEinde" layoutX="578.0" layoutY="224.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5 km" />
     </children>
 </AnchorPane>

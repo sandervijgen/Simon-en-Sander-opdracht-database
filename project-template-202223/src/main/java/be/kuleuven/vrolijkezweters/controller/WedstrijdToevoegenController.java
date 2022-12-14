@@ -66,7 +66,6 @@ public class WedstrijdToevoegenController {
     }
 
     private void voegToe() {
-
         try {
             Wedstrijd nieuweWedstrijd =  maakWedstrijd();
             nieuweWedstrijd = new Wedstrijd(nieuweWedstrijd.getWedstrijdId(), nieuweWedstrijd.getPlaats(), nieuweWedstrijd.getAfstand(), nieuweWedstrijd.getInschrijvingsGeld(), nieuweWedstrijd.getDatum(), nieuweWedstrijd.getBeginUur());
