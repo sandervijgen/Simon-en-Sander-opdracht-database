@@ -23,13 +23,14 @@ public class EtappeBewerkenController {
     @FXML
     private TextField aantalEtappes;
 
-    private Wedstrijd wedstrijd;
+    private Wedstrijd wedstrijd = WedstrijdBewerkController.getWedstrijd();
 
     ArrayList<TextField> afstandWaardes = new ArrayList<TextField>();
 
     public void initialize(){
         btnPasToe.setOnAction(e -> PasToe());
-        btnVoegToe.setOnAction(e -> voegToe());
+        btnVoegToe.setOnAction(e -> bewerk());
+        textEinde.setText(String.valueOf(wedstrijd.getAfstand()));
     }
 
     public Wedstrijd getWedstrijd() {
@@ -52,18 +53,22 @@ public class EtappeBewerkenController {
         }
 
     }
-    private void voegToe(){
-        wedstrijd = new Wedstrijd(1,"1",10,1,"1",1);//moet vervangen door wedstrijd die die meekrijgt
-
+    private void bewerk(){
+        ArrayList<Etappe> etappeLijst = new ArrayList<Etappe>();
         for (int i = 0; i <= afstandWaardes.size(); i++) {
-            if(i == 0){
+            if (afstandWaardes.size() == 0){
+                int beginKm = 0;
+                int eindKm = wedstrijd.getAfstand();
+                Etappe etappe = new Etappe(i, wedstrijd.getWedstrijdId(), (eindKm -beginKm) , beginKm);
+                etappeLijst.add(etappe);
+            }
+
+            else if(i == 0){
                 TextField textFieldEinde = afstandWaardes.get(i);
                 int beginKm = 0;
                 int eindKm = Integer.parseInt(textFieldEinde.getText());
                 Etappe etappe = new Etappe(i, wedstrijd.getWedstrijdId(), (eindKm -beginKm) , beginKm);
-                if(!RepoJDBC.voegEtappeToe(etappe)){
-                    System.out.println("Er is iets mis met etappe" + (i+1));
-                };
+                etappeLijst.add(etappe);
 
 
                 //TODO if beginKM > eindKM catchen
@@ -73,22 +78,20 @@ public class EtappeBewerkenController {
                 int beginKm = Integer.parseInt(textFieldBegin.getText());
                 int eindKm = wedstrijd.getAfstand();
                 Etappe etappe = new Etappe(i, wedstrijd.getWedstrijdId(), (eindKm -beginKm) , beginKm);
-                if(!RepoJDBC.voegEtappeToe(etappe)){
-                    System.out.println("Er is iets mis met etappe" + (i+1));
-                };
+                etappeLijst.add(etappe);
             }
+
             else {
                 TextField textFieldBegin = afstandWaardes.get(i-1);
                 TextField textFieldEinde = afstandWaardes.get(i);
                 int beginKm = Integer.parseInt(textFieldBegin.getText());
                 int eindKm = Integer.parseInt(textFieldEinde.getText());
                 Etappe etappe = new Etappe(i, wedstrijd.getWedstrijdId(), (eindKm -beginKm) , beginKm);
-                if(!RepoJDBC.voegEtappeToe(etappe)){
-                    System.out.println("Er is iets mis met etappe" + (i+1));
-                };
+                etappeLijst.add(etappe);
             }
 
     }
+        RepoJDBC.bewerkEtappes(wedstrijd.getWedstrijdId(),etappeLijst);
     }
 
 }

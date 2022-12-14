@@ -5,25 +5,26 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="475.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.vrolijkezweters.controller.WedstrijdToevoegenController">
+<AnchorPane  fx:id="scherm" prefHeight="475.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.vrolijkezweters.controller.WedstrijdToevoegenController">
    <children>
       <Button fx:id="voeg_toe" layoutX="342.0" layoutY="369.0" mnemonicParsing="false" text="Voeg Toe" />
       <TextField fx:id="wedstrijd_id_text" layoutX="74.0" layoutY="107.0" text="0" />
       <Text fx:id="wedstrijdText1" layoutX="74.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WedstrijdId" wrappingWidth="137.13671875" />
-      <TextField fx:id="afstand_text" layoutX="74.0" layoutY="184.0" text="30" />
-      <Text fx:id="wedstrijdText2" layoutX="74.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Afstand" wrappingWidth="137.13671875" />
+      <TextField fx:id="afstand_text" layoutX="467.0" layoutY="190.0" text="30" />
+      <Text fx:id="wedstrijdText2" layoutX="467.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Afstand" wrappingWidth="137.13671875" />
       <TextField fx:id="datum_text" layoutX="74.0" layoutY="267.0" text="12-12-2002" />
       <Text fx:id="wedstrijdText3" layoutX="74.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Datum" wrappingWidth="137.13671875" />
       <TextField fx:id="plaats_text" layoutX="260.0" layoutY="109.0" text="Belgie" />
       <Text fx:id="wedstrijdText4" layoutX="260.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Plaats" wrappingWidth="137.13671875" />
       <TextField fx:id="inschrijvingsgeld_text" layoutX="260.0" layoutY="187.0" text="100" />
       <Text fx:id="wedstrijdText5" layoutX="260.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inschrijvings geld" wrappingWidth="137.13671875" />
-      <TextField fx:id="begin_uur_text" layoutX="260.0" layoutY="270.0" text="5" />
-      <Text fx:id="wedstrijdText6" layoutX="260.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Begin uur" wrappingWidth="137.13671875" />
+      <TextField fx:id="begin_uur_text" layoutX="74.0" layoutY="190.0" text="5" />
+      <Text fx:id="wedstrijdText6" layoutX="74.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Begin uur" wrappingWidth="137.13671875" />
       <Text layoutX="419.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$" />
-      <Text layoutX="419.0" layoutY="287.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
-      <Text layoutX="229.0" layoutY="201.0" strokeType="OUTSIDE" strokeWidth="0.0" text="km" />
+      <Text layoutX="233.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+      <Text layoutX="622.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="km" />
       <Text fx:id="statusBalk_text" layoutX="207.0" layoutY="339.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="336.1367492675781" />
-      <Button fx:id="btnEtappes" layoutX="517.0" layoutY="109.0" mnemonicParsing="false" text="Etappes" />
+      <Button fx:id="btnApply" layoutX="639.0" layoutY="107.0" mnemonicParsing="false" text="Apply" />
+      <TextField fx:id="textEtappes" layoutX="461.0" layoutY="107.0" text="2" />
    </children>
 </AnchorPane>

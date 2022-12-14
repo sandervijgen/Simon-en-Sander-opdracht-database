@@ -33,8 +33,11 @@ public class WedstrijdBewerkController {
     @FXML
     private Text statusBalk_text;
 
+    private static Wedstrijd wedstrijd;
 
-    private Wedstrijd wedstrijd = new Wedstrijd(1,"1",1,1,"1",1);
+    public static Wedstrijd getWedstrijd() {
+        return wedstrijd;
+    }
 
     public void initialize() {
         this.wedstrijd = BeheerWedstrijdenController.getSelectedWedstrijd();
@@ -52,13 +55,13 @@ public class WedstrijdBewerkController {
 
     private void gaNaarEtappesScherm(Wedstrijd wedstrijd) {
         try {
+            bewerk();
             var stage = new Stage();
             //FXMLLoader loader = new FXMLLoader(getClass().getResource("bewerkettappe.fxml"));
             //EtappeBewerkenController etappeBewerkenController = loader.getController();
             //etappeBewerkenController.setWedstrijd(wedstrijd);
             var root = (AnchorPane) FXMLLoader.load(getClass().getClassLoader().getResource("bewerkettappe.fxml"));
             var scene = new Scene(root);
-
             stage.setScene(scene);
             stage.setTitle("etappe bewerken");
             stage.initOwner(ProjectMain.getRootStage());
@@ -80,6 +83,7 @@ public class WedstrijdBewerkController {
             beginUur = Integer.parseInt(begin_uur_text.getText());
             plaats = plaats_text.getText();
             datum = datum_text.getText();
+            this.wedstrijd = new Wedstrijd(wedstrijdId, plaats, afstand, inschrijvingsGeld, datum, beginUur);
             if (plaats == "" || datum == ""){
                 throw new NullPointerException("veld leeg gelaten");
             }
