@@ -2,10 +2,12 @@ package be.kuleuven.vrolijkezweters.controller;
 
 import be.kuleuven.vrolijkezweters.RepoJDBC;
 import be.kuleuven.vrolijkezweters.properties.Loper;
+import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 
 public class LoperToevoegenController {
@@ -39,6 +41,7 @@ public class LoperToevoegenController {
         voeg_toe.setOnAction(e -> voegToe());
     }
 
+
     private void voegToe() {
         int loperId, leeftijd, gewicht, contactMedewerkerId, punten;
         String naam, geslacht, fysiek, club;
@@ -70,7 +73,10 @@ public class LoperToevoegenController {
         catch(NullPointerException e){
             statusBalk_text.setText("gelieve voor alle selectievelden een keuze op te geven");
         }
+
     }
+
+
 
 
 }

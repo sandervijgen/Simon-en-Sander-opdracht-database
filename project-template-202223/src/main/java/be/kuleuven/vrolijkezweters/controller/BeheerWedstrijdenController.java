@@ -26,7 +26,12 @@ public class BeheerWedstrijdenController {
     @FXML
     private Button btnClose;
     @FXML
+    private Button btnRefresh;
+    @FXML
     private TableView tblConfigs;
+
+    private static Wedstrijd selectedWedstrijd;
+
 
     public void initialize() {
         initTable();
@@ -44,6 +49,7 @@ public class BeheerWedstrijdenController {
             var stage = (Stage) btnClose.getScene().getWindow();
             stage.close();
         });
+        btnRefresh.setOnAction(e->initTable());
     }
 
     private void initTable() {
@@ -58,15 +64,15 @@ public class BeheerWedstrijdenController {
         tblConfigs.getColumns().addAll(wedstrijdId,plaats,afstand,inschrijvingsgeld,datum,beginUur);
 
 
-        wedstrijdId.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("WestrijdId"));
+        wedstrijdId.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("wedstrijdId"));
         plaats.setCellValueFactory(new PropertyValueFactory<Wedstrijd, String>("plaats"));
         afstand.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("afstand"));
         inschrijvingsgeld.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("inschrijvingsGeld"));
         datum.setCellValueFactory(new PropertyValueFactory<Wedstrijd, String>("datum"));
         beginUur.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("beginUur"));
 
-        RepoJDBC.getWedstrijden();
-        //tblConfigs.setItems(RepoJDBC.getWedstrijden());
+        ObservableList<Wedstrijd> wedstrijdsLijst = FXCollections.observableArrayList(RepoJDBC.getWedstrijden());
+        tblConfigs.setItems(wedstrijdsLijst);
 
     }
 
@@ -88,9 +94,32 @@ public class BeheerWedstrijdenController {
     }
 
     private void deleteCurrentRow() {
+
+        Wedstrijd selectedItem = (Wedstrijd) tblConfigs.getSelectionModel().getSelectedItem();
+        RepoJDBC.verwijderWedstrijd(selectedItem.getWedstrijdId());
+        initTable();
     }
 
     private void modifyCurrentRow() {
+        this.selectedWedstrijd = (Wedstrijd) tblConfigs.getSelectionModel().getSelectedItem();
+        try {
+            var stage = new Stage();
+            var root = (AnchorPane) FXMLLoader.load(getClass().getClassLoader().getResource("veranderWedstrijd.fxml"));
+            var scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("wedstrijd bewerken");
+            stage.initOwner(ProjectMain.getRootStage());
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.show();
+
+        } catch (Exception e) {
+            throw new RuntimeException("Kan beheerscherm wedstrijd toevoegen niet vinden", e);
+        }
+
+    }
+
+    public static Wedstrijd getSelectedWedstrijd() {
+        return selectedWedstrijd;
     }
 
     public void showAlert(String title, String content) {

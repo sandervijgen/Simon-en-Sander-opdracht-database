@@ -1,22 +1,17 @@
 package be.kuleuven.vrolijkezweters.controller;
 
 import be.kuleuven.vrolijkezweters.RepoJDBC;
-import be.kuleuven.vrolijkezweters.connection.ConnectionManager;
 import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
-
-public class WedstrijdToevoegenController {
-
-
+public class WedstrijdBewerkController {
     @FXML
-    private Button voeg_toe;
+    private Button btnBewerk;
     @FXML
-    private TextField wedstrijd_id_text;
+    private Text wedstrijd_id_text;
     @FXML
     private TextField plaats_text;
     @FXML
@@ -30,16 +25,28 @@ public class WedstrijdToevoegenController {
     @FXML
     private Text statusBalk_text;
 
+    private Wedstrijd wedstrijd = new Wedstrijd(1,"1",1,1,"1",1);
 
     public void initialize() {
-        voeg_toe.setOnAction(e -> voegToe());
+        this.wedstrijd = BeheerWedstrijdenController.getSelectedWedstrijd();
+        wedstrijd_id_text.setText(String.valueOf(wedstrijd.getWedstrijdId()));
+        plaats_text.setText(String.valueOf(wedstrijd.getPlaats()));
+        afstand_text.setText(String.valueOf(wedstrijd.getAfstand()));
+        inschrijvingsgeld_text.setText(String.valueOf(wedstrijd.getInschrijvingsGeld()));
+        begin_uur_text.setText(String.valueOf(wedstrijd.getBeginUur()));
+        datum_text.setText(String.valueOf(wedstrijd.getDatum()));
+
+        btnBewerk.setOnAction(e -> bewerk());
     }
 
-    private void voegToe() {
+
+
+
+    private void bewerk() {
         int wedstrijdId, afstand, inschrijvingsGeld, beginUur;
         String plaats, datum;
         try {
-            wedstrijdId = Integer.parseInt(wedstrijd_id_text.getText());
+            wedstrijdId = wedstrijd.getWedstrijdId();
             afstand = Integer.parseInt(afstand_text.getText());
             inschrijvingsGeld = Integer.parseInt(inschrijvingsgeld_text.getText());
             beginUur = Integer.parseInt(begin_uur_text.getText());
@@ -48,13 +55,10 @@ public class WedstrijdToevoegenController {
             if (plaats == "" || datum == ""){
                 throw new NullPointerException("veld leeg gelaten");
             }
-            Wedstrijd nieuweWedstrijd = new Wedstrijd(wedstrijdId, plaats, afstand, inschrijvingsGeld, datum, beginUur);
-            if (RepoJDBC.voegWedstrijdToe(nieuweWedstrijd) == false) {
-                statusBalk_text.setText("deze id bestaat al");
-            }
-            else{
-                statusBalk_text.setText("Wedstrijd succesvol toegevoegd");
-            }
+            Wedstrijd bewerkteWedstrijd = new Wedstrijd(wedstrijdId, plaats, afstand, inschrijvingsGeld, datum, beginUur);
+            RepoJDBC.bewerkWedstrijd(bewerkteWedstrijd);
+            statusBalk_text.setText("Wedstrijd succesvol bewerkt");
+
         }
         catch(NumberFormatException n){
             statusBalk_text.setText("Gelieve een geldig getal in te geven waar dit nodig is");
@@ -64,5 +68,4 @@ public class WedstrijdToevoegenController {
         }
 
     }
-
 }

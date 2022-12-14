@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class ConnectionManager {
     private Connection connection;
-    public static final String ConnectionString = "jdbc:sqlite:DatabaseLoopwedstrijd2.db";
+    public static final String ConnectionString = "jdbc:sqlite:DatabaseLoopwedstrijd.db";
 
     public Connection getConnection() {
         return connection;
