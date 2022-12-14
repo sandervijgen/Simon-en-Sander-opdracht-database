@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS "Etappe" (
 	"EtappeId"	INTEGER NOT NULL UNIQUE,
 	"WedstrijdId"	INTEGER NOT NULL,
 	"Afstand"	INTEGER NOT NULL,
+	"BeginKm" INTEGER NOT NULL,
 	PRIMARY KEY("EtappeId" AUTOINCREMENT),
 	FOREIGN KEY("WedstrijdId") REFERENCES "Wedstijd"("WedstrijdId")
 );

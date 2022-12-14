@@ -1,12 +1,13 @@
 package be.kuleuven.vrolijkezweters.properties;
 
 public class Etappe {
-    private int etappeID, wedstrijdId, afstand;
+    private int etappeID, wedstrijdId, afstand, beginKm;
 
-    public Etappe(int etappeID, int wedstrijdId, int afstand) {
+    public Etappe(Integer etappeID, int wedstrijdId, int afstand, int beginKm) {
         this.etappeID = etappeID;
         this.wedstrijdId = wedstrijdId;
         this.afstand = afstand;
+        this.beginKm = beginKm;
     }
 
     public int getEtappeID() {
@@ -19,6 +20,14 @@ public class Etappe {
 
     public int getWedstrijdId() {
         return wedstrijdId;
+    }
+
+    public int getBeginKm() {
+        return beginKm;
+    }
+
+    public void setBeginKm(int beginKm) {
+        this.beginKm = beginKm;
     }
 
     public void setWedstrijdId(int wedstrijdId) {

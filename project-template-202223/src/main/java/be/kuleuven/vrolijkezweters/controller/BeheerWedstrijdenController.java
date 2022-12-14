@@ -113,7 +113,7 @@ public class BeheerWedstrijdenController {
             stage.show();
 
         } catch (Exception e) {
-            throw new RuntimeException("Kan beheerscherm wedstrijd toevoegen niet vinden", e);
+            throw new RuntimeException("Kan beheerscherm wedstrijd bewerken niet vinden", e);
         }
 
     }

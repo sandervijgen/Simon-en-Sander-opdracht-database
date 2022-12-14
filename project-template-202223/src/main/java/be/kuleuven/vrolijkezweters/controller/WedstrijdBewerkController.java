@@ -1,15 +1,23 @@
 package be.kuleuven.vrolijkezweters.controller;
 
+import be.kuleuven.vrolijkezweters.ProjectMain;
 import be.kuleuven.vrolijkezweters.RepoJDBC;
 import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class WedstrijdBewerkController {
     @FXML
     private Button btnBewerk;
+    @FXML
+    private Button btnEtappes;
     @FXML
     private Text wedstrijd_id_text;
     @FXML
@@ -25,6 +33,7 @@ public class WedstrijdBewerkController {
     @FXML
     private Text statusBalk_text;
 
+
     private Wedstrijd wedstrijd = new Wedstrijd(1,"1",1,1,"1",1);
 
     public void initialize() {
@@ -36,11 +45,30 @@ public class WedstrijdBewerkController {
         begin_uur_text.setText(String.valueOf(wedstrijd.getBeginUur()));
         datum_text.setText(String.valueOf(wedstrijd.getDatum()));
 
+        btnEtappes.setOnAction(e -> gaNaarEtappesScherm(wedstrijd));
         btnBewerk.setOnAction(e -> bewerk());
     }
 
 
+    private void gaNaarEtappesScherm(Wedstrijd wedstrijd) {
+        try {
+            var stage = new Stage();
+            //FXMLLoader loader = new FXMLLoader(getClass().getResource("bewerkettappe.fxml"));
+            //EtappeBewerkenController etappeBewerkenController = loader.getController();
+            //etappeBewerkenController.setWedstrijd(wedstrijd);
+            var root = (AnchorPane) FXMLLoader.load(getClass().getClassLoader().getResource("bewerkettappe.fxml"));
+            var scene = new Scene(root);
 
+            stage.setScene(scene);
+            stage.setTitle("etappe bewerken");
+            stage.initOwner(ProjectMain.getRootStage());
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.show();
+
+        } catch (Exception e) {
+            throw new RuntimeException("Kan beheerscherm etappe bewerken niet vinden", e);
+        }
+    }
 
     private void bewerk() {
         int wedstrijdId, afstand, inschrijvingsGeld, beginUur;

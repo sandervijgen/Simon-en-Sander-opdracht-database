@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="scherm" prefHeight="475.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.vrolijkezweters.controller.EtappeBewerkenController">
+    <children>
+        <Button fx:id="btnVoegToe" layoutX="342.0" layoutY="369.0" mnemonicParsing="false" text="Voeg Toe" />
+        <TextField fx:id="aantalEtappes" layoutX="260.0" layoutY="109.0" promptText="Sander Vijgen" text="5" />
+        <Text fx:id="wedstrijdText4" layoutX="260.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Aantal etappes" wrappingWidth="137.13671875" />
+        <Text fx:id="statusBalk_text" layoutX="216.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="318.1367492675781" />
+      <Button fx:id="btnPasToe" layoutX="464.0" layoutY="109.0" mnemonicParsing="false" text="Pas toe " />
+      <Text fx:id="textBegin" layoutX="135.0" layoutY="224.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0 km" />
+      <Text fx:id="textEinde" layoutX="578.0" layoutY="224.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0 km" />
+    </children>
+</AnchorPane>

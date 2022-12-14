@@ -1,6 +1,7 @@
 package be.kuleuven.vrolijkezweters;
 
 import be.kuleuven.vrolijkezweters.connection.ConnectionManager;
+import be.kuleuven.vrolijkezweters.properties.Etappe;
 import be.kuleuven.vrolijkezweters.properties.Loper;
 import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
 import javafx.collections.FXCollections;
@@ -19,7 +20,7 @@ public class RepoJDBC {
     try
     {
         var s = connection.createStatement();
-        s.executeUpdate("INSERT INTO Wedstrijd(WedstrijdId, Plaats, Afstand, InschrijvingsGeld, Datum, BeginUur) VALUES (" + wedstrijd.getWedstrijdId() + ",'" + wedstrijd.getPlaats() + "'," + wedstrijd.getAfstand() + "," + wedstrijd.getInschrijvingsGeld() + ",'" + wedstrijd.getDatum() + "'," + wedstrijd.getBeginUur() + ");");
+        s.executeUpdate("INSERT INTO Wedstrijd(WedstrijdId, Plaats, Afstand, InschrijvingsGeld, Datum, BeginUur) VALUES ("+wedstrijd.getWedstrijdId()+"'" + wedstrijd.getPlaats() + "'," + wedstrijd.getAfstand() + "," + wedstrijd.getInschrijvingsGeld() + ",'" + wedstrijd.getDatum() + "'," + wedstrijd.getBeginUur() + ");");
         connection.commit();
         s.close();
     } catch(SQLException e)
@@ -74,11 +75,25 @@ public class RepoJDBC {
         return wedstrijds;
     }
 
+    public static Boolean bewerkWedstrijd(Wedstrijd wedstrijd) {
+        try
+        {
+            var s = connection.createStatement();
+            s.executeUpdate("UPDATE Wedstrijd SET Plaats = '"+wedstrijd.getPlaats()+"', Afstand = "+wedstrijd.getAfstand()+", InschrijvingsGeld = "+wedstrijd.getInschrijvingsGeld()+", Datum  = '"+wedstrijd.getDatum()+"', BeginUur= "+wedstrijd.getBeginUur()+";");
+            connection.commit();
+            s.close();
+        } catch(SQLException e)
+        {
+            return false;
+        }
+        return true;
+    }
+
     public static boolean voegLoperToe(Loper loper) {
         try
         {
             var s = connection.createStatement();
-            s.executeUpdate("INSERT INTO Loper(LoperId, Naam, Leeftijd, Geslacht, Gewicht, Fysiek, Club, ContactMedewerkerId, Punten) VALUES (" + loper.getLoperId() + ",'" + loper.getNaam() + "'," + loper.getLeeftijd() + ",'" + loper.getGeslacht() + "'," + loper.getGewicht() + ",'" + loper.getFysiek() + "','" + loper.getClub() + "'," + loper.getContactMedewerkerId() + "," + loper.getPunten() + ");");
+            s.executeUpdate("INSERT INTO Loper(LoperId, Naam, Leeftijd, Geslacht, Gewicht, Fysiek, Club, ContactMedewerkerId, Punten) VALUES ("+loper.getLoperId()+"'" + loper.getNaam() + "'," + loper.getLeeftijd() + ",'" + loper.getGeslacht() + "'," + loper.getGewicht() + ",'" + loper.getFysiek() + "','" + loper.getClub() + "'," + loper.getContactMedewerkerId() + "," + loper.getPunten() + ");");
             connection.commit();
             s.close();
         } catch(SQLException e)
@@ -123,11 +138,14 @@ public class RepoJDBC {
             return wedstrijds;
         }
 
-    public static Boolean bewerkWedstrijd(Wedstrijd wedstrijd) {
+
+
+    public static boolean voegEtappeToe(Etappe etappe) {
+
         try
         {
             var s = connection.createStatement();
-            s.executeUpdate("UPDATE Wedstrijd SET Plaats = '"+wedstrijd.getPlaats()+"', Afstand = "+wedstrijd.getAfstand()+", InschrijvingsGeld = "+wedstrijd.getInschrijvingsGeld()+", Datum  = '"+wedstrijd.getDatum()+"', BeginUur= "+wedstrijd.getBeginUur()+";");
+            s.executeUpdate("INSERT INTO Wedstrijd(EtappeId, WedstrijdId, Afstand, BeginKm) VALUES ("+etappe.getEtappeID()+"," + etappe.getWedstrijdId() + "," + etappe.getAfstand() + "," + etappe.getBeginKm() + ";");
             connection.commit();
             s.close();
         } catch(SQLException e)

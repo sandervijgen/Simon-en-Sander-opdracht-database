@@ -24,5 +24,6 @@
         <Text layoutX="229.0" layoutY="201.0" strokeType="OUTSIDE" strokeWidth="0.0" text="km" />
         <Text fx:id="statusBalk_text" layoutX="207.0" layoutY="339.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="336.1367492675781" />
       <Text fx:id="wedstrijd_id_text" layoutX="74.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Button fx:id="btnEtappes" layoutX="514.0" layoutY="109.0" mnemonicParsing="false" text="Etappes" />
     </children>
 </AnchorPane>
