@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="475.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.vrolijkezweters.controller.LoperInschrijfController">
+    <children>
+        <TextField fx:id="textLoopNr" layoutX="260.0" layoutY="109.0" promptText="Sander Vijgen" text="5" />
+        <Text fx:id="schrijfIn" layoutX="260.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Loop nummer" wrappingWidth="137.13671875" />
+        <Text fx:id="statusBalk_text" layoutX="216.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="318.1367492675781" />
+        <Button fx:id="btnSchrijfIn" layoutX="464.0" layoutY="109.0" mnemonicParsing="false" text="Schrijf In" />
+        <Text fx:id="textWedstrijd" layoutX="260.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5 km" />
+      <Button fx:id="btnIsBetaald" layoutX="260.0" layoutY="186.0" mnemonicParsing="false" text="Is Betaald?" />
+    </children>
+</AnchorPane>

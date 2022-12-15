@@ -23,6 +23,8 @@ public class RepoJDBC {
         var s = connection.createStatement();
         s.executeUpdate("INSERT INTO Wedstrijd(Plaats, Afstand, InschrijvingsGeld, Datum, BeginUur) VALUES ('" + wedstrijd.getPlaats() + "'," + wedstrijd.getAfstand() + "," + wedstrijd.getInschrijvingsGeld() + ",'" + wedstrijd.getDatum() + "'," + wedstrijd.getBeginUur() + ");");
         ResultSet rs = s.executeQuery("SELECT WedstrijdId FROM  Wedstrijd WHERE plaats = '" + wedstrijd.getPlaats() + "' AND Afstand = " + wedstrijd.getAfstand() + " AND Datum = '" + wedstrijd.getDatum() + "';");
+        //Werkt niet als twee de zelfde wedstrijden gemaakt zijn want dan geeft die id door van de eerste
+        //Todo check dat er geen twee de zelfde wedstrijden zijn
         connection.commit();
         wedstrijdId = rs.getInt("WedstrijdId");
         s.close();
@@ -89,8 +91,10 @@ public class RepoJDBC {
             rs = s.executeQuery("Select BeginKm FROM Etappe WHERE EtappeId = "+etappeId+";");
             int beginKm = rs.getInt("BeginKm");
             int afstandEtappe = wedstrijd.getAfstand() - beginKm;
-            s.executeUpdate("UPDATE Etappe SET afstand = "+afstandEtappe+" WHERE EtappeId = "+ etappeId +";");//dit is om de laatste etappe van de wedstrijd een grotere of kleinere afstand te geven moest de afstand van de volledige wedstrijd veranderen
-            //Toevoeging = Etappe verwijderen als zijn afstand nu negatief wordt, met eenvoudige for loop
+            s.executeUpdate("UPDATE Etappe SET afstand = "+afstandEtappe+" WHERE EtappeId = "+ etappeId +";");
+            //dit is om de laatste etappe van de wedstrijd een grotere of kleinere afstand te geven moest de afstand van de volledige wedstrijd veranderen
+            //TODO Toevoeging = Etappe verwijderen als zijn afstand nu negatief wordt, met eenvoudige for loop
+            //TODO EtappeLoper OOk AANPASSEN
 
             connection.commit();
             s.close();
@@ -125,7 +129,6 @@ public class RepoJDBC {
                 connection.commit();
 
                 while(rs.next()) {
-
                     int loperId = rs.getInt("loperId");
                     String naam = rs.getString("naam");
                     int leeftijd = rs.getInt("leeftijd");
@@ -150,6 +153,32 @@ public class RepoJDBC {
             return wedstrijds;
         }
 
+    public static void schrijfLoperIn(Wedstrijd wedstrijd, int loperId) {
+        int wedstrijdId = wedstrijd.getWedstrijdId();
+        ArrayList<Integer> etappeIds = new ArrayList<Integer>();
+        try
+        {
+            var s = connection.createStatement();
+            ResultSet rs = s.executeQuery("select EtappeId from Etappe where WedstrijdId = "+wedstrijdId+";");
+            while(rs.next()) {
+                System.out.println(rs.getInt("EtappeId"));
+                int etappeId = rs.getInt("EtappeId");
+                etappeIds.add(etappeId);
+                //gaf enkel eerste id terug als we de etappe loper direct terug gaven, wrsch mag zoeken en schrijven in db niet samen
+            }
+            for(int i = 0; i< etappeIds.size(); i++) {
+                int etappeId = etappeIds.get(i);
+                s.executeUpdate("INSERT INTO EtappeLoper( LoperId, EtappeId, Tijd) VALUES (" + loperId + "," + etappeId + "," + 0 + " );");
+            }
+            connection.commit();
+            s.close();
+
+        } catch(SQLException e)
+        {
+
+        }
+
+    }
 
 
     public static boolean voegEtappeToe(Etappe etappe) {

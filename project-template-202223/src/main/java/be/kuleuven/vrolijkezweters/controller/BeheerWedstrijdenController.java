@@ -28,6 +28,8 @@ public class BeheerWedstrijdenController {
     @FXML
     private Button btnRefresh;
     @FXML
+    private Button btnSchrijfIn;
+    @FXML
     private TableView tblConfigs;
 
     private static Wedstrijd selectedWedstrijd;
@@ -50,7 +52,13 @@ public class BeheerWedstrijdenController {
             stage.close();
         });
         btnRefresh.setOnAction(e->initTable());
+        btnSchrijfIn.setOnAction(e -> {
+            verifyOneRowSelected();
+            schrijfLoperIn();
+        });
     }
+
+
 
     private void initTable() {
         tblConfigs.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -134,5 +142,23 @@ public class BeheerWedstrijdenController {
         if(tblConfigs.getSelectionModel().getSelectedCells().size() == 0) {
             showAlert("Hela!", "Eerst een record selecteren hé.");
         }
+    }
+
+    private void schrijfLoperIn() {
+        this.selectedWedstrijd = (Wedstrijd) tblConfigs.getSelectionModel().getSelectedItem();
+        try {
+            var stage = new Stage();
+            var root = (AnchorPane) FXMLLoader.load(getClass().getClassLoader().getResource("schrijfLoperIn.fxml"));
+            var scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("inschrijven");
+            stage.initOwner(ProjectMain.getRootStage());
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.show();
+
+        } catch (Exception e) {
+            throw new RuntimeException("Kan beheerscherm schrijf loper in niet vinden", e);
+        }
+
     }
 }
