@@ -214,6 +214,33 @@ public class RepoJDBC {
         return true;
     }
 
+    public static void tijdIngeven(int etappeId, int loperId, int tijd) {
+        try
+        {
+            var s = connection.createStatement();
+            s.executeUpdate("UPDATE EtappeLoper SET TIJD = "+tijd+" WHERE EtappeId  = "+etappeId+" AND LoperId = "+loperId+";");
+            connection.commit();
+            s.close();
+        } catch(SQLException e)
+        {
+        }
     }
+    public static ArrayList wedstrijdKlassement(int wedstrijdId) {
+        ArrayList<Loper> wedstrijdKlassement = new ArrayList<Loper>();
+        try
+        {
+            var s = connection.createStatement();
+            ResultSet rs = s.executeQuery("SELECT Tijd, LoperId FROM EtappeLoper inner join Etappe on Etappe.EtappeId = EtappeLoper.EtappeId WHERE WedstrijdId = "+wedstrijdId+" ORDER BY LoperId;");
+            System.out.println(rs.getInt("Tijd"));
+            connection.commit();
+            s.close();
+        } catch(SQLException e)
+        {
+        }
+        return wedstrijdKlassement;
+    }
+
+
+}
 
 

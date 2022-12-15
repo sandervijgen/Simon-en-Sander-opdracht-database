@@ -1,5 +1,5 @@
-be/kuleuven/vrolijkezweters/controller/ProjectMainController.java
- be.kuleuven.vrolijkezweters.controller.ProjectMainController
+be/kuleuven/vrolijkezweters/controller/BeheerAttachesController.java
+ be.kuleuven.vrolijkezweters.controller.BeheerAttachesController
 be/kuleuven/vrolijkezweters/properties/Etappe.java
  be.kuleuven.vrolijkezweters.properties.Etappe
 be/kuleuven/vrolijkezweters/properties/Loper.java
@@ -16,10 +16,12 @@ be/kuleuven/vrolijkezweters/properties/EtappeLoper.java
  be.kuleuven.vrolijkezweters.properties.EtappeLoper
 be/kuleuven/vrolijkezweters/properties/Medewerker.java
  be.kuleuven.vrolijkezweters.properties.Medewerker
-be/kuleuven/vrolijkezweters/controller/BeheerAttachesController.java
- be.kuleuven.vrolijkezweters.controller.BeheerAttachesController
+be/kuleuven/vrolijkezweters/controller/TijdIngeefController.java
+ be.kuleuven.vrolijkezweters.controller.TijdIngeefController
 be/kuleuven/vrolijkezweters/controller/EtappeBewerkenController.java
  be.kuleuven.vrolijkezweters.controller.EtappeBewerkenController
+be/kuleuven/vrolijkezweters/controller/ProjectMainController.java
+ be.kuleuven.vrolijkezweters.controller.ProjectMainController
 be/kuleuven/vrolijkezweters/controller/WedstrijdBewerkController.java
  be.kuleuven.vrolijkezweters.controller.WedstrijdBewerkController
 be/kuleuven/vrolijkezweters/controller/WedstrijdToevoegenController.java

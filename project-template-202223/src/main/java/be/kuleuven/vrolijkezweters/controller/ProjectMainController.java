@@ -1,6 +1,7 @@
 package be.kuleuven.vrolijkezweters.controller;
 
 import be.kuleuven.vrolijkezweters.ProjectMain;
+import be.kuleuven.vrolijkezweters.RepoJDBC;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -17,11 +18,16 @@ public class ProjectMainController {
     private Button btnBeheerLopers;
     @FXML
     private Button btnConfigAttaches;
+    @FXML
+    private Button btnTijdIngeven;
+
 
     public void initialize() {
         btnBeheerLopers.setOnAction(e -> showBeheerScherm("lopers"));
         btnWedstrijden.setOnAction(e -> showBeheerScherm("wedstrijden"));
         btnConfigAttaches.setOnAction(e -> showBeheerScherm("attaches"));
+        btnTijdIngeven.setOnAction(e -> showBeheerScherm("tijd"));
+
     }
 
     private void showBeheerScherm(String id) {
@@ -39,5 +45,8 @@ public class ProjectMainController {
         } catch (Exception e) {
             throw new RuntimeException("Kan beheerscherm " + resourceName + " niet vinden", e);
         }
+        RepoJDBC.wedstrijdKlassement(1);
     }
+
+
 }
