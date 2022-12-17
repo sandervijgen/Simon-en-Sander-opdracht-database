@@ -48,8 +48,9 @@ public class BeheerWedstrijdenController {
         });
         
         btnClose.setOnAction(e -> {
-            var stage = (Stage) btnClose.getScene().getWindow();
-            stage.close();
+            RepoJDBC.wedstrijdKlassement(2);
+            //var stage = (Stage) btnClose.getScene().getWindow();
+            //stage.close();
         });
         btnRefresh.setOnAction(e->initTable());
         btnSchrijfIn.setOnAction(e -> {

@@ -2,6 +2,7 @@ package be.kuleuven.vrolijkezweters;
 
 import be.kuleuven.vrolijkezweters.connection.ConnectionManager;
 import be.kuleuven.vrolijkezweters.properties.Etappe;
+import be.kuleuven.vrolijkezweters.properties.KlassementLoper;
 import be.kuleuven.vrolijkezweters.properties.Loper;
 import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
 import javafx.collections.FXCollections;
@@ -11,6 +12,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class RepoJDBC {
     private static ConnectionManager connectionManager = new ConnectionManager();
@@ -36,10 +40,20 @@ public class RepoJDBC {
     }
 
     public static boolean verwijderWedstrijd(int wedstrijdId) {
+        ArrayList<Integer> etappeIds = new ArrayList<Integer>();
         try
         {
             var s = connection.createStatement();
             s.executeUpdate("Delete From wedstrijd where wedstrijdId = "+wedstrijdId+";");
+            ResultSet rs = s.executeQuery("Select EtappeId From Etappe where wedstrijdId = "+wedstrijdId+";");
+            while(rs.next()) {
+                int etappeId = rs.getInt("EtappeId");
+                etappeIds.add(etappeId);
+            }
+            for(int i=0; i < etappeIds.size(); i ++ ){
+                s.executeUpdate("Delete From EtappeLoper where EtappeId = "+etappeIds.get(i)+";");
+            }
+            s.executeUpdate("Delete From Etappe where wedstrijdId = "+wedstrijdId+";");
             connection.commit();
             s.close();
         } catch(SQLException e)
@@ -226,21 +240,63 @@ public class RepoJDBC {
         }
     }
     public static ArrayList wedstrijdKlassement(int wedstrijdId) {
-        ArrayList<Loper> wedstrijdKlassement = new ArrayList<Loper>();
+        ArrayList<Integer> nietUitgelopenLopersId = new ArrayList<Integer>();
+        ArrayList<Integer> uitgelopenLopersId = new ArrayList<Integer>();
+        ArrayList<KlassementLoper> wedstrijdKlassement = new ArrayList<KlassementLoper>();
         try
         {
             var s = connection.createStatement();
-            ResultSet rs = s.executeQuery("SELECT Tijd, LoperId FROM EtappeLoper inner join Etappe on Etappe.EtappeId = EtappeLoper.EtappeId WHERE WedstrijdId = "+wedstrijdId+" ORDER BY LoperId;");
-            System.out.println(rs.getInt("Tijd"));
+            ResultSet rs = s.executeQuery("SELECT LoperId FROM EtappeLoper inner join Etappe on Etappe.EtappeId = EtappeLoper.EtappeId WHERE WedstrijdId = "+wedstrijdId+" AND Tijd = 0;");
+            while(rs.next()) {
+                int nietUitgelopen = rs.getInt("LoperId");
+                if(!nietUitgelopenLopersId.contains(nietUitgelopen)){
+                    nietUitgelopenLopersId.add(nietUitgelopen);
+                }
+            }
+            ResultSet rs2 = s.executeQuery("SELECT LoperId FROM EtappeLoper inner join Etappe on Etappe.EtappeId = EtappeLoper.EtappeId WHERE WedstrijdId = "+wedstrijdId+";");
+            while(rs.next()) {
+                int uitgelopen = rs.getInt("LoperId");
+                if(!nietUitgelopenLopersId.contains(uitgelopen) && !uitgelopenLopersId.contains(uitgelopen)){
+                   uitgelopenLopersId.add(uitgelopen);
+                }
+            }
+            for(int i = 0; i<uitgelopenLopersId.size();i++){
+                int lopersId = uitgelopenLopersId.get(i);
+                if(!nietUitgelopenLopersId.contains(i)){
+                    ResultSet rs3 = s.executeQuery("SELECT sum(Tijd) FROM EtappeLoper inner join Etappe on Etappe.EtappeId = EtappeLoper.EtappeId WHERE WedstrijdId = "+wedstrijdId+" AND LoperId = "+lopersId+" ;");
+                    KlassementLoper loper = new KlassementLoper(lopersId, rs3.getInt("sum(Tijd)"));
+                    wedstrijdKlassement.add(loper);
+                }
+            }
+            Collections.sort(wedstrijdKlassement, Comparator.comparing(KlassementLoper::getTijd)); //sorteren op tijd
             connection.commit();
             s.close();
+            geeftPunten(wedstrijdId,wedstrijdKlassement);
         } catch(SQLException e)
         {
         }
         return wedstrijdKlassement;
     }
+    public static void geeftPunten(int wedstrijdId, ArrayList<KlassementLoper> wedstrijdKlassement) {
+        try
+        {
+            var s = connection.createStatement();
+            for(int i=0;i<wedstrijdKlassement.size(); i++){
+                int loperId = wedstrijdKlassement.get(i).getLoperId();
+                int punt = 50-i*5;
+                if(punt < 0 ){
+                    punt = 0;
+                }
+                ResultSet rs = s.executeQuery("SELECT Punten FROM Loper WHERE LoperId = "+loperId+";");
+                punt = rs.getInt("Punten") + punt;
+                s.executeUpdate("UPDATE Loper SET punten = "+punt+" WHERE loperId = "+loperId+";");
+            }
+            connection.commit();
+            s.close();
+        } catch(SQLException e) {
+        }
 
-
+    }
 }
 
 
