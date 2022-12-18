@@ -18,6 +18,11 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
+/*
+* Problemen nog hier, afstand etappe is een int -> automatisch afstand bepalen als er meer etappes zijn dan de afstand geeft fout
+* als het totaal van etappes niet klopt zal wedstrijd toch worden toegevoegd, hierna gebeurt pas de etappe check
+*
+* */
 
 public class WedstrijdToevoegenController {
 
@@ -59,24 +64,28 @@ public class WedstrijdToevoegenController {
         afstand_text.setLayoutY(190);
         wedstrijdText2.setLayoutY(175);
         int aantal = Integer.parseInt(textEtappes.getText());
-        for (int i = 1; i < aantal; i++) {
-            TextField textField = new TextField();
-            textField.setLayoutX(461.0);
-            textField.setLayoutY(120 + (30 * i));
-            wedstrijdText2.setLayoutY(wedstrijdText2.getLayoutY() + 30);
-            afstand_text.setLayoutY(afstand_text.getLayoutY() + 30);
-            afstandWaardes.add(textField);
-            scherm.getChildren().add(textField);
+        if (aantal > 8){
+            statusBalk_text.setText("een wedstrijd kan maximaal 8 etappes bevatten!");
+        }
+        else {
+            for (int i = 1; i < aantal + 1; i++) {
+                TextField textField = new TextField();
+                textField.setPromptText("afstand etappe " + i + " in km");
+                textField.setLayoutX(461.0);
+                textField.setLayoutY(120 + (30 * i));
+                wedstrijdText2.setLayoutY(wedstrijdText2.getLayoutY() + 30);
+                afstand_text.setLayoutY(afstand_text.getLayoutY() + 30);
+                afstandWaardes.add(textField);
+                scherm.getChildren().add(textField);
+            }
         }
     }
 
     private void voegToe() {
-
         try {
             Wedstrijd nieuweWedstrijd =  maakWedstrijd();
-            nieuweWedstrijd = new Wedstrijd(nieuweWedstrijd.getWedstrijdId(), nieuweWedstrijd.getPlaats(), nieuweWedstrijd.getAfstand(), nieuweWedstrijd.getInschrijvingsGeld(), nieuweWedstrijd.getDatum(), nieuweWedstrijd.getBeginUur());
             int wedstrijdId  = RepoJDBC.voegWedstrijdToe(nieuweWedstrijd);
-
+            //waarom dit, de eerst mogelijke id wordt toch gepakt?
             if (wedstrijdId == -1) {
                 statusBalk_text.setText("deze id bestaat al");
             }
@@ -91,73 +100,88 @@ public class WedstrijdToevoegenController {
         catch(NullPointerException e){
             statusBalk_text.setText("Gelieve voor alle velden een keuze op te geven");
         }
-
-
-
-
+        catch(IllegalArgumentException i){
+            statusBalk_text.setText("het totaal van de etappes komt niet overeen met de totale afstand of niet bij elke etappe een positief getal opgegeven");
+        }
     }
 
-        private void voegEtappesToe(int wedstrijdId) {
-            for (int i = 0; i <= afstandWaardes.size(); i++) {
-                if (afstandWaardes.size() == 0){
+    private void voegEtappesToe(int wedstrijdId) {
+        int totaal = 0;
+        ArrayList<Etappe> etappes = new ArrayList<Etappe>();
+        if (afstandWaardes.size() == 0){
+            int aantalEtappes = Integer.parseInt(textEtappes.getText());
+            int eindKm = Integer.parseInt(afstand_text.getText());
+            int deling = eindKm/aantalEtappes;
+            int rest = eindKm%aantalEtappes;
+            for (int i = 0; i < aantalEtappes; i++){
+                etappes.add(new Etappe(i+1, wedstrijdId, deling, totaal));
+                totaal += deling;
+            }
+            if (rest != 0){
+                etappes.add(new Etappe(aantalEtappes, wedstrijdId, rest, totaal));
+                totaal += rest;
+            }
+            else{
+                etappes.add(new Etappe(aantalEtappes, wedstrijdId, deling, totaal));
+                totaal += deling;
+            }
+        }
+        else {
+            for (int i = 0; i < afstandWaardes.size(); i++) {
+                if (i == 0) {
+                    TextField textFieldAfstand = afstandWaardes.get(i);
                     int beginKm = 0;
-                    int eindKm = Integer.parseInt(afstand_text.getText());
-                    Etappe etappe = new Etappe(i, wedstrijdId, (eindKm -beginKm) , beginKm);
-                    if(!RepoJDBC.voegEtappeToe(etappe)){
-                        System.out.println("Er is iets mis met etappe" + 1);
-                    };
-                    }
-                else if(i == 0){
-                    TextField textFieldEinde = afstandWaardes.get(i);
-                    int beginKm = 0;
-                    int eindKm = Integer.parseInt(textFieldEinde.getText());
-                    Etappe etappe = new Etappe(i, wedstrijdId, (eindKm -beginKm) , beginKm);
-                    if(!RepoJDBC.voegEtappeToe(etappe)){
-                        System.out.println("Er is iets mis met etappe" + (i+1));
-                    };
-
-
+                    int afstand = Integer.parseInt(textFieldAfstand.getText());
+                    Etappe etappe = new Etappe(1, wedstrijdId, afstand, beginKm);
+                    etappes.add(etappe);
+                    totaal += afstand;
                     //TODO if beginKM > eindKM catchen
+                } else if (i == afstandWaardes.size()-1) {
+                    TextField textFieldAfstand = afstandWaardes.get(i);
+                    int afstand = Integer.parseInt(textFieldAfstand.getText());
+                    Etappe etappe = new Etappe(i, wedstrijdId, afstand , totaal);
+                    totaal += afstand;
+                    etappes.add(etappe);
+                } else {
+                    TextField textFieldAfstand = afstandWaardes.get(i);
+                    int afstand = Integer.parseInt(textFieldAfstand.getText());
+                    Etappe etappe = new Etappe(i, wedstrijdId, afstand, totaal);
+                    etappes.add(etappe);
+                    totaal += afstand;
                 }
-                else if(i == afstandWaardes.size()){
-                    TextField textFieldBegin = afstandWaardes.get(i-1);
-                    int beginKm = Integer.parseInt(textFieldBegin.getText());
-                    int eindKm = Integer.parseInt(afstand_text.getText());;
-                    Etappe etappe = new Etappe(i, wedstrijdId, (eindKm -beginKm) , beginKm);
-                    if(!RepoJDBC.voegEtappeToe(etappe)){
-                        System.out.println("Er is iets mis met etappe" + (i+1));
-                    };
-                }
-                else {
-                    TextField textFieldBegin = afstandWaardes.get(i-1);
-                    TextField textFieldEinde = afstandWaardes.get(i);
-                    int beginKm = Integer.parseInt(textFieldBegin.getText());
-                    int eindKm = Integer.parseInt(textFieldEinde.getText());
-                    Etappe etappe = new Etappe(i, wedstrijdId, (eindKm -beginKm) , beginKm);
-                    if(!RepoJDBC.voegEtappeToe(etappe)){
-                        System.out.println("Er is iets mis met etappe" + (i+1));
-                    };
-                }
+            }
+        }
+        System.out.println(totaal + ", " + Integer.parseInt(afstand_text.getText()));
+        for (int i = 0; i < etappes.size(); i++){
+            if (etappes.get(i).getAfstand() <= 0){
+                throw new IllegalArgumentException("negatieve afstand voor etappe");
+            }
+        }
+        if (totaal != Integer.parseInt(afstand_text.getText())){
+            throw new IllegalArgumentException("totaal klopt niet");
+        }
+        else{
+            for (int i = 0; i < etappes.size(); i++){
+                RepoJDBC.voegEtappeToe(etappes.get(i));
+            }
         }
     }
 
 
-        private Wedstrijd maakWedstrijd() {
-            int wedstrijdId, afstand, inschrijvingsGeld, beginUur;
-            String plaats, datum;
-
-                wedstrijdId = Integer.parseInt(wedstrijd_id_text.getText());
-                afstand = Integer.parseInt(afstand_text.getText());
-                inschrijvingsGeld = Integer.parseInt(inschrijvingsgeld_text.getText());
-                beginUur = Integer.parseInt(begin_uur_text.getText());
-                plaats = plaats_text.getText();
-                datum = datum_text.getText();
-                if (plaats == "" || datum == "") {
-                    throw new NullPointerException("veld leeg gelaten");
-                }
-            Wedstrijd nieuweWedstrijd;
-            return nieuweWedstrijd = new Wedstrijd(wedstrijdId, plaats, afstand, inschrijvingsGeld, datum, beginUur);
-
+    private Wedstrijd maakWedstrijd() {
+        int afstand, etappes, inschrijvingsGeld, beginUur;
+        String plaats, datum;
+        afstand = Integer.parseInt(afstand_text.getText());
+        inschrijvingsGeld = Integer.parseInt(inschrijvingsgeld_text.getText());
+        beginUur = Integer.parseInt(begin_uur_text.getText());
+        plaats = plaats_text.getText();
+        datum = datum_text.getText();
+        etappes = Integer.parseInt(textEtappes.getText());
+        if (plaats == "" || datum == "" || afstand <= 0 || inschrijvingsGeld < 0 || beginUur <= 0 || beginUur > 24 || etappes <= 0 ) {
+            throw new NullPointerException("veld leeg gelaten");
         }
+        return new Wedstrijd(1, plaats, afstand, inschrijvingsGeld, datum, beginUur);
+
+    }
 
 }
