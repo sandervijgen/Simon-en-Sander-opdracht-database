@@ -16,6 +16,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 
 /*
@@ -82,17 +83,11 @@ public class WedstrijdToevoegenController {
     }
 
     private void voegToe() {
+        Wedstrijd wedstrijd;
         try {
-            Wedstrijd nieuweWedstrijd =  maakWedstrijd();
-            int wedstrijdId  = RepoJDBC.voegWedstrijdToe(nieuweWedstrijd);
-            //waarom dit, de eerst mogelijke id wordt toch gepakt?
-            if (wedstrijdId == -1) {
-                statusBalk_text.setText("deze id bestaat al");
-            }
-            else{
-                statusBalk_text.setText("Wedstrijd succesvol toegevoegd");
-            }
-            voegEtappesToe(wedstrijdId);
+            wedstrijd =  maakWedstrijd();
+            RepoJDBC.voegWedstrijdToe(wedstrijd,voegEtappesToe(0));
+            statusBalk_text.setText("Wedstrijd succesvol toegevoegd");
         }
         catch(NumberFormatException n){
             statusBalk_text.setText("Gelieve een geldig getal in te geven waar dit nodig is");
@@ -105,7 +100,7 @@ public class WedstrijdToevoegenController {
         }
     }
 
-    private void voegEtappesToe(int wedstrijdId) {
+    private ArrayList<Etappe> voegEtappesToe(int wedstrijdId) {
         int totaal = 0;
         ArrayList<Etappe> etappes = new ArrayList<Etappe>();
         if (afstandWaardes.size() == 0){
@@ -113,29 +108,32 @@ public class WedstrijdToevoegenController {
             int eindKm = Integer.parseInt(afstand_text.getText());
             int deling = eindKm/aantalEtappes;
             int rest = eindKm%aantalEtappes;
-            for (int i = 0; i < aantalEtappes; i++){
+            for (int i = 0; i < aantalEtappes - 1; i++){
+                if (i == aantalEtappes - 2){
+                    etappes.add(new Etappe(aantalEtappes, wedstrijdId, rest+deling, totaal));
+                    totaal += rest+deling;
+                }
                 etappes.add(new Etappe(i+1, wedstrijdId, deling, totaal));
-                totaal += deling;
-            }
-            if (rest != 0){
-                etappes.add(new Etappe(aantalEtappes, wedstrijdId, rest, totaal));
-                totaal += rest;
-            }
-            else{
-                etappes.add(new Etappe(aantalEtappes, wedstrijdId, deling, totaal));
                 totaal += deling;
             }
         }
         else {
             for (int i = 0; i < afstandWaardes.size(); i++) {
+                try{
+                    Integer.parseInt(afstandWaardes.get(i).getText());
+                }
+                catch (NumberFormatException n){
+                    throw new IllegalArgumentException("fout");
+                }
                 if (i == 0) {
                     TextField textFieldAfstand = afstandWaardes.get(i);
                     int beginKm = 0;
                     int afstand = Integer.parseInt(textFieldAfstand.getText());
+                    System.out.println(afstand);
                     Etappe etappe = new Etappe(1, wedstrijdId, afstand, beginKm);
                     etappes.add(etappe);
                     totaal += afstand;
-                    //TODO if beginKM > eindKM catchen
+
                 } else if (i == afstandWaardes.size()-1) {
                     TextField textFieldAfstand = afstandWaardes.get(i);
                     int afstand = Integer.parseInt(textFieldAfstand.getText());
@@ -153,18 +151,14 @@ public class WedstrijdToevoegenController {
         }
         System.out.println(totaal + ", " + Integer.parseInt(afstand_text.getText()));
         for (int i = 0; i < etappes.size(); i++){
-            if (etappes.get(i).getAfstand() <= 0){
+            if (etappes.get(i).getAfstand() <= 0 ){
                 throw new IllegalArgumentException("negatieve afstand voor etappe");
             }
         }
         if (totaal != Integer.parseInt(afstand_text.getText())){
             throw new IllegalArgumentException("totaal klopt niet");
         }
-        else{
-            for (int i = 0; i < etappes.size(); i++){
-                RepoJDBC.voegEtappeToe(etappes.get(i));
-            }
-        }
+        return etappes;
     }
 
 
