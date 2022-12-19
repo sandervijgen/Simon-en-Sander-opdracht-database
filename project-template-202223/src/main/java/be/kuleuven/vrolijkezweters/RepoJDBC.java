@@ -1,10 +1,7 @@
 package be.kuleuven.vrolijkezweters;
 
 import be.kuleuven.vrolijkezweters.connection.ConnectionManager;
-import be.kuleuven.vrolijkezweters.properties.Etappe;
-import be.kuleuven.vrolijkezweters.properties.KlassementLoper;
-import be.kuleuven.vrolijkezweters.properties.Loper;
-import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
+import be.kuleuven.vrolijkezweters.properties.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -56,6 +53,45 @@ public class RepoJDBC {
                 s.executeUpdate("Delete From EtappeLoper where EtappeId = "+etappeIds.get(i)+";");
             }
             s.executeUpdate("Delete From Etappe where wedstrijdId = "+wedstrijdId+";");
+            connection.commit();
+            s.close();
+        } catch(SQLException e)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean verwijderLoper(int loperId) {
+        ArrayList<Integer> etappeLoperIds = new ArrayList<Integer>();
+        try
+        {
+            var s = connection.createStatement();
+            s.executeUpdate("Delete From Loper where loperId = "+loperId+";");
+            ResultSet rs = s.executeQuery("Select etappeLoperId From EtappeLoper where LoperId = "+loperId+";");
+            while(rs.next()) {
+                int etappeLoperId = rs.getInt("EtappeLoperId");
+                etappeLoperIds.add(etappeLoperId);
+            }
+            for(int i=0; i < etappeLoperIds.size(); i ++ ){
+                s.executeUpdate("Delete From EtappeLoper where EtappeLoperId = "+etappeLoperIds.get(i)+";");
+            }
+            s.executeUpdate("Delete From EtappeLoper where LoperId = "+loperId+";");
+            connection.commit();
+            s.close();
+        } catch(SQLException e)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean verwijderMedewerker(int medewerkerId) {
+        //TODO: alle lopers die deze medewerker als contact medewerker hadden moeten een nieuwe toegewezen krijgen
+        try
+        {
+            var s = connection.createStatement();
+            s.executeUpdate("Delete From Medewerker where medewerkerId = "+medewerkerId+";");
             connection.commit();
             s.close();
         } catch(SQLException e)
@@ -141,39 +177,71 @@ public class RepoJDBC {
         return true;
     }
 
+    public static boolean voegMedewerkerToe(Medewerker medewerker) {
+        try
+        {
+            var s = connection.createStatement();
+            s.executeUpdate("INSERT INTO Medewerker( Naam, Functie, Leeftijd, Uurloon) VALUES ('" + medewerker.getNaam() + "','" + medewerker.getFunctie() + "'," + medewerker.getLeeftijd() + "," + medewerker.getUurloon() + ");");
+            connection.commit();
+            s.close();
+        } catch(SQLException e)
+        {
+            return false;
+        }
+        return true;
+    }
+
     public static ArrayList<Loper> getLoper() {
 
-            ArrayList<Loper> wedstrijds = new ArrayList<Loper>();
-
-            try {
-                var s = connection.createStatement();
-                ResultSet rs = s.executeQuery("select * from Loper;");
-                connection.commit();
-
-                while(rs.next()) {
-                    int loperId = rs.getInt("loperId");
-                    String naam = rs.getString("naam");
-                    int leeftijd = rs.getInt("leeftijd");
-                    String geslacht = rs.getString("geslacht");
-                    int gewicht = rs.getInt("gewicht");
-                    String fysiek = rs.getString("fysiek");
-                    String club  = rs.getString("club");
-                    int contactMedewerkerId = rs.getInt("contactMedewerkerId");
-                    int punten = rs.getInt("punten");
-
-
-                    Loper loper = new Loper(loperId, naam, leeftijd, geslacht, gewicht, fysiek,club,contactMedewerkerId,punten);
-                    wedstrijds.add(loper);
-                }
-
-                s.close();
-
-            } catch (
-                    SQLException e) {
-                e.printStackTrace();
+        ArrayList<Loper> lopers = new ArrayList<Loper>();
+        try {
+            var s = connection.createStatement();
+            ResultSet rs = s.executeQuery("select * from Loper;");
+            connection.commit();
+            while(rs.next()) {
+                int loperId = rs.getInt("loperId");
+                String naam = rs.getString("naam");
+                int leeftijd = rs.getInt("leeftijd");
+                String geslacht = rs.getString("geslacht");
+                int gewicht = rs.getInt("gewicht");
+                String fysiek = rs.getString("fysiek");
+                String club  = rs.getString("club");
+                int contactMedewerkerId = rs.getInt("contactMedewerkerId");
+                int punten = rs.getInt("punten");
+                Loper loper = new Loper(loperId, naam, leeftijd, geslacht, gewicht, fysiek,club,contactMedewerkerId,punten);
+                lopers.add(loper);
             }
-            return wedstrijds;
+            s.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return lopers;
+    }
+
+    public static ArrayList<Medewerker> getMedewerker() {
+
+        ArrayList<Medewerker> medewerkers = new ArrayList<Medewerker>();
+        try {
+            var s = connection.createStatement();
+            ResultSet rs = s.executeQuery("select * from Medewerker;");
+            connection.commit();
+            while(rs.next()) {
+                int medewerkerId = rs.getInt("medewerkerId");
+                String naam = rs.getString("naam");
+                int leeftijd = rs.getInt("leeftijd");
+                String functie = rs.getString("functie");
+                int uurloon = rs.getInt("uurloon");
+
+                Medewerker medewerker = new Medewerker(medewerkerId, naam, functie, leeftijd, uurloon);
+                medewerkers.add(medewerker);
+            }
+            s.close();
+        } catch (
+                SQLException e) {
+            e.printStackTrace();
+        }
+        return medewerkers;
+    }
 
     public static boolean schrijfLoperIn(Wedstrijd wedstrijd, int loperId) {
         int wedstrijdId = wedstrijd.getWedstrijdId();

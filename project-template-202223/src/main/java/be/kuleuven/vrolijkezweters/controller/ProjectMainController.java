@@ -20,12 +20,16 @@ public class ProjectMainController {
     private Button btnConfigAttaches;
     @FXML
     private Button btnTijdIngeven;
+    @FXML
+    private Button btnMedewerkers;
 
     public void initialize() {
         btnBeheerLopers.setOnAction(e -> showBeheerScherm("lopers"));
         btnWedstrijden.setOnAction(e -> showBeheerScherm("wedstrijden"));
         btnConfigAttaches.setOnAction(e -> showBeheerScherm("attaches"));
         btnTijdIngeven.setOnAction(e -> showBeheerScherm("tijd"));
+        btnMedewerkers.setOnAction(e -> showBeheerScherm("medewerkers"));
+
     }
 
     private void showBeheerScherm(String id) {

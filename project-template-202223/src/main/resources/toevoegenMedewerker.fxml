@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.vrolijkezweters.controller.MedewerkerToevoegenController">
+   <children>
+      <TextField fx:id="medewerker_id_text" layoutX="54.0" layoutY="69.0" />
+      <TextField fx:id="naam_text" layoutX="54.0" layoutY="148.0" />
+      <TextField fx:id="functie_text" layoutX="54.0" layoutY="237.0" />
+      <TextField fx:id="leeftijd_text" layoutX="371.0" layoutY="69.0" />
+      <TextField fx:id="uurloon_text" layoutX="371.0" layoutY="148.0" />
+      <Text layoutX="54.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Medewerker ID" />
+      <Text layoutX="54.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Naam" />
+      <Text layoutX="54.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Functie" />
+      <Text layoutX="371.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Leeftijd" />
+      <Text layoutX="371.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Uurloon" />
+      <Button fx:id="voeg_toe_button" layoutX="274.0" layoutY="332.0" mnemonicParsing="false" text="Voeg toe" />
+      <Text fx:id="statusbalk_text" layoutX="168.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="275.4700622558594" />
+   </children>
+</AnchorPane>

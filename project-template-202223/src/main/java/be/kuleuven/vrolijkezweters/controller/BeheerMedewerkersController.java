@@ -16,7 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class BeheerLopersController {
+public class BeheerMedewerkersController {
 
     @FXML
     private Button btnVoeg_toe;
@@ -29,7 +29,7 @@ public class BeheerLopersController {
 
     public void initialize() {
         initTable();
-        btnVoeg_toe.setOnAction(e -> addNewLoper());
+        btnVoeg_toe.setOnAction(e -> addNewMedewerker());
         btnRefresh.setOnAction(e -> initTable());
         btnDelete.setOnAction(e -> {
             verifyOneRowSelected();
@@ -37,13 +37,13 @@ public class BeheerLopersController {
         });
     }
 
-    private void addNewLoper() {
+    private void addNewMedewerker() {
         try {
             var stage = new Stage();
-            var root = (AnchorPane) FXMLLoader.load(getClass().getClassLoader().getResource("toevoegenLoper.fxml"));
+            var root = (AnchorPane) FXMLLoader.load(getClass().getClassLoader().getResource("toevoegenMedewerker.fxml"));
             var scene = new Scene(root);
             stage.setScene(scene);
-            stage.setTitle("Loper Toevoegen");
+            stage.setTitle("Medewerker Toevoegen");
             stage.initOwner(ProjectMain.getRootStage());
             stage.initModality(Modality.WINDOW_MODAL);
             stage.show();
@@ -53,40 +53,31 @@ public class BeheerLopersController {
     }
 
     private void deleteCurrentRow() {
-        Loper selectedItem = (Loper) tblConfigs.getSelectionModel().getSelectedItem();
-        RepoJDBC.verwijderLoper(selectedItem.getLoperId());
+        Medewerker selectedItem = (Medewerker) tblConfigs.getSelectionModel().getSelectedItem();
+        RepoJDBC.verwijderMedewerker(selectedItem.getMedewerkerId());
         initTable();
     }
 
     private void initTable() {
         tblConfigs.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         tblConfigs.getColumns().clear();
-        TableColumn loperId = new TableColumn("Loper Id");
+        TableColumn medewerkerId = new TableColumn("Medewerker Id");
         TableColumn naam = new TableColumn("Naam");
-        TableColumn leeftijd = new TableColumn("Leeftijd");
-        TableColumn geslacht = new TableColumn("Geslacht");
-        TableColumn gewicht = new TableColumn("Gewicht");
-        TableColumn fysiek = new TableColumn("Fysiek");
-        TableColumn club = new TableColumn("Club");
-        TableColumn contactMedewerkerId = new TableColumn("Contact Medewerker Id");
-        TableColumn punten = new TableColumn("Punten");
+        TableColumn functie = new TableColumn("functie");
+        TableColumn leeftijd = new TableColumn("leeftijd");
+        TableColumn uurloon = new TableColumn("uurloon");
 
-        tblConfigs.getColumns().addAll(loperId,naam,leeftijd,geslacht,gewicht,fysiek,club,contactMedewerkerId,punten);
+        tblConfigs.getColumns().addAll(medewerkerId,naam,functie,leeftijd,uurloon);
 
 
-        loperId.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("loperId"));
+        medewerkerId.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("medewerkerId"));
         naam.setCellValueFactory(new PropertyValueFactory<Wedstrijd, String>("naam"));
         leeftijd.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("leeftijd"));
-        geslacht.setCellValueFactory(new PropertyValueFactory<Wedstrijd, String>("geslacht"));
-        gewicht.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("gewicht"));
-        fysiek.setCellValueFactory(new PropertyValueFactory<Wedstrijd, String>("fysiek"));
-        club.setCellValueFactory(new PropertyValueFactory<Wedstrijd, String>("club"));
-        contactMedewerkerId.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("contactMedewerkerId"));
-        punten.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("punten"));
+        functie.setCellValueFactory(new PropertyValueFactory<Wedstrijd, String>("functie"));
+        uurloon.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("uurloon"));
 
-
-        ObservableList<Loper> loperLijst = FXCollections.observableArrayList(RepoJDBC.getLoper());
-        tblConfigs.setItems(loperLijst);
+        ObservableList<Medewerker> medewerkersLijst = FXCollections.observableArrayList(RepoJDBC.getMedewerker());
+        tblConfigs.setItems(medewerkersLijst);
     }
 
     public void showAlert(String title, String content) {
