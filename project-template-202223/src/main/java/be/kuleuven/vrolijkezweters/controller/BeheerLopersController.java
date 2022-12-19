@@ -27,9 +27,7 @@ public class BeheerLopersController {
     public void initialize() {
         initTable();
         btnVoeg_toe.setOnAction(e -> addNewLoper());
-        btnRefresh.setOnAction(e->initTable());
-
-
+        btnRefresh.setOnAction(e -> initTable());
     }
 
     private void addNewLoper() {
@@ -42,7 +40,6 @@ public class BeheerLopersController {
             stage.initOwner(ProjectMain.getRootStage());
             stage.initModality(Modality.WINDOW_MODAL);
             stage.show();
-
         } catch (Exception e) {
             throw new RuntimeException("Kan beheerscherm loper toevoegen niet vinden", e);
         }
@@ -77,6 +74,5 @@ public class BeheerLopersController {
 
         ObservableList<Loper> loperLijst = FXCollections.observableArrayList(RepoJDBC.getLoper());
         tblConfigs.setItems(loperLijst);
-
     }
 }

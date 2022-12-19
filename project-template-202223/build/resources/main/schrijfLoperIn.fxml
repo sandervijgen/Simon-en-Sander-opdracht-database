@@ -13,7 +13,6 @@
         <Text fx:id="statusBalk_text" layoutX="216.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="318.1367492675781" />
         <Button fx:id="btnSchrijfIn" layoutX="464.0" layoutY="109.0" mnemonicParsing="false" text="Schrijf In" />
         <Text fx:id="textWedstrijd" layoutX="260.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5 km" />
-      <Button fx:id="btnIsBetaald" layoutX="260.0" layoutY="186.0" mnemonicParsing="false" text="Is Betaald?" />
-      <CheckBox fx:id="isBetaald_checkbox" layoutX="348.0" layoutY="190.0" mnemonicParsing="false" text="is betaald " />
+      <CheckBox fx:id="isBetaald_checkbox" layoutX="296.0" layoutY="190.0" mnemonicParsing="false" text="is betaald " />
     </children>
 </AnchorPane>

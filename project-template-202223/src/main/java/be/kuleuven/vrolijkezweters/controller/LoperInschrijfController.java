@@ -32,8 +32,6 @@ public class LoperInschrijfController {
         textWedstrijd.setText("wedstrijd in " +wedstrijd.getPlaats()+", op "+wedstrijd.getDatum());
         btnSchrijfIn.setOnAction(e->schrijfin());
         isBetaald_checkbox.setOnAction(e -> setIsBetaald());
-        //btnIsBetaald.setOnAction(e-> setIsBetaald());
-
     }
 
     private void setIsBetaald() {

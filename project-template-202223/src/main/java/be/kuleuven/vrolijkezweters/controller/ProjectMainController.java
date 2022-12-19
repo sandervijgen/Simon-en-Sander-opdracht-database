@@ -21,13 +21,11 @@ public class ProjectMainController {
     @FXML
     private Button btnTijdIngeven;
 
-
     public void initialize() {
         btnBeheerLopers.setOnAction(e -> showBeheerScherm("lopers"));
         btnWedstrijden.setOnAction(e -> showBeheerScherm("wedstrijden"));
         btnConfigAttaches.setOnAction(e -> showBeheerScherm("attaches"));
         btnTijdIngeven.setOnAction(e -> showBeheerScherm("tijd"));
-
     }
 
     private void showBeheerScherm(String id) {
@@ -47,6 +45,4 @@ public class ProjectMainController {
         }
         RepoJDBC.wedstrijdKlassement(1);
     }
-
-
 }

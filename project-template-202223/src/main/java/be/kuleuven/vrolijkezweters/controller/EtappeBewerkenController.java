@@ -55,8 +55,8 @@ public class EtappeBewerkenController {
             afstandWaardes.add(textField);
             scherm.getChildren().add(textField);
         }
-
     }
+
     private void bewerk(){
         boolean klopt = true;
         int totaal = 0;
@@ -117,5 +117,4 @@ public class EtappeBewerkenController {
             }
         }
     }
-
 }

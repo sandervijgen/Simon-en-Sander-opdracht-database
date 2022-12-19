@@ -34,7 +34,6 @@ public class BeheerWedstrijdenController {
 
     private static Wedstrijd selectedWedstrijd;
 
-
     public void initialize() {
         initTable();
         btnAdd.setOnAction(e -> addNewRow());
@@ -46,7 +45,6 @@ public class BeheerWedstrijdenController {
             verifyOneRowSelected();
             deleteCurrentRow();
         });
-        
         btnClose.setOnAction(e -> {
             RepoJDBC.wedstrijdKlassement(1);
             var stage = (Stage) btnClose.getScene().getWindow();
@@ -58,8 +56,6 @@ public class BeheerWedstrijdenController {
             schrijfLoperIn();
         });
     }
-
-
 
     private void initTable() {
         tblConfigs.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -85,25 +81,23 @@ public class BeheerWedstrijdenController {
 
     }
 
-
     private void addNewRow() {
-            try {
-                var stage = new Stage();
-                var root = (AnchorPane) FXMLLoader.load(getClass().getClassLoader().getResource("toevoegenWedstrijd.fxml"));
-                var scene = new Scene(root);
-                stage.setScene(scene);
-                stage.setTitle("wedstrijd toevoegen");
-                stage.initOwner(ProjectMain.getRootStage());
-                stage.initModality(Modality.WINDOW_MODAL);
-                stage.show();
+        try {
+            var stage = new Stage();
+            var root = (AnchorPane) FXMLLoader.load(getClass().getClassLoader().getResource("toevoegenWedstrijd.fxml"));
+            var scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("wedstrijd toevoegen");
+            stage.initOwner(ProjectMain.getRootStage());
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.show();
 
-            } catch (Exception e) {
-                throw new RuntimeException("Kan beheerscherm wedstrijd toevoegen niet vinden", e);
-            }
+        } catch (Exception e) {
+            throw new RuntimeException("Kan beheerscherm wedstrijd toevoegen niet vinden", e);
+        }
     }
 
     private void deleteCurrentRow() {
-
         Wedstrijd selectedItem = (Wedstrijd) tblConfigs.getSelectionModel().getSelectedItem();
         RepoJDBC.verwijderWedstrijd(selectedItem.getWedstrijdId());
         initTable();
@@ -124,7 +118,6 @@ public class BeheerWedstrijdenController {
         } catch (Exception e) {
             throw new RuntimeException("Kan beheerscherm wedstrijd bewerken niet vinden", e);
         }
-
     }
 
     public static Wedstrijd getSelectedWedstrijd() {
@@ -160,6 +153,5 @@ public class BeheerWedstrijdenController {
         } catch (Exception e) {
             throw new RuntimeException("Kan beheerscherm schrijf loper in niet vinden", e);
         }
-
     }
 }

@@ -41,7 +41,6 @@ public class LoperToevoegenController {
         voeg_toe.setOnAction(e -> voegToe());
     }
 
-
     private void voegToe() {
         int loperId, leeftijd, gewicht, contactMedewerkerId, punten;
         String naam, geslacht, fysiek, club;
@@ -73,6 +72,5 @@ public class LoperToevoegenController {
         catch(NullPointerException e){
             statusBalk_text.setText("gelieve voor alle selectievelden een keuze op te geven");
         }
-
     }
 }

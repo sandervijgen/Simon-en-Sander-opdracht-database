@@ -161,7 +161,6 @@ public class WedstrijdToevoegenController {
         return etappes;
     }
 
-
     private Wedstrijd maakWedstrijd() {
         int afstand, etappes, inschrijvingsGeld, beginUur;
         String plaats, datum;
@@ -177,5 +176,4 @@ public class WedstrijdToevoegenController {
         return new Wedstrijd(1, plaats, afstand, inschrijvingsGeld, datum, beginUur);
 
     }
-
 }

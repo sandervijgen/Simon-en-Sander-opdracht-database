@@ -52,7 +52,6 @@ public class WedstrijdBewerkController {
         btnBewerk.setOnAction(e -> bewerk());
     }
 
-
     private void gaNaarEtappesScherm(Wedstrijd wedstrijd) {
         try {
             bewerk();
