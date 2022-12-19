@@ -47,7 +47,7 @@ public class LoperInschrijfController {
                     statusBalk_text.setText("Loper succesvol ingeschreven!");
                 }
                 else{
-                    statusBalk_text.setText("Er bestaat geen loper met dit loopnummer");
+                    statusBalk_text.setText("Er bestaat geen loper met dit loopnummer of deze is al ingeschreven");
                 }
             }
             else {

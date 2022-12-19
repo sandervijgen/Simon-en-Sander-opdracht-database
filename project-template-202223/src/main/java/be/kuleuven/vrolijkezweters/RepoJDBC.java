@@ -88,10 +88,20 @@ public class RepoJDBC {
 
     public static boolean verwijderMedewerker(int medewerkerId) {
         //TODO: alle lopers die deze medewerker als contact medewerker hadden moeten een nieuwe toegewezen krijgen
+        ArrayList<Integer> wedstrijdMedewerkersIds = new ArrayList<Integer>();
         try
         {
             var s = connection.createStatement();
             s.executeUpdate("Delete From Medewerker where medewerkerId = "+medewerkerId+";");
+            ResultSet rs = s.executeQuery("Select WedstrijdMedewerkerId From WedstrijdMedewerker where medewerkerId = "+medewerkerId+";");
+            while(rs.next()) {
+                int wedstrijdMedewerkerId = rs.getInt("WedstrijdMedewerkerId");
+                wedstrijdMedewerkersIds.add(wedstrijdMedewerkerId);
+            }
+            for(int i=0; i < wedstrijdMedewerkersIds.size(); i ++ ){
+                s.executeUpdate("Delete From WedstrijdMedewerker where WedstrijdMedewerkerId = "+wedstrijdMedewerkersIds.get(i)+";");
+            }
+            s.executeUpdate("Delete From WedstrijdMedewerker where MedewerkerId = "+medewerkerId+";");
             connection.commit();
             s.close();
         } catch(SQLException e)
@@ -267,6 +277,30 @@ public class RepoJDBC {
                 }
                 s.executeUpdate("INSERT INTO EtappeLoper( LoperId, EtappeId, Tijd) VALUES (" + loperId + "," + etappeId + "," + 0 + " );");
             }
+            connection.commit();
+            s.close();
+
+        } catch(SQLException e)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean schrijfMedewerkerIn(Wedstrijd wedstrijd, WedstrijdMedewerker medewerker) {
+        int wedstrijdId = wedstrijd.getWedstrijdId();
+        try
+        {
+            var s = connection.createStatement();
+            ResultSet rs_MedewerkerId = s.executeQuery("select Naam from Medewerker where MedewerkerId = " + medewerker.getMedewerkerId()+ ";");
+            if (!rs_MedewerkerId.next()){
+                throw new SQLException("medewerker bestaat niet");
+            }
+            ResultSet rs_bestaatAl = s.executeQuery("select Positie from WedstrijdMedewerker where MedewerkerId = " + medewerker.getMedewerkerId() + " AND WedstrijdId = " + wedstrijdId + ";");
+            if (rs_bestaatAl.next()){
+                throw new SQLException("medewerker al ingeschreven");
+            }
+            s.executeUpdate("INSERT INTO WedstrijdMedewerker( WedstrijdId, MedewerkerId, BeginUur, EindUur, Positie) VALUES (" + wedstrijdId + "," + medewerker.getMedewerkerId() + "," + medewerker.getBeginUur() + "," + medewerker.getEindUur() + ",'" + medewerker.getPositie() + "');");
             connection.commit();
             s.close();
 
