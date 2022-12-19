@@ -1,7 +1,7 @@
 be/kuleuven/vrolijkezweters/properties/Etappe.java
  be.kuleuven.vrolijkezweters.properties.Etappe
-be/kuleuven/vrolijkezweters/properties/EtappeLoper.java
- be.kuleuven.vrolijkezweters.properties.EtappeLoper
+be/kuleuven/vrolijkezweters/ProjectMain.java
+ be.kuleuven.vrolijkezweters.ProjectMain
 be/kuleuven/vrolijkezweters/properties/Loper.java
  be.kuleuven.vrolijkezweters.properties.Loper
 be/kuleuven/vrolijkezweters/properties/WedstrijdMedewerker.java
@@ -10,8 +10,8 @@ be/kuleuven/vrolijkezweters/properties/KlassementLoper.java
  be.kuleuven.vrolijkezweters.properties.KlassementLoper
 be/kuleuven/vrolijkezweters/controller/BeheerAttachesController.java
  be.kuleuven.vrolijkezweters.controller.BeheerAttachesController
-be/kuleuven/vrolijkezweters/ProjectMain.java
- be.kuleuven.vrolijkezweters.ProjectMain
+be/kuleuven/vrolijkezweters/properties/EtappeLoper.java
+ be.kuleuven.vrolijkezweters.properties.EtappeLoper
 be/kuleuven/vrolijkezweters/properties/Wedstrijd.java
  be.kuleuven.vrolijkezweters.properties.Wedstrijd
 be/kuleuven/vrolijkezweters/properties/Medewerker.java
