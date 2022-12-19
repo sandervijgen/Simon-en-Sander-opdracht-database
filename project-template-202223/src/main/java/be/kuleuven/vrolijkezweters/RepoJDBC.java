@@ -175,21 +175,28 @@ public class RepoJDBC {
             return wedstrijds;
         }
 
-    public static void schrijfLoperIn(Wedstrijd wedstrijd, int loperId) {
+    public static boolean schrijfLoperIn(Wedstrijd wedstrijd, int loperId) {
         int wedstrijdId = wedstrijd.getWedstrijdId();
         ArrayList<Integer> etappeIds = new ArrayList<Integer>();
         try
         {
             var s = connection.createStatement();
+            ResultSet rs_LoperId = s.executeQuery("select Naam from Loper where LoperId = " + loperId+ ";");
+            if (!rs_LoperId.next()){
+                throw new SQLException("loper bestaat niet");
+            }
             ResultSet rs = s.executeQuery("select EtappeId from Etappe where WedstrijdId = "+wedstrijdId+";");
             while(rs.next()) {
-                System.out.println(rs.getInt("EtappeId"));
                 int etappeId = rs.getInt("EtappeId");
                 etappeIds.add(etappeId);
                 //gaf enkel eerste id terug als we de etappe loper direct terug gaven, wrsch mag zoeken en schrijven in db niet samen
             }
             for(int i = 0; i< etappeIds.size(); i++) {
                 int etappeId = etappeIds.get(i);
+                ResultSet rs_bestaatAl = s.executeQuery("select Tijd from EtappeLoper where LoperId = " + loperId + " AND etappeId = " + etappeId + ";");
+                if (rs_bestaatAl.next()){
+                    throw new SQLException("loper al ingeschreven");
+                }
                 s.executeUpdate("INSERT INTO EtappeLoper( LoperId, EtappeId, Tijd) VALUES (" + loperId + "," + etappeId + "," + 0 + " );");
             }
             connection.commit();
@@ -197,9 +204,9 @@ public class RepoJDBC {
 
         } catch(SQLException e)
         {
-
+            return false;
         }
-
+        return true;
     }
 
     public static boolean bewerkEtappes(int wedstrijdId, ArrayList<Etappe> etappesLijst) {

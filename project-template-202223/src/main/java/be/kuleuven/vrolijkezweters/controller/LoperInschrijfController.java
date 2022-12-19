@@ -4,6 +4,7 @@ import be.kuleuven.vrolijkezweters.RepoJDBC;
 import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -17,8 +18,12 @@ public class LoperInschrijfController {
     private Text textWedstrijd;
     @FXML
     private TextField textLoopNr;
+    @FXML
+    private Text statusBalk_text;
+    @FXML
+    private CheckBox isBetaald_checkbox;
 
-    private boolean isBetaald;
+    private boolean isBetaald = false;
 
     private Wedstrijd wedstrijd;
 
@@ -26,20 +31,34 @@ public class LoperInschrijfController {
         this.wedstrijd = BeheerWedstrijdenController.getSelectedWedstrijd();
         textWedstrijd.setText("wedstrijd in " +wedstrijd.getPlaats()+", op "+wedstrijd.getDatum());
         btnSchrijfIn.setOnAction(e->schrijfin());
-        btnIsBetaald.setOnAction(e-> setIsBetaald());
+        isBetaald_checkbox.setOnAction(e -> setIsBetaald());
+        //btnIsBetaald.setOnAction(e-> setIsBetaald());
 
     }
 
     private void setIsBetaald() {
-        isBetaald = true;
+        isBetaald = !isBetaald;
     }
 
     private void schrijfin() {
-        int loperId = Integer.parseInt(textLoopNr.getText());
-        //todo checken of niet null en of loper bestaat
-        if (isBetaald){
-            RepoJDBC.schrijfLoperIn(wedstrijd, loperId);
+
+        try {
+            int loperId = Integer.parseInt(textLoopNr.getText());
+            if (isBetaald){
+                if (RepoJDBC.schrijfLoperIn(wedstrijd, loperId) == true) {
+                    statusBalk_text.setText("Loper succesvol ingeschreven!");
+                }
+                else{
+                    statusBalk_text.setText("Er bestaat geen loper met dit loopnummer");
+                }
+            }
+            else {
+                statusBalk_text.setText("gelieve eerst te betalen");
+            }
         }
-        //TODO Als niet betaalt eror
+        catch(Exception e){
+            statusBalk_text.setText("gelieve een geldige waarde voor het loop nummer op te geven");
+        }
+        //todo checken of loper bestaat
     }
 }
