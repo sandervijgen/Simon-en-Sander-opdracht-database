@@ -1,5 +1,6 @@
 package be.kuleuven.vrolijkezweters.controller;
 
+import be.kuleuven.vrolijkezweters.LoperJDBC;
 import be.kuleuven.vrolijkezweters.ProjectMain;
 import be.kuleuven.vrolijkezweters.WedstrijdJDBC;
 import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
@@ -179,20 +180,22 @@ public class BeheerWedstrijdenController {
         }
     }
 
-    private void loopWedstrijd(){
+    private void loopWedstrijd() {
         this.selectedWedstrijd = (Wedstrijd) tblConfigs.getSelectionModel().getSelectedItem();
-        try {
-            var stage = new Stage();
-            var root = (AnchorPane) FXMLLoader.load(getClass().getClassLoader().getResource("loopWedstrijd.fxml"));
-            var scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setTitle("lopen");
-            stage.initOwner(ProjectMain.getRootStage());
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.show();
+        if (LoperJDBC.getAantalLopers(selectedWedstrijd.getWedstrijdId()).size() > 0) {
+            try {
+                var stage = new Stage();
+                var root = (AnchorPane) FXMLLoader.load(getClass().getClassLoader().getResource("loopWedstrijd.fxml"));
+                var scene = new Scene(root);
+                stage.setScene(scene);
+                stage.setTitle("lopen");
+                stage.initOwner(ProjectMain.getRootStage());
+                stage.initModality(Modality.WINDOW_MODAL);
+                stage.show();
 
-        } catch (Exception e) {
-            throw new RuntimeException("Kan beheerscherm schrijf loper in niet vinden", e);
+            } catch (Exception e) {
+                throw new RuntimeException("Kan beheerscherm schrijf loper in niet vinden", e);
+            }
         }
     }
 }

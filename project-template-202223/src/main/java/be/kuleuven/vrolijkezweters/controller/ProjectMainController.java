@@ -19,7 +19,7 @@ public class ProjectMainController {
     @FXML
     private Button btnConfigAttaches;
     @FXML
-    private Button btnTijdIngeven;
+    private Button btnAlgemeenKlassement;
     @FXML
     private Button btnMedewerkers;
 
@@ -27,7 +27,7 @@ public class ProjectMainController {
         btnBeheerLopers.setOnAction(e -> showBeheerScherm("lopers"));
         btnWedstrijden.setOnAction(e -> showBeheerScherm("wedstrijden"));
         btnConfigAttaches.setOnAction(e -> showBeheerScherm("attaches"));
-        btnTijdIngeven.setOnAction(e -> showBeheerScherm("tijd"));
+        btnAlgemeenKlassement.setOnAction(e -> showBeheerScherm("algemeenklassement"));
         btnMedewerkers.setOnAction(e -> showBeheerScherm("medewerkers"));
 
     }

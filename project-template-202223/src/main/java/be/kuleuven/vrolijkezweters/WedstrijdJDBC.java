@@ -187,6 +187,17 @@ public class WedstrijdJDBC {
         {
         }
     }
+    public static void getGelopen(int etappeId, int loperId, int tijd) {
+        try
+        {
+            var s = connection.createStatement();
+            s.executeUpdate("UPDATE EtappeLoper SET TIJD = "+tijd+" WHERE EtappeId  = "+etappeId+" AND LoperId = "+loperId+";");
+            connection.commit();
+            s.close();
+        } catch(SQLException e)
+        {
+        }
+    }
 
 
 }

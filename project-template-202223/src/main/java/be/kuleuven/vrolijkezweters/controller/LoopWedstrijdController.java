@@ -1,6 +1,7 @@
 package be.kuleuven.vrolijkezweters.controller;
 
 import be.kuleuven.vrolijkezweters.RepoJDBC;
+import be.kuleuven.vrolijkezweters.WedstrijdJDBC;
 import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -49,7 +50,7 @@ public class LoopWedstrijdController {
                 int etappeId = etappeIds.get(i);
                 int loperId = loperIds.get(teller);
                 int tijd = Integer.parseInt(tijden.get(i).getText());
-                RepoJDBC.tijdIngeven(etappeId, loperId, tijd);
+                WedstrijdJDBC.tijdIngeven(etappeId, loperId, tijd);
             } catch (NumberFormatException e) {
                 statusBalk_text.setText("gelieve bij alle velden een geldig getal in te vullen");
                 gelukt = false;
