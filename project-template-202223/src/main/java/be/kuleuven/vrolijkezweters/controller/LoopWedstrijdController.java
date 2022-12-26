@@ -1,7 +1,6 @@
 package be.kuleuven.vrolijkezweters.controller;
 
-import be.kuleuven.vrolijkezweters.EtappeJDBC;
-import be.kuleuven.vrolijkezweters.LoperJDBC;
+import be.kuleuven.vrolijkezweters.RepoJDBC;
 import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,7 +10,6 @@ import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 
-
 public class LoopWedstrijdController {
 
     @FXML
@@ -19,7 +17,7 @@ public class LoopWedstrijdController {
     @FXML
     private Button btn_volgendeLoper;
     @FXML
-    private Button btn_opslaan;
+    private Text statusBalk_text;
 
     private static Wedstrijd wedstrijd;
     public static Wedstrijd getWedstrijd() {
@@ -28,34 +26,56 @@ public class LoopWedstrijdController {
     int aantalEtappes, aantalLopers;
     ArrayList<Integer> etappeIds, loperIds;
     Text header = new Text();
-    TextField textField = new TextField();
+    ArrayList<TextField> tijden = new ArrayList<TextField>();
     int teller = 0;
 
     public void initialize() {
         this.wedstrijd = BeheerWedstrijdenController.getSelectedWedstrijd();
-        etappeIds  = EtappeJDBC.getAantalEtappes(wedstrijd.getWedstrijdId());
-        loperIds = LoperJDBC.getAantalLopers(wedstrijd.getWedstrijdId());
+        etappeIds  = RepoJDBC.getAantalEtappes(wedstrijd.getWedstrijdId());
+        loperIds = RepoJDBC.getAantalLopers(wedstrijd.getWedstrijdId());
         aantalEtappes = etappeIds.size();
         aantalLopers = loperIds.size();
-        btn_opslaan.setVisible(false);
-        btn_opslaan.setDisable(true);
         btn_volgendeLoper.setOnAction(e -> volgendeLoper());
         laatZien();
     }
 
     private void volgendeLoper(){
-        //als alles is ingevuld wegschrijven naar database
-        teller++;
-        if (teller == aantalLopers+1){
-            btn_volgendeLoper.setDisable(true);
-            btn_volgendeLoper.setVisible(false);
-            btn_opslaan.setDisable(false);
-            btn_opslaan.setVisible(true);
+        boolean gelukt = true;
+        for (int i = 0; i < tijden.size(); i++) {
+            try {
+                if ((Integer.parseInt(tijden.get(i).getText())) < 0 || tijden.get(i).getText() == "") {
+                    throw new NumberFormatException();
+                }
+                int etappeId = etappeIds.get(i);
+                int loperId = loperIds.get(teller);
+                int tijd = Integer.parseInt(tijden.get(i).getText());
+                RepoJDBC.tijdIngeven(etappeId, loperId, tijd);
+            } catch (NumberFormatException e) {
+                statusBalk_text.setText("gelieve bij alle velden een geldig getal in te vullen");
+                gelukt = false;
+            }
         }
-        initialize();
+        if (gelukt == true) {
+            teller++;
+            if (teller != aantalLopers){laatZien();}
+            else{
+                alleLopersIngevuld();
+            }
+        }
     }
 
+    private void alleLopersIngevuld(){
+        btn_volgendeLoper.setDisable(true);
+        btn_volgendeLoper.setVisible(false);
+        header.setVisible(false);
+        for (int i = 0; i < tijden.size(); i++) {
+            tijden.get(i).setVisible(false);
+        }
+        statusBalk_text.setText("alle lopers ingevuld");
+    }
     private void laatZien(){
+        scherm.getChildren().removeAll(tijden);
+        tijden.clear();
         header.setLayoutX(261.0);
         header.setLayoutY(100);
         header.setText("Etappe tijden van loper met loperId: " + loperIds.get(teller));
@@ -64,12 +84,11 @@ public class LoopWedstrijdController {
         }
         for (int i = 1; i < aantalEtappes + 1; i++) {
             TextField textField = new TextField();
+            tijden.add(textField);
             textField.setPromptText("tijd etappe " + i + " in seconden");
             textField.setLayoutX(261.0);
             textField.setLayoutY(120 + (30 * i));
-            if (teller == 0) {
-                scherm.getChildren().add(textField);
-            }
+            scherm.getChildren().add(textField);
         }
     }
 }

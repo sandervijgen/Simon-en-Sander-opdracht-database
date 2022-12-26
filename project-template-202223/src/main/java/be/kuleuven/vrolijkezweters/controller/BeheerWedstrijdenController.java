@@ -71,8 +71,8 @@ public class BeheerWedstrijdenController {
         TableColumn inschrijvingsgeld = new TableColumn("Inschrijvingsgeld");
         TableColumn datum = new TableColumn("Datum");
         TableColumn beginUur = new TableColumn("Begin uur");
-        TableColumn isGelopen = new TableColumn("Reeds gelopen?");
-        tblConfigs.getColumns().addAll(wedstrijdId,plaats,afstand,inschrijvingsgeld,datum,beginUur,isGelopen);
+        TableColumn gelopen = new TableColumn("Reeds gelopen?");
+        tblConfigs.getColumns().addAll(wedstrijdId,plaats,afstand,inschrijvingsgeld,datum,beginUur,gelopen);
 
 
         wedstrijdId.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("wedstrijdId"));
@@ -81,7 +81,7 @@ public class BeheerWedstrijdenController {
         inschrijvingsgeld.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("inschrijvingsGeld"));
         datum.setCellValueFactory(new PropertyValueFactory<Wedstrijd, String>("datum"));
         beginUur.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("beginUur"));
-        //isGelopen.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Boolean>("isGelopen"));
+        gelopen.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Boolean>("gelopen"));
 
         ObservableList<Wedstrijd> wedstrijdsLijst = FXCollections.observableArrayList(WedstrijdJDBC.getWedstrijden());
         tblConfigs.setItems(wedstrijdsLijst);
