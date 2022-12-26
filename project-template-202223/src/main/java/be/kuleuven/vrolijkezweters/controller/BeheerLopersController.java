@@ -1,7 +1,7 @@
 package be.kuleuven.vrolijkezweters.controller;
 
+import be.kuleuven.vrolijkezweters.LoperJDBC;
 import be.kuleuven.vrolijkezweters.ProjectMain;
-import be.kuleuven.vrolijkezweters.RepoJDBC;
 import be.kuleuven.vrolijkezweters.properties.Loper;
 import be.kuleuven.vrolijkezweters.properties.Medewerker;
 import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
@@ -54,7 +54,7 @@ public class BeheerLopersController {
 
     private void deleteCurrentRow() {
         Loper selectedItem = (Loper) tblConfigs.getSelectionModel().getSelectedItem();
-        RepoJDBC.verwijderLoper(selectedItem.getLoperId());
+        LoperJDBC.verwijderLoper(selectedItem.getLoperId());
         initTable();
     }
 
@@ -85,7 +85,7 @@ public class BeheerLopersController {
         punten.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("punten"));
 
 
-        ObservableList<Loper> loperLijst = FXCollections.observableArrayList(RepoJDBC.getLoper());
+        ObservableList<Loper> loperLijst = FXCollections.observableArrayList(LoperJDBC.getLoper());
         tblConfigs.setItems(loperLijst);
     }
 

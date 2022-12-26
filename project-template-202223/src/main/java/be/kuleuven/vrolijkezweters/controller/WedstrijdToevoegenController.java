@@ -1,7 +1,7 @@
 package be.kuleuven.vrolijkezweters.controller;
 
 import be.kuleuven.vrolijkezweters.ProjectMain;
-import be.kuleuven.vrolijkezweters.RepoJDBC;
+import be.kuleuven.vrolijkezweters.WedstrijdJDBC;
 import be.kuleuven.vrolijkezweters.connection.ConnectionManager;
 import be.kuleuven.vrolijkezweters.properties.Etappe;
 import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
@@ -13,10 +13,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-
-import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 
 /*
@@ -86,7 +82,7 @@ public class WedstrijdToevoegenController {
         Wedstrijd wedstrijd;
         try {
             wedstrijd =  maakWedstrijd();
-            RepoJDBC.voegWedstrijdToe(wedstrijd,voegEtappesToe(0));
+            WedstrijdJDBC.voegWedstrijdToe(wedstrijd,voegEtappesToe(0));
             statusBalk_text.setText("Wedstrijd succesvol toegevoegd");
         }
         catch(NumberFormatException n){

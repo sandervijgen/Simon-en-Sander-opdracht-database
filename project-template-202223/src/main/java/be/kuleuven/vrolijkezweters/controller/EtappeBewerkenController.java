@@ -1,6 +1,6 @@
 package be.kuleuven.vrolijkezweters.controller;
 
-import be.kuleuven.vrolijkezweters.RepoJDBC;
+import be.kuleuven.vrolijkezweters.EtappeJDBC;
 import be.kuleuven.vrolijkezweters.properties.Etappe;
 import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
 import javafx.fxml.FXML;
@@ -112,7 +112,7 @@ public class EtappeBewerkenController {
         }
         else {
             for (int i = 0; i < etappes.size(); i++) {
-                RepoJDBC.bewerkEtappes(wedstrijd.getWedstrijdId(), etappes);
+                EtappeJDBC.bewerkEtappes(wedstrijd.getWedstrijdId(), etappes);
                 statusBalk_text.setText("succesvol gewijzigd!");
             }
         }

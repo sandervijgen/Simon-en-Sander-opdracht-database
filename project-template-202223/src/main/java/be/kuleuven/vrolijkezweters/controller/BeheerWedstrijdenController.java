@@ -1,7 +1,7 @@
 package be.kuleuven.vrolijkezweters.controller;
 
 import be.kuleuven.vrolijkezweters.ProjectMain;
-import be.kuleuven.vrolijkezweters.RepoJDBC;
+import be.kuleuven.vrolijkezweters.WedstrijdJDBC;
 import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
@@ -50,9 +50,6 @@ public class BeheerWedstrijdenController {
         btnLoopWedstrijd.setOnAction(e -> {
             verifyOneRowSelected();
             loopWedstrijd();
-            //RepoJDBC.wedstrijdKlassement(1);
-            //var stage = (Stage) btnClose.getScene().getWindow();
-            //stage.close();
         });
         btnRefresh.setOnAction(e->initTable());
         btnSchrijfLoperIn.setOnAction(e -> {
@@ -86,7 +83,7 @@ public class BeheerWedstrijdenController {
         beginUur.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("beginUur"));
         //isGelopen.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Boolean>("isGelopen"));
 
-        ObservableList<Wedstrijd> wedstrijdsLijst = FXCollections.observableArrayList(RepoJDBC.getWedstrijden());
+        ObservableList<Wedstrijd> wedstrijdsLijst = FXCollections.observableArrayList(WedstrijdJDBC.getWedstrijden());
         tblConfigs.setItems(wedstrijdsLijst);
 
     }
@@ -109,7 +106,7 @@ public class BeheerWedstrijdenController {
 
     private void deleteCurrentRow() {
         Wedstrijd selectedItem = (Wedstrijd) tblConfigs.getSelectionModel().getSelectedItem();
-        RepoJDBC.verwijderWedstrijd(selectedItem.getWedstrijdId());
+        WedstrijdJDBC.verwijderWedstrijd(selectedItem.getWedstrijdId());
         initTable();
     }
 
@@ -197,8 +194,5 @@ public class BeheerWedstrijdenController {
         } catch (Exception e) {
             throw new RuntimeException("Kan beheerscherm schrijf loper in niet vinden", e);
         }
-        //RepoJDBC.wedstrijdKlassement(selectedWedstrijd.getWedstrijdId());
-        //oftewel random tijd toekennen aan de etappes van alle lopers
-        //oftewel naar scherm waar je alle tijden kunt ingeven
     }
 }

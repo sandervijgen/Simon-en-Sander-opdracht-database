@@ -13,9 +13,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
+import static be.kuleuven.vrolijkezweters.connection.ConnectionManager.returnConnection;
+
 public class RepoJDBC {
-    private static ConnectionManager connectionManager = new ConnectionManager();
-    private static Connection connection = connectionManager.getConnection();
+    private static Connection connection = returnConnection();
 
     public static boolean voegWedstrijdToe(Wedstrijd wedstrijd, ArrayList<Etappe> etappes) {
     try

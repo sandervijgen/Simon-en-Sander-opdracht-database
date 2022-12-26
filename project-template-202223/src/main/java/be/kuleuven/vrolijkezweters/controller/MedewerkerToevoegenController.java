@@ -1,6 +1,6 @@
 package be.kuleuven.vrolijkezweters.controller;
 
-import be.kuleuven.vrolijkezweters.RepoJDBC;
+import be.kuleuven.vrolijkezweters.MedewerkerJDBC;
 import be.kuleuven.vrolijkezweters.properties.Loper;
 import be.kuleuven.vrolijkezweters.properties.Medewerker;
 import javafx.fxml.FXML;
@@ -49,7 +49,7 @@ public class MedewerkerToevoegenController {
             }
             Medewerker nieuweMedewerker = new Medewerker(medewerkerId, naam, functie, leeftijd, uurloon);
 
-            if (RepoJDBC.voegMedewerkerToe(nieuweMedewerker) == false) {
+            if (MedewerkerJDBC.voegMedewerkerToe(nieuweMedewerker) == false) {
                 statusbalk_text.setText("deze id bestaat al");
             }
             else{

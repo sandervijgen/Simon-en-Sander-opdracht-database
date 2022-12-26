@@ -1,7 +1,7 @@
 package be.kuleuven.vrolijkezweters.controller;
 
 import be.kuleuven.vrolijkezweters.ProjectMain;
-import be.kuleuven.vrolijkezweters.RepoJDBC;
+import be.kuleuven.vrolijkezweters.WedstrijdJDBC;
 import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +12,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.time.temporal.WeekFields;
 
 public class WedstrijdBewerkController {
     @FXML
@@ -87,7 +89,7 @@ public class WedstrijdBewerkController {
                 throw new NullPointerException("veld leeg gelaten");
             }
             Wedstrijd bewerkteWedstrijd = new Wedstrijd(wedstrijdId, plaats, afstand, inschrijvingsGeld, datum, beginUur);
-            RepoJDBC.bewerkWedstrijd(bewerkteWedstrijd);
+            WedstrijdJDBC.bewerkWedstrijd(bewerkteWedstrijd);
             statusBalk_text.setText("Wedstrijd succesvol bewerkt");
 
         }

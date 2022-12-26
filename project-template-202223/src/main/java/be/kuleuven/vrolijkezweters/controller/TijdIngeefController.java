@@ -1,6 +1,5 @@
 package be.kuleuven.vrolijkezweters.controller;
-
-import be.kuleuven.vrolijkezweters.RepoJDBC;
+import be.kuleuven.vrolijkezweters.WedstrijdJDBC;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -25,7 +24,7 @@ public class TijdIngeefController {
         int loperId  = Integer.parseInt(textLoperId.getText());
         int tijd  = Integer.parseInt(textTijd.getText());
 
-        RepoJDBC.tijdIngeven(etappeId,loperId,tijd);
+        WedstrijdJDBC.tijdIngeven(etappeId,loperId,tijd);
     }
 }
 

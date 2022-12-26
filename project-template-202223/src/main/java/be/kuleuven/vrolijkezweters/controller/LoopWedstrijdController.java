@@ -1,6 +1,7 @@
 package be.kuleuven.vrolijkezweters.controller;
 
-import be.kuleuven.vrolijkezweters.RepoJDBC;
+import be.kuleuven.vrolijkezweters.EtappeJDBC;
+import be.kuleuven.vrolijkezweters.LoperJDBC;
 import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -32,8 +33,8 @@ public class LoopWedstrijdController {
 
     public void initialize() {
         this.wedstrijd = BeheerWedstrijdenController.getSelectedWedstrijd();
-        etappeIds  = RepoJDBC.getAantalEtappes(wedstrijd.getWedstrijdId());
-        loperIds = RepoJDBC.getAantalLopers(wedstrijd.getWedstrijdId());
+        etappeIds  = EtappeJDBC.getAantalEtappes(wedstrijd.getWedstrijdId());
+        loperIds = LoperJDBC.getAantalLopers(wedstrijd.getWedstrijdId());
         aantalEtappes = etappeIds.size();
         aantalLopers = loperIds.size();
         btn_opslaan.setVisible(false);

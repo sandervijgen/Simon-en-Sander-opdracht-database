@@ -1,6 +1,6 @@
 package be.kuleuven.vrolijkezweters.controller;
 
-import be.kuleuven.vrolijkezweters.RepoJDBC;
+import be.kuleuven.vrolijkezweters.LoperJDBC;
 import be.kuleuven.vrolijkezweters.properties.Loper;
 import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
 import javafx.collections.FXCollections;
@@ -59,7 +59,7 @@ public class LoperToevoegenController {
             }
             Loper nieuweLoper = new Loper(loperId, naam, leeftijd, geslacht, gewicht, fysiek, club, contactMedewerkerId, punten);
 
-            if (RepoJDBC.voegLoperToe(nieuweLoper) == false) {
+            if (LoperJDBC.voegLoperToe(nieuweLoper) == false) {
                 statusBalk_text.setText("deze id bestaat al");
             }
             else{

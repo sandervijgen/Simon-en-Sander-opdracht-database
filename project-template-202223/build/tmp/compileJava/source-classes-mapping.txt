@@ -1,9 +1,13 @@
 be/kuleuven/vrolijkezweters/properties/EtappeLoper.java
  be.kuleuven.vrolijkezweters.properties.EtappeLoper
-be/kuleuven/vrolijkezweters/ProjectMain.java
- be.kuleuven.vrolijkezweters.ProjectMain
+be/kuleuven/vrolijkezweters/RepoJDBC.java
+ be.kuleuven.vrolijkezweters.RepoJDBC
+be/kuleuven/vrolijkezweters/EtappeJDBC.java
+ be.kuleuven.vrolijkezweters.EtappeJDBC
 be/kuleuven/vrolijkezweters/LoperJDBC.java
  be.kuleuven.vrolijkezweters.LoperJDBC
+be/kuleuven/vrolijkezweters/ProjectMain.java
+ be.kuleuven.vrolijkezweters.ProjectMain
 be/kuleuven/vrolijkezweters/connection/ConnectionManager.java
  be.kuleuven.vrolijkezweters.connection.ConnectionManager
 be/kuleuven/vrolijkezweters/MedewerkerJDBC.java
@@ -30,10 +34,8 @@ be/kuleuven/vrolijkezweters/controller/WedstrijdToevoegenController.java
  be.kuleuven.vrolijkezweters.controller.WedstrijdToevoegenController
 be/kuleuven/vrolijkezweters/controller/MedewerkerToevoegenController.java
  be.kuleuven.vrolijkezweters.controller.MedewerkerToevoegenController
-be/kuleuven/vrolijkezweters/RepoJDBC.java
- be.kuleuven.vrolijkezweters.RepoJDBC
-be/kuleuven/vrolijkezweters/controller/BeheerMedewerkersController.java
- be.kuleuven.vrolijkezweters.controller.BeheerMedewerkersController
+be/kuleuven/vrolijkezweters/controller/LoopWedstrijdController.java
+ be.kuleuven.vrolijkezweters.controller.LoopWedstrijdController
 be/kuleuven/vrolijkezweters/controller/BeheerLopersController.java
  be.kuleuven.vrolijkezweters.controller.BeheerLopersController
 be/kuleuven/vrolijkezweters/controller/TijdIngeefController.java
@@ -50,5 +52,5 @@ be/kuleuven/vrolijkezweters/controller/MedewerkerInschrijvenController.java
  be.kuleuven.vrolijkezweters.controller.MedewerkerInschrijvenController
 be/kuleuven/vrolijkezweters/controller/LoperInschrijfController.java
  be.kuleuven.vrolijkezweters.controller.LoperInschrijfController
-be/kuleuven/vrolijkezweters/controller/LoopWedstrijdController.java
- be.kuleuven.vrolijkezweters.controller.LoopWedstrijdController
+be/kuleuven/vrolijkezweters/controller/BeheerMedewerkersController.java
+ be.kuleuven.vrolijkezweters.controller.BeheerMedewerkersController

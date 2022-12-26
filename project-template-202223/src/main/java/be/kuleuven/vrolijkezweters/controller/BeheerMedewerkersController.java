@@ -1,7 +1,7 @@
 package be.kuleuven.vrolijkezweters.controller;
 
+import be.kuleuven.vrolijkezweters.MedewerkerJDBC;
 import be.kuleuven.vrolijkezweters.ProjectMain;
-import be.kuleuven.vrolijkezweters.RepoJDBC;
 import be.kuleuven.vrolijkezweters.properties.Loper;
 import be.kuleuven.vrolijkezweters.properties.Medewerker;
 import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
@@ -83,7 +83,7 @@ public class BeheerMedewerkersController {
 
     private void deleteCurrentRow() {
         Medewerker selectedItem = (Medewerker) tblConfigs.getSelectionModel().getSelectedItem();
-        RepoJDBC.verwijderMedewerker(selectedItem.getMedewerkerId());
+        MedewerkerJDBC.verwijderMedewerker(selectedItem.getMedewerkerId());
         initTable();
     }
 
@@ -105,7 +105,7 @@ public class BeheerMedewerkersController {
         functie.setCellValueFactory(new PropertyValueFactory<Wedstrijd, String>("functie"));
         uurloon.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("uurloon"));
 
-        ObservableList<Medewerker> medewerkersLijst = FXCollections.observableArrayList(RepoJDBC.getMedewerker());
+        ObservableList<Medewerker> medewerkersLijst = FXCollections.observableArrayList(MedewerkerJDBC.getMedewerker());
         tblConfigs.setItems(medewerkersLijst);
     }
 

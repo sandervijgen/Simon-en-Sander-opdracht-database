@@ -10,12 +10,10 @@ import javafx.stage.Stage;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import static be.kuleuven.vrolijkezweters.connection.ConnectionManager.returnConnection;
+
 
 public class ProjectMain extends Application {
-
-    private static ConnectionManager connectionManager = new ConnectionManager();
-    private static Connection connection = connectionManager.getConnection();
-
     private static Stage rootStage;
 
     public static Stage getRootStage() {
@@ -35,17 +33,6 @@ public class ProjectMain extends Application {
     }
 
     public static void main(String[] args) {
-        try {
-            var s = connection.createStatement();
-            /*s.executeUpdate("CREATE TABLE Wedstrijd (WedstrijdId INT, Plaats VARCHAR(200), Afstand INT, InschrijvingsGeld INT, Datum VARCHAR(200), BeginUur INT);");
-            s.executeUpdate("CREATE TABLE EtappeLoper (EtappeLoperId INT, LoperId INT, EtappeId INT, Tijd INT);");
-            s.executeUpdate("INSERT INTO EtappeLoper (EtappeLoperId, LoperId, EtappeId, Tijd) VALUES (2,2,2,2);");*/
-            connection.commit();
-            s.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
         launch();
     }
 }

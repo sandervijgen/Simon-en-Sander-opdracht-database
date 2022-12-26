@@ -1,6 +1,6 @@
 package be.kuleuven.vrolijkezweters.controller;
 
-import be.kuleuven.vrolijkezweters.RepoJDBC;
+import be.kuleuven.vrolijkezweters.LoperJDBC;
 import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -43,7 +43,7 @@ public class LoperInschrijfController {
         try {
             int loperId = Integer.parseInt(textLoopNr.getText());
             if (isBetaald){
-                if (RepoJDBC.schrijfLoperIn(wedstrijd, loperId) == true) {
+                if (LoperJDBC.schrijfLoperIn(wedstrijd, loperId) == true) {
                     statusBalk_text.setText("Loper succesvol ingeschreven!");
                 }
                 else{

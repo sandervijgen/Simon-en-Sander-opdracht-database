@@ -1,6 +1,6 @@
 package be.kuleuven.vrolijkezweters.controller;
 
-import be.kuleuven.vrolijkezweters.RepoJDBC;
+import be.kuleuven.vrolijkezweters.MedewerkerJDBC;
 import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
 import be.kuleuven.vrolijkezweters.properties.WedstrijdMedewerker;
 import javafx.fxml.FXML;
@@ -47,7 +47,7 @@ public class MedewerkerInschrijvenController {
 
             WedstrijdMedewerker nieuweWedstrijdMedewerker = new WedstrijdMedewerker(1,wedstrijd.getWedstrijdId(),medewerkerId,beginUur,eindUur,positie);
 
-            if (RepoJDBC.schrijfMedewerkerIn(wedstrijd, nieuweWedstrijdMedewerker) == true) {
+            if (MedewerkerJDBC.schrijfMedewerkerIn(wedstrijd, nieuweWedstrijdMedewerker) == true) {
                 statusBalk_text.setText("Medewerker succesvol ingeschreven!");
             }
             else{

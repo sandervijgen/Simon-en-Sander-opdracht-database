@@ -11,9 +11,18 @@ import java.sql.SQLException;
 
 public class ConnectionManager {
     private Connection connection;
+
+    private static ConnectionManager connectionManager;
     public static final String ConnectionString = "jdbc:sqlite:DatabaseLoopwedstrijd.db";
 
-    public Connection getConnection() {
+    public static Connection returnConnection() {
+        if (connectionManager == null){
+            connectionManager = new ConnectionManager();
+        }
+        return connectionManager.getConnection();
+    }
+
+    private Connection getConnection(){
         return connection;
     }
 
@@ -26,7 +35,7 @@ public class ConnectionManager {
         }
     }
 
-    public ConnectionManager() {
+    private ConnectionManager() {
         try {
             // auto-creates if not exists
             connection = DriverManager.getConnection(ConnectionString);
