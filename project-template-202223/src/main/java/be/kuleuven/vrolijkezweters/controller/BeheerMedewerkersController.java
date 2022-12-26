@@ -23,9 +23,17 @@ public class BeheerMedewerkersController {
     @FXML
     private Button btnRefresh;
     @FXML
+    private Button btnModify;
+    @FXML
     private Button btnDelete;
     @FXML
     private TableView tblConfigs;
+
+    private static Medewerker selectedMedewerker;
+
+    public static Medewerker getSelectedWedstrijd() {
+        return selectedMedewerker;
+    }
 
     public void initialize() {
         initTable();
@@ -35,6 +43,10 @@ public class BeheerMedewerkersController {
             verifyOneRowSelected();
             deleteCurrentRow();
         });
+        /*btnModify.setOnAction(e -> {
+            verifyOneRowSelected();
+            modifyCurrentRow();
+        });*/// weet niet zeker of dit moet, indien niet code verwijderen !!!
     }
 
     private void addNewMedewerker() {
@@ -51,6 +63,23 @@ public class BeheerMedewerkersController {
             throw new RuntimeException("Kan beheerscherm loper toevoegen niet vinden", e);
         }
     }
+
+    /*private void modifyCurrentRow() {
+        this.selectedMedewerker = (Medewerker) tblConfigs.getSelectionModel().getSelectedItem();
+        try {
+            var stage = new Stage();
+            var root = (AnchorPane) FXMLLoader.load(getClass().getClassLoader().getResource("veranderMedewerker.fxml"));
+            var scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("medewerker bewerken");
+            stage.initOwner(ProjectMain.getRootStage());
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.show();
+
+        } catch (Exception e) {
+            throw new RuntimeException("Kan beheerscherm wedstrijd bewerken niet vinden", e);
+        }
+    }*/
 
     private void deleteCurrentRow() {
         Medewerker selectedItem = (Medewerker) tblConfigs.getSelectionModel().getSelectedItem();

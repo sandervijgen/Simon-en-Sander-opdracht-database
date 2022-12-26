@@ -24,7 +24,7 @@ public class BeheerWedstrijdenController {
     @FXML
     private Button btnModify;
     @FXML
-    private Button btnClose;
+    private Button btnLoopWedstrijd;
     @FXML
     private Button btnRefresh;
     @FXML
@@ -47,10 +47,12 @@ public class BeheerWedstrijdenController {
             verifyOneRowSelected();
             deleteCurrentRow();
         });
-        btnClose.setOnAction(e -> {
-            RepoJDBC.wedstrijdKlassement(1);
-            var stage = (Stage) btnClose.getScene().getWindow();
-            stage.close();
+        btnLoopWedstrijd.setOnAction(e -> {
+            verifyOneRowSelected();
+            loopWedstrijd();
+            //RepoJDBC.wedstrijdKlassement(1);
+            //var stage = (Stage) btnClose.getScene().getWindow();
+            //stage.close();
         });
         btnRefresh.setOnAction(e->initTable());
         btnSchrijfLoperIn.setOnAction(e -> {
@@ -72,7 +74,8 @@ public class BeheerWedstrijdenController {
         TableColumn inschrijvingsgeld = new TableColumn("Inschrijvingsgeld");
         TableColumn datum = new TableColumn("Datum");
         TableColumn beginUur = new TableColumn("Begin uur");
-        tblConfigs.getColumns().addAll(wedstrijdId,plaats,afstand,inschrijvingsgeld,datum,beginUur);
+        TableColumn isGelopen = new TableColumn("Reeds gelopen?");
+        tblConfigs.getColumns().addAll(wedstrijdId,plaats,afstand,inschrijvingsgeld,datum,beginUur,isGelopen);
 
 
         wedstrijdId.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("wedstrijdId"));
@@ -81,6 +84,7 @@ public class BeheerWedstrijdenController {
         inschrijvingsgeld.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("inschrijvingsGeld"));
         datum.setCellValueFactory(new PropertyValueFactory<Wedstrijd, String>("datum"));
         beginUur.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("beginUur"));
+        //isGelopen.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Boolean>("isGelopen"));
 
         ObservableList<Wedstrijd> wedstrijdsLijst = FXCollections.observableArrayList(RepoJDBC.getWedstrijden());
         tblConfigs.setItems(wedstrijdsLijst);
@@ -140,7 +144,7 @@ public class BeheerWedstrijdenController {
 
     private void verifyOneRowSelected() {
         if(tblConfigs.getSelectionModel().getSelectedCells().size() == 0) {
-            showAlert("Hela!", "Eerst een record selecteren hé.");
+            showAlert("Fout", "Gelieve eerst een record te selecteren");
         }
     }
 
@@ -176,5 +180,25 @@ public class BeheerWedstrijdenController {
         } catch (Exception e) {
             throw new RuntimeException("Kan beheerscherm schrijf loper in niet vinden", e);
         }
+    }
+
+    private void loopWedstrijd(){
+        this.selectedWedstrijd = (Wedstrijd) tblConfigs.getSelectionModel().getSelectedItem();
+        try {
+            var stage = new Stage();
+            var root = (AnchorPane) FXMLLoader.load(getClass().getClassLoader().getResource("loopWedstrijd.fxml"));
+            var scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("lopen");
+            stage.initOwner(ProjectMain.getRootStage());
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.show();
+
+        } catch (Exception e) {
+            throw new RuntimeException("Kan beheerscherm schrijf loper in niet vinden", e);
+        }
+        //RepoJDBC.wedstrijdKlassement(selectedWedstrijd.getWedstrijdId());
+        //oftewel random tijd toekennen aan de etappes van alle lopers
+        //oftewel naar scherm waar je alle tijden kunt ingeven
     }
 }

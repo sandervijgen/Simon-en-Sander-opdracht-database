@@ -1,23 +1,29 @@
-be/kuleuven/vrolijkezweters/properties/Etappe.java
- be.kuleuven.vrolijkezweters.properties.Etappe
+be/kuleuven/vrolijkezweters/properties/EtappeLoper.java
+ be.kuleuven.vrolijkezweters.properties.EtappeLoper
 be/kuleuven/vrolijkezweters/ProjectMain.java
  be.kuleuven.vrolijkezweters.ProjectMain
-be/kuleuven/vrolijkezweters/properties/Loper.java
- be.kuleuven.vrolijkezweters.properties.Loper
-be/kuleuven/vrolijkezweters/properties/WedstrijdMedewerker.java
- be.kuleuven.vrolijkezweters.properties.WedstrijdMedewerker
+be/kuleuven/vrolijkezweters/LoperJDBC.java
+ be.kuleuven.vrolijkezweters.LoperJDBC
+be/kuleuven/vrolijkezweters/connection/ConnectionManager.java
+ be.kuleuven.vrolijkezweters.connection.ConnectionManager
+be/kuleuven/vrolijkezweters/MedewerkerJDBC.java
+ be.kuleuven.vrolijkezweters.MedewerkerJDBC
 be/kuleuven/vrolijkezweters/properties/KlassementLoper.java
  be.kuleuven.vrolijkezweters.properties.KlassementLoper
 be/kuleuven/vrolijkezweters/controller/BeheerAttachesController.java
  be.kuleuven.vrolijkezweters.controller.BeheerAttachesController
-be/kuleuven/vrolijkezweters/properties/EtappeLoper.java
- be.kuleuven.vrolijkezweters.properties.EtappeLoper
 be/kuleuven/vrolijkezweters/properties/Wedstrijd.java
  be.kuleuven.vrolijkezweters.properties.Wedstrijd
+be/kuleuven/vrolijkezweters/properties/WedstrijdMedewerker.java
+ be.kuleuven.vrolijkezweters.properties.WedstrijdMedewerker
 be/kuleuven/vrolijkezweters/properties/Medewerker.java
  be.kuleuven.vrolijkezweters.properties.Medewerker
-be/kuleuven/vrolijkezweters/connection/ConnectionManager.java
- be.kuleuven.vrolijkezweters.connection.ConnectionManager
+be/kuleuven/vrolijkezweters/WedstrijdJDBC.java
+ be.kuleuven.vrolijkezweters.WedstrijdJDBC
+be/kuleuven/vrolijkezweters/properties/Etappe.java
+ be.kuleuven.vrolijkezweters.properties.Etappe
+be/kuleuven/vrolijkezweters/properties/Loper.java
+ be.kuleuven.vrolijkezweters.properties.Loper
 be/kuleuven/vrolijkezweters/controller/ProjectMainController.java
  be.kuleuven.vrolijkezweters.controller.ProjectMainController
 be/kuleuven/vrolijkezweters/controller/WedstrijdToevoegenController.java
@@ -26,6 +32,8 @@ be/kuleuven/vrolijkezweters/controller/MedewerkerToevoegenController.java
  be.kuleuven.vrolijkezweters.controller.MedewerkerToevoegenController
 be/kuleuven/vrolijkezweters/RepoJDBC.java
  be.kuleuven.vrolijkezweters.RepoJDBC
+be/kuleuven/vrolijkezweters/controller/BeheerMedewerkersController.java
+ be.kuleuven.vrolijkezweters.controller.BeheerMedewerkersController
 be/kuleuven/vrolijkezweters/controller/BeheerLopersController.java
  be.kuleuven.vrolijkezweters.controller.BeheerLopersController
 be/kuleuven/vrolijkezweters/controller/TijdIngeefController.java
@@ -42,5 +50,5 @@ be/kuleuven/vrolijkezweters/controller/MedewerkerInschrijvenController.java
  be.kuleuven.vrolijkezweters.controller.MedewerkerInschrijvenController
 be/kuleuven/vrolijkezweters/controller/LoperInschrijfController.java
  be.kuleuven.vrolijkezweters.controller.LoperInschrijfController
-be/kuleuven/vrolijkezweters/controller/BeheerMedewerkersController.java
- be.kuleuven.vrolijkezweters.controller.BeheerMedewerkersController
+be/kuleuven/vrolijkezweters/controller/LoopWedstrijdController.java
+ be.kuleuven.vrolijkezweters.controller.LoopWedstrijdController

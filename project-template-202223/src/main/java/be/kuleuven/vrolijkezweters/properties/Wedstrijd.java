@@ -3,6 +3,15 @@ package be.kuleuven.vrolijkezweters.properties;
 public class Wedstrijd {
     private int wedstrijdId, afstand, inschrijvingsGeld, beginUur;
     private String plaats, datum;
+    private boolean isGelopen;
+
+    public boolean isGelopen() {
+        return isGelopen;
+    }
+
+    public void setGelopen(boolean gelopen) {
+        isGelopen = gelopen;
+    }
 
     public Wedstrijd(int wedstrijdId, String plaats, int afstand, int inschrijvingsGeld, String datum, int beginUur) {
         this.wedstrijdId = wedstrijdId;
@@ -11,6 +20,7 @@ public class Wedstrijd {
         this.inschrijvingsGeld = inschrijvingsGeld;
         this.datum = datum;
         this.beginUur = beginUur;
+        this.isGelopen = false;
     }
 
     public int getWedstrijdId() {

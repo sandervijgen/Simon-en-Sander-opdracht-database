@@ -22,7 +22,7 @@
       </Text>
       <Button fx:id="btnAdd" layoutX="217.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="76.0" text="Voeg Toe" />
       <Button fx:id="btnModify" layoutX="31.0" layoutY="304.0" mnemonicParsing="false" text="Bewerk" />
-      <Button fx:id="btnClose" layoutX="371.0" layoutY="14.0" mnemonicParsing="false" text="Sluiten" />
+      <Button fx:id="btnLoopWedstrijd" layoutX="371.0" layoutY="14.0" mnemonicParsing="false" text="loop wedstrijd" />
       <Button fx:id="btnDelete" layoutX="491.0" layoutY="304.0" mnemonicParsing="false" text="Verwijder" />
        <Button fx:id="btnRefresh" layoutX="304.0" layoutY="14.0" mnemonicParsing="false" text="Refresh" />
       <Button fx:id="btnSchrijfLoperIn" layoutX="191.0" layoutY="304.0" mnemonicParsing="false" text="Schrijf loper In" />

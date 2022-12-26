@@ -340,6 +340,42 @@ public class RepoJDBC {
         {
         }
     }
+    public static ArrayList getAantalEtappes(int wedstrijdId) {
+        ArrayList<Integer> etappeIds = new ArrayList<>();
+        try
+        {
+            var s = connection.createStatement();
+            ResultSet rs = s.executeQuery("SELECT EtappeId from Etappe WHERE WedstrijdId = " + wedstrijdId+";");
+            while(rs.next()) {
+                int etappeId = rs.getInt("EtappeId");
+                if(!etappeIds.contains(etappeId)){
+                    etappeIds.add(etappeId);
+                }
+            }
+            s.close();
+        } catch(SQLException e)
+        {
+        }
+        return etappeIds;
+    }
+    public static ArrayList getAantalLopers(int wedstrijdId) {
+        ArrayList<Integer> loperIds = new ArrayList<>();
+        try
+        {
+            var s = connection.createStatement();
+            ResultSet rs = s.executeQuery("SELECT LoperId FROM EtappeLoper inner join Etappe on Etappe.EtappeId = EtappeLoper.EtappeId WHERE WedstrijdId = "+wedstrijdId+";");
+            while(rs.next()) {
+                int loperId = rs.getInt("LoperId");
+                if(!loperIds.contains(loperId)){
+                    loperIds.add(loperId);
+                }
+            }
+            s.close();
+        } catch(SQLException e)
+        {
+        }
+        return loperIds;
+    }
     public static ArrayList wedstrijdKlassement(int wedstrijdId) {
         ArrayList<Integer> nietUitgelopenLopersId = new ArrayList<Integer>();
         ArrayList<Integer> uitgelopenLopersId = new ArrayList<Integer>();
