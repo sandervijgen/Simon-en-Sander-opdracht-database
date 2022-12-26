@@ -182,7 +182,7 @@ public class BeheerWedstrijdenController {
 
     private void loopWedstrijd() {
         this.selectedWedstrijd = (Wedstrijd) tblConfigs.getSelectionModel().getSelectedItem();
-        if (LoperJDBC.getAantalLopers(selectedWedstrijd.getWedstrijdId()).size() > 0) {
+        if (LoperJDBC.getAantalLopers(selectedWedstrijd.getWedstrijdId()).size() > 0 && WedstrijdJDBC.getGelopen(selectedWedstrijd.getWedstrijdId())==0) {
             try {
                 var stage = new Stage();
                 var root = (AnchorPane) FXMLLoader.load(getClass().getClassLoader().getResource("loopWedstrijd.fxml"));

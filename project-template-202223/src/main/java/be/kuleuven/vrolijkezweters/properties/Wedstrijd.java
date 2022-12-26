@@ -13,14 +13,14 @@ public class Wedstrijd {
         this.gelopen = gelopen;
     }
 
-    public Wedstrijd(int wedstrijdId, String plaats, int afstand, int inschrijvingsGeld, String datum, int beginUur) {
+    public Wedstrijd(int wedstrijdId, String plaats, int afstand, int inschrijvingsGeld, String datum, int beginUur, boolean gelopen) {
         this.wedstrijdId = wedstrijdId;
         this.plaats = plaats;
         this.afstand = afstand;
         this.inschrijvingsGeld = inschrijvingsGeld;
         this.datum = datum;
         this.beginUur = beginUur;
-        this.gelopen = false;
+        this.gelopen = gelopen;
     }
 
     public int getWedstrijdId() {

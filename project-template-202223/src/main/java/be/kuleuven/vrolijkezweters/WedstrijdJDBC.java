@@ -19,7 +19,7 @@ public class WedstrijdJDBC {
         try
         {
             var s = connection.createStatement();
-            int rs = s.executeUpdate("INSERT INTO Wedstrijd(Plaats, Afstand, InschrijvingsGeld, Datum, BeginUur) VALUES ('" + wedstrijd.getPlaats() + "'," + wedstrijd.getAfstand() + "," + wedstrijd.getInschrijvingsGeld() + ",'" + wedstrijd.getDatum() + "'," + wedstrijd.getBeginUur() + ");");
+            int rs = s.executeUpdate("INSERT INTO Wedstrijd(Plaats, Afstand, InschrijvingsGeld, Datum, BeginUur, Gelopen) VALUES ('" + wedstrijd.getPlaats() + "'," + wedstrijd.getAfstand() + "," + wedstrijd.getInschrijvingsGeld() + ",'" + wedstrijd.getDatum() + "'," + wedstrijd.getBeginUur() + ", "+wedstrijd.isGelopen()+");");
             int wedstrijdId = s.executeQuery("SELECT WedstrijdId FROM Wedstrijd WHERE Plaats = '"+wedstrijd.getPlaats()+"' AND Afstand = "+wedstrijd.getAfstand()+" AND Datum = '"+wedstrijd.getDatum()+"';").getInt("WedstrijdId");
             for(int i=0; i<etappes.size();i++) {
                 Etappe etappe = etappes.get(i);
@@ -51,9 +51,9 @@ public class WedstrijdJDBC {
                 int inschrijvingsGeld = rs.getInt("inschrijvingsGeld");
                 String datum = rs.getString("datum");
                 int beginUur = rs.getInt("beginUur");
+                boolean gelopen = rs.getBoolean("Gelopen");
 
-
-                Wedstrijd wedstrijd = new Wedstrijd(wedstrijdId, plaats, afstand, inschrijvingsGeld, datum, beginUur);
+                Wedstrijd wedstrijd = new Wedstrijd(wedstrijdId, plaats, afstand, inschrijvingsGeld, datum, beginUur, gelopen);
                 wedstrijds.add(wedstrijd);
             }
 
@@ -187,11 +187,25 @@ public class WedstrijdJDBC {
         {
         }
     }
-    public static void getGelopen(int etappeId, int loperId, int tijd) {
+    public static int getGelopen(int wedstrijdId) {
+        int isGelopen = 1;
         try
         {
             var s = connection.createStatement();
-            s.executeUpdate("UPDATE EtappeLoper SET TIJD = "+tijd+" WHERE EtappeId  = "+etappeId+" AND LoperId = "+loperId+";");
+            ResultSet rs = s.executeQuery("Select Gelopen FROM Wedstrijd WHERE WedstrijdId = "+wedstrijdId+";");
+            isGelopen =  rs.getInt("Gelopen");
+            connection.commit();
+            s.close();
+        } catch(SQLException e)
+        {
+        }
+        return isGelopen;
+    }
+    public static void loopWedstrijd(int wedstrijdId){
+        try
+        {
+            var s = connection.createStatement();
+            s.executeUpdate("UPDATE Wedstrijd SET Gelopen = 1 WHERE WedstrijdId = "+wedstrijdId+";");
             connection.commit();
             s.close();
         } catch(SQLException e)

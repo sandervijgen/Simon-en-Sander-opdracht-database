@@ -128,9 +128,10 @@ public class RepoJDBC {
                 int inschrijvingsGeld = rs.getInt("inschrijvingsGeld");
                 String datum = rs.getString("datum");
                 int beginUur = rs.getInt("beginUur");
+                boolean gelopen = rs.getBoolean("gelopen");
 
 
-                Wedstrijd wedstrijd = new Wedstrijd(wedstrijdId, plaats, afstand, inschrijvingsGeld, datum, beginUur);
+                Wedstrijd wedstrijd = new Wedstrijd(wedstrijdId, plaats, afstand, inschrijvingsGeld, datum, beginUur, gelopen);
                 wedstrijds.add(wedstrijd);
             }
 

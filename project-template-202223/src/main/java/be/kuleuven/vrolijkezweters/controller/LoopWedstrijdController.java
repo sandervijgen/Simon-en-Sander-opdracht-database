@@ -73,6 +73,8 @@ public class LoopWedstrijdController {
             tijden.get(i).setVisible(false);
         }
         statusBalk_text.setText("alle lopers ingevuld");
+        WedstrijdJDBC.loopWedstrijd(wedstrijd.getWedstrijdId());
+        WedstrijdJDBC.wedstrijdKlassement(wedstrijd.getWedstrijdId());
     }
     private void laatZien(){
         scherm.getChildren().removeAll(tijden);

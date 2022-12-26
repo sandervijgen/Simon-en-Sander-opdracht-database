@@ -84,11 +84,11 @@ public class WedstrijdBewerkController {
             beginUur = Integer.parseInt(begin_uur_text.getText());
             plaats = plaats_text.getText();
             datum = datum_text.getText();
-            this.wedstrijd = new Wedstrijd(wedstrijdId, plaats, afstand, inschrijvingsGeld, datum, beginUur);
+            this.wedstrijd = new Wedstrijd(wedstrijdId, plaats, afstand, inschrijvingsGeld, datum, beginUur, false);
             if (plaats == "" || datum == ""){
                 throw new NullPointerException("veld leeg gelaten");
             }
-            Wedstrijd bewerkteWedstrijd = new Wedstrijd(wedstrijdId, plaats, afstand, inschrijvingsGeld, datum, beginUur);
+            Wedstrijd bewerkteWedstrijd = new Wedstrijd(wedstrijdId, plaats, afstand, inschrijvingsGeld, datum, beginUur, false);
             WedstrijdJDBC.bewerkWedstrijd(bewerkteWedstrijd);
             statusBalk_text.setText("Wedstrijd succesvol bewerkt");
 

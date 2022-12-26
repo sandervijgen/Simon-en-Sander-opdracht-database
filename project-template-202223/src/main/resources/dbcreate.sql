@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS "Wedstrijd" (
 	"InschrijvingsGeld"	INTEGER NOT NULL,
 	"Datum"	TEXT NOT NULL,
 	"BeginUur"	INTEGER NOT NULL,
+	"Gelopen"   INTEGER NOT NULL,
 	PRIMARY KEY("WedstrijdId" AUTOINCREMENT)
 );
 CREATE TABLE IF NOT EXISTS "WedstrijdMedewerker" (
@@ -16,7 +17,7 @@ CREATE TABLE IF NOT EXISTS "WedstrijdMedewerker" (
 	"Positie"	TEXT NOT NULL,
 	PRIMARY KEY("WedstrijdMedewerkerId" AUTOINCREMENT),
 	FOREIGN KEY("MedewerkerId") REFERENCES "Medewerker"("MedewerkerId"),
-	FOREIGN KEY("WedstrijdId") REFERENCES "Wedstijd"("WedstrijdId")
+	FOREIGN KEY("WedstrijdId") REFERENCES "Wedstrijd"("WedstrijdId")
 );
 CREATE TABLE IF NOT EXISTS "Medewerker" (
 	"MedewerkerId"	INTEGER NOT NULL UNIQUE,
@@ -32,7 +33,7 @@ CREATE TABLE IF NOT EXISTS "Etappe" (
 	"Afstand"	INTEGER NOT NULL,
 	"BeginKm" INTEGER NOT NULL,
 	PRIMARY KEY("EtappeId" AUTOINCREMENT),
-	FOREIGN KEY("WedstrijdId") REFERENCES "Wedstijd"("WedstrijdId")
+	FOREIGN KEY("WedstrijdId") REFERENCES "Wedstrijd"("WedstrijdId")
 );
 CREATE TABLE IF NOT EXISTS "Loper" (
 	"LoperId"	INTEGER NOT NULL UNIQUE,

@@ -169,7 +169,7 @@ public class WedstrijdToevoegenController {
         if (plaats == "" || datum == "" || afstand <= 0 || inschrijvingsGeld < 0 || beginUur <= 0 || beginUur > 24 || etappes <= 0 ) {
             throw new NullPointerException("veld leeg gelaten");
         }
-        return new Wedstrijd(1, plaats, afstand, inschrijvingsGeld, datum, beginUur);
+        return new Wedstrijd(1, plaats, afstand, inschrijvingsGeld, datum, beginUur, false);
 
     }
 }
