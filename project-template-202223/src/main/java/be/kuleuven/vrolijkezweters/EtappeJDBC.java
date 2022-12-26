@@ -4,6 +4,7 @@ import be.kuleuven.vrolijkezweters.connection.ConnectionManager;
 import be.kuleuven.vrolijkezweters.properties.Etappe;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,14 +16,17 @@ public class EtappeJDBC {
     public static boolean bewerkEtappes(int wedstrijdId, ArrayList<Etappe> etappesLijst) {
         try
         {
-            var s = connection.createStatement();
-            s.executeUpdate("DELETE FROM Etappe WHERE WedstrijdId = "+wedstrijdId+";");
+            //var s = connection.createStatement();
+            String sql = "DELETE FROM Etappe WHERE WedstrijdId = ?";
+            PreparedStatement p = connection.prepareStatement(sql);
+            p.setInt(1, wedstrijdId);
+            p.executeQuery();
             for(int i = 0; i < etappesLijst.size(); i++){
                 Etappe etappe = etappesLijst.get(i);
-                s.executeUpdate("INSERT INTO Etappe( WedstrijdId, Afstand, BeginKm) VALUES (" + etappe.getWedstrijdId() + "," + etappe.getAfstand() + "," + etappe.getBeginKm() + ");");
+                //s.executeUpdate("INSERT INTO Etappe( WedstrijdId, Afstand, BeginKm) VALUES (" + etappe.getWedstrijdId() + "," + etappe.getAfstand() + "," + etappe.getBeginKm() + ");");
             }
             connection.commit();
-            s.close();
+            //s.close();
         } catch(SQLException e)
         {
             return false;

@@ -5,6 +5,7 @@ import be.kuleuven.vrolijkezweters.properties.Loper;
 import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,10 +18,21 @@ public class LoperJDBC {
     public static boolean voegLoperToe(Loper loper) {
         try
         {
-            var s = connection.createStatement();
-            s.executeUpdate("INSERT INTO Loper( Naam, Leeftijd, Geslacht, Gewicht, Fysiek, Club, ContactMedewerkerId, Punten) VALUES ('" + loper.getNaam() + "'," + loper.getLeeftijd() + ",'" + loper.getGeslacht() + "'," + loper.getGewicht() + ",'" + loper.getFysiek() + "','" + loper.getClub() + "'," + loper.getContactMedewerkerId() + "," + loper.getPunten() + ");");
+            //var s = connection.createStatement();
+            String sql = "INSERT INTO Loper( Naam, Leeftijd, Geslacht, Gewicht, Fysiek, Club, ContactMedewerkerId, Punten) VALUES (?,?,?,?,?,?,?,?)";
+            PreparedStatement p = connection.prepareStatement(sql);
+            p.setString(1,loper.getNaam());
+            p.setInt(2,loper.getLeeftijd());
+            p.setString(3,loper.getGeslacht());
+            p.setInt(4,loper.getGewicht());
+            p.setString(5,loper.getFysiek());
+            p.setString(6,loper.getClub());
+            p.setInt(7,loper.getContactMedewerkerId());
+            p.setInt(8,loper.getPunten());
+            p.executeUpdate();
+            //s.executeUpdate("INSERT INTO Loper( Naam, Leeftijd, Geslacht, Gewicht, Fysiek, Club, ContactMedewerkerId, Punten) VALUES ('" + loper.getNaam() + "'," + loper.getLeeftijd() + ",'" + loper.getGeslacht() + "'," + loper.getGewicht() + ",'" + loper.getFysiek() + "','" + loper.getClub() + "'," + loper.getContactMedewerkerId() + "," + loper.getPunten() + ");");
             connection.commit();
-            s.close();
+            p.close();
         } catch(SQLException e)
         {
             return false;
@@ -57,15 +69,18 @@ public class LoperJDBC {
         ArrayList<Integer> loperIds = new ArrayList<>();
         try
         {
-            var s = connection.createStatement();
-            ResultSet rs = s.executeQuery("SELECT LoperId FROM EtappeLoper inner join Etappe on Etappe.EtappeId = EtappeLoper.EtappeId WHERE WedstrijdId = "+wedstrijdId+";");
+            //var s = connection.createStatement();
+            String sql = "SELECT LoperId FROM EtappeLoper inner join Etappe on Etappe.EtappeId = EtappeLoper.EtappeId WHERE WedstrijdId = ?";
+            PreparedStatement p = connection.prepareStatement(sql);
+            p.setInt(1, wedstrijdId);
+            ResultSet rs = p.executeQuery();
             while(rs.next()) {
                 int loperId = rs.getInt("LoperId");
                 if(!loperIds.contains(loperId)){
                     loperIds.add(loperId);
                 }
             }
-            s.close();
+            p.close();
         } catch(SQLException e)
         {
         }
@@ -76,12 +91,17 @@ public class LoperJDBC {
         ArrayList<Integer> etappeIds = new ArrayList<Integer>();
         try
         {
-            var s = connection.createStatement();
-            ResultSet rs_LoperId = s.executeQuery("select Naam from Loper where LoperId = " + loperId+ ";");
+            String sql = "select Naam from Loper where LoperId = ?";
+            PreparedStatement p = connection.prepareStatement(sql);
+            p.setInt(1, loperId);
+            ResultSet rs_LoperId = p.executeQuery();
             if (!rs_LoperId.next()){
                 throw new SQLException("loper bestaat niet");
             }
-            ResultSet rs = s.executeQuery("select EtappeId from Etappe where WedstrijdId = "+wedstrijdId+";");
+            sql = "select EtappeId from Etappe where WedstrijdId = ?";
+            p = connection.prepareStatement(sql);
+            p.setInt(1, wedstrijdId);
+            ResultSet rs = p.executeQuery();
             while(rs.next()) {
                 int etappeId = rs.getInt("EtappeId");
                 etappeIds.add(etappeId);
@@ -89,14 +109,23 @@ public class LoperJDBC {
             }
             for(int i = 0; i< etappeIds.size(); i++) {
                 int etappeId = etappeIds.get(i);
-                ResultSet rs_bestaatAl = s.executeQuery("select Tijd from EtappeLoper where LoperId = " + loperId + " AND etappeId = " + etappeId + ";");
+                sql = "select Tijd from EtappeLoper where LoperId = ? AND etappeId = ?";
+                p = connection.prepareStatement(sql);
+                p.setInt(1, loperId);
+                p.setInt(2, etappeId);
+                ResultSet rs_bestaatAl = p.executeQuery();
                 if (rs_bestaatAl.next()){
                     throw new SQLException("loper al ingeschreven");
                 }
-                s.executeUpdate("INSERT INTO EtappeLoper( LoperId, EtappeId, Tijd) VALUES (" + loperId + "," + etappeId + "," + 0 + " );");
+                sql = "INSERT INTO EtappeLoper( LoperId, EtappeId, Tijd) VALUES (?,?,?)";
+                p = connection.prepareStatement(sql);
+                p.setInt(1, loperId);
+                p.setInt(2, etappeId);
+                p.setInt(3,0);
+                p.executeUpdate();
             }
             connection.commit();
-            s.close();
+            p.close();
 
         } catch(SQLException e)
         {
@@ -108,19 +137,31 @@ public class LoperJDBC {
         ArrayList<Integer> etappeLoperIds = new ArrayList<Integer>();
         try
         {
-            var s = connection.createStatement();
-            s.executeUpdate("Delete From Loper where loperId = "+loperId+";");
-            ResultSet rs = s.executeQuery("Select etappeLoperId From EtappeLoper where LoperId = "+loperId+";");
+            //var s = connection.createStatement();
+            String sql = "Delete From Loper where loperId = ?";
+            PreparedStatement p = connection.prepareStatement(sql);
+            p.setInt(1,loperId);
+            p.executeUpdate();
+            sql = "Select etappeLoperId From EtappeLoper where LoperId = ?";
+            p = connection.prepareStatement(sql);
+            p.setInt(1, loperId);
+            ResultSet rs = p.executeQuery();
             while(rs.next()) {
                 int etappeLoperId = rs.getInt("EtappeLoperId");
                 etappeLoperIds.add(etappeLoperId);
             }
-            for(int i=0; i < etappeLoperIds.size(); i ++ ){
-                s.executeUpdate("Delete From EtappeLoper where EtappeLoperId = "+etappeLoperIds.get(i)+";");
+            for(int i=0; i < etappeLoperIds.size(); i ++ ) {
+                sql = "Delete From EtappeLoper where EtappeLoperId = ?";
+                p = connection.prepareStatement(sql);
+                p.setInt(1, etappeLoperIds.get(i));
+                p.executeUpdate();
+                sql = "Delete From EtappeLoper where LoperId = ?";
+                p = connection.prepareStatement(sql);
+                p.setInt(1, loperId);
+                p.executeUpdate();
+                connection.commit();
+                p.close();
             }
-            s.executeUpdate("Delete From EtappeLoper where LoperId = "+loperId+";");
-            connection.commit();
-            s.close();
         } catch(SQLException e)
         {
             return false;
