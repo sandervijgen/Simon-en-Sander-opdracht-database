@@ -152,7 +152,13 @@ public class BeheerWedstrijdenController {
         this.selectedWedstrijd = (Wedstrijd) tblConfigs.getSelectionModel().getSelectedItem();
         try {
             var stage = new Stage();
-            var root = (AnchorPane) FXMLLoader.load(getClass().getClassLoader().getResource("schrijfLoperIn.fxml"));
+
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getClassLoader().getResource("schrijfLoperIn.fxml")));
+            AnchorPane root = loader.load();
+
+            LoperInschrijfController controller = loader.getController();
+            controller.initialize(selectedWedstrijd);
+
             var scene = new Scene(root);
             stage.setScene(scene);
             stage.setTitle("inschrijven");
