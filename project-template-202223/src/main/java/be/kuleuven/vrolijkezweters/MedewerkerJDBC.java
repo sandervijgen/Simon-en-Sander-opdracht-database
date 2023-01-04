@@ -6,6 +6,7 @@ import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
 import be.kuleuven.vrolijkezweters.properties.WedstrijdMedewerker;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,10 +18,16 @@ public class MedewerkerJDBC {
     public static boolean voegMedewerkerToe(Medewerker medewerker) {
         try
         {
-            var s = connection.createStatement();
-            s.executeUpdate("INSERT INTO Medewerker( Naam, Functie, Leeftijd, Uurloon, GeldTegoed) VALUES ('" + medewerker.getNaam() + "','" + medewerker.getFunctie() + "'," + medewerker.getLeeftijd() + "," + medewerker.getUurloon() + "," + medewerker.getGeldTegoed() + " );");
+            String sql = "INSERT INTO Medewerker( Naam, Functie, Leeftijd, Uurloon, GeldTegoed) VALUES (?,?,?,?,?)";
+            PreparedStatement p = connection.prepareStatement(sql);
+            p.setString(1, medewerker.getNaam());
+            p.setString(2, medewerker.getFunctie());
+            p.setInt(3, medewerker.getLeeftijd());
+            p.setInt(4, medewerker.getUurloon());
+            p.setInt(5, medewerker.getGeldTegoed());
+            p.executeUpdate();
             connection.commit();
-            s.close();
+            p.close();
         } catch(SQLException e)
         {
             return false;
@@ -56,18 +63,31 @@ public class MedewerkerJDBC {
         int wedstrijdId = wedstrijd.getWedstrijdId();
         try
         {
-            var s = connection.createStatement();
-            ResultSet rs_MedewerkerId = s.executeQuery("select Naam from Medewerker where MedewerkerId = " + medewerker.getMedewerkerId()+ ";");
+            String sql = "select Naam from Medewerker where MedewerkerId = ?";
+            PreparedStatement p = connection.prepareStatement(sql);
+            p.setInt(1, medewerker.getMedewerkerId());
+            ResultSet rs_MedewerkerId = p.executeQuery();
             if (!rs_MedewerkerId.next()){
                 throw new SQLException("medewerker bestaat niet");
             }
-            ResultSet rs_bestaatAl = s.executeQuery("select Positie from WedstrijdMedewerker where MedewerkerId = " + medewerker.getMedewerkerId() + " AND WedstrijdId = " + wedstrijdId + ";");
+            sql = "select Positie from WedstrijdMedewerker where MedewerkerId = ? AND WedstrijdId = ?";
+            p = connection.prepareStatement(sql);
+            p.setInt(1, medewerker.getMedewerkerId());
+            p.setInt(2, wedstrijdId);
+            ResultSet rs_bestaatAl = p.executeQuery();
             if (rs_bestaatAl.next()){
                 throw new SQLException("medewerker al ingeschreven");
             }
-            s.executeUpdate("INSERT INTO WedstrijdMedewerker( WedstrijdId, MedewerkerId, BeginUur, EindUur, Positie) VALUES (" + wedstrijdId + "," + medewerker.getMedewerkerId() + "," + medewerker.getBeginUur() + "," + medewerker.getEindUur() + ",'" + medewerker.getPositie() + "');");
+            sql = "INSERT INTO WedstrijdMedewerker( WedstrijdId, MedewerkerId, BeginUur, EindUur, Positie) VALUES (?,?,?,?,?)";
+            p = connection.prepareStatement(sql);
+            p.setInt(1, wedstrijdId);
+            p.setInt(2, medewerker.getMedewerkerId());
+            p.setInt(3, medewerker.getBeginUur());
+            p.setInt(4, medewerker.getEindUur());
+            p.setString(5, medewerker.getPositie());
+            p.executeUpdate();
             connection.commit();
-            s.close();
+            p.close();
 
         } catch(SQLException e)
         {
@@ -80,19 +100,30 @@ public class MedewerkerJDBC {
         ArrayList<Integer> wedstrijdMedewerkersIds = new ArrayList<Integer>();
         try
         {
-            var s = connection.createStatement();
-            s.executeUpdate("Delete From Medewerker where medewerkerId = "+medewerkerId+";");
-            ResultSet rs = s.executeQuery("Select WedstrijdMedewerkerId From WedstrijdMedewerker where medewerkerId = "+medewerkerId+";");
+            String sql = "Delete From Medewerker where medewerkerId = ?";
+            PreparedStatement p = connection.prepareStatement(sql);
+            p.setInt(1, medewerkerId);
+            p.executeUpdate();
+            sql = "Select WedstrijdMedewerkerId From WedstrijdMedewerker where medewerkerId = ?";
+            p = connection.prepareStatement(sql);
+            p.setInt(1, medewerkerId);
+            ResultSet rs = p.executeQuery();
             while(rs.next()) {
                 int wedstrijdMedewerkerId = rs.getInt("WedstrijdMedewerkerId");
                 wedstrijdMedewerkersIds.add(wedstrijdMedewerkerId);
             }
             for(int i=0; i < wedstrijdMedewerkersIds.size(); i ++ ){
-                s.executeUpdate("Delete From WedstrijdMedewerker where WedstrijdMedewerkerId = "+wedstrijdMedewerkersIds.get(i)+";");
+                sql = "Delete From WedstrijdMedewerker where WedstrijdMedewerkerId = ?";
+                p = connection.prepareStatement(sql);
+                p.setInt(1, wedstrijdMedewerkersIds.get(i));
+                p.executeUpdate();
             }
-            s.executeUpdate("Delete From WedstrijdMedewerker where MedewerkerId = "+medewerkerId+";");
+            sql = "Delete From WedstrijdMedewerker where MedewerkerId = ?";
+            p = connection.prepareStatement(sql);
+            p.setInt(1, medewerkerId);
+            p.executeUpdate();
             connection.commit();
-            s.close();
+            p.close();
         } catch(SQLException e)
         {
             return false;
@@ -102,8 +133,10 @@ public class MedewerkerJDBC {
     public static void berekenVergoeding(int wedstrijdId) {
         try
         {
-            var s = connection.createStatement();
-            ResultSet rs = s.executeQuery("Select MedewerkerId, BeginUur, EindUur From WedstrijdMedewerker where WedstrijdId = "+wedstrijdId+";");
+            String sql = "Select MedewerkerId, BeginUur, EindUur From WedstrijdMedewerker where WedstrijdId = ?";
+            PreparedStatement p = connection.prepareStatement(sql);
+            p.setInt(1, wedstrijdId);
+            ResultSet rs = p.executeQuery();
             ArrayList<WedstrijdMedewerker> wedstrijdMedewerkers = new ArrayList<WedstrijdMedewerker>();
             while(rs.next()) {
                 int medewerkerId = rs.getInt("medewerkerId");
@@ -113,14 +146,21 @@ public class MedewerkerJDBC {
             }
             for(var i = 0; i < wedstrijdMedewerkers.size(); i++ ) {
                 WedstrijdMedewerker medewerker = wedstrijdMedewerkers.get(i);
-                ResultSet rs2 = s.executeQuery("Select Uurloon, GeldTegoed From Medewerker where MedewerkerId = " + medewerker.getMedewerkerId() + ";");
+                sql = "Select Uurloon, GeldTegoed From Medewerker where MedewerkerId = ?";
+                p = connection.prepareStatement(sql);
+                p.setInt(1, medewerker.getMedewerkerId());
+                ResultSet rs2 = p.executeQuery();
                 int uurloon = rs2.getInt("Uurloon");
                 int geldTegoed = rs2.getInt("GeldTegoed");
                 geldTegoed = geldTegoed + (uurloon * (medewerker.getEindUur()- medewerker.getBeginUur()));
-                s.executeUpdate("Update Medewerker SET GeldTegoed = " + geldTegoed + " where MedewerkerId = " + medewerker.getMedewerkerId() + ";");
+                sql = "Update Medewerker SET GeldTegoed = ? where MedewerkerId = ?";
+                p = connection.prepareStatement(sql);
+                p.setInt(1, geldTegoed);
+                p.setInt(2,medewerker.getMedewerkerId());
+                p.executeUpdate();
             }
             connection.commit();
-            s.close();
+            p.close();
         } catch(SQLException e)
         {
         }

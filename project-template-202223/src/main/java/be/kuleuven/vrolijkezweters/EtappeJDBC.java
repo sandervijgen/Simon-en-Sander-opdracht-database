@@ -23,10 +23,16 @@ public class EtappeJDBC {
             p.executeQuery();
             for(int i = 0; i < etappesLijst.size(); i++){
                 Etappe etappe = etappesLijst.get(i);
+                sql = "INSERT INTO Etappe( WedstrijdId, Afstand, BeginKm) VALUES (?,?,?)";
+                p = connection.prepareStatement(sql);
+                p.setInt(1, etappe.getWedstrijdId());
+                p.setInt(1, etappe.getAfstand());
+                p.setInt(1, etappe.getBeginKm());
+                p.executeUpdate();
                 //s.executeUpdate("INSERT INTO Etappe( WedstrijdId, Afstand, BeginKm) VALUES (" + etappe.getWedstrijdId() + "," + etappe.getAfstand() + "," + etappe.getBeginKm() + ");");
             }
             connection.commit();
-            //s.close();
+            p.close();
         } catch(SQLException e)
         {
             return false;
@@ -37,15 +43,18 @@ public class EtappeJDBC {
         ArrayList<Integer> etappeIds = new ArrayList<>();
         try
         {
-            var s = connection.createStatement();
-            ResultSet rs = s.executeQuery("SELECT EtappeId from Etappe WHERE WedstrijdId = " + wedstrijdId+";");
+            //var s = connection.createStatement();
+            String sql = "SELECT EtappeId from Etappe WHERE WedstrijdId = ?";
+            PreparedStatement p = connection.prepareStatement(sql);
+            p.setInt(1, wedstrijdId);
+            ResultSet rs = p.executeQuery();
             while(rs.next()) {
                 int etappeId = rs.getInt("EtappeId");
                 if(!etappeIds.contains(etappeId)){
                     etappeIds.add(etappeId);
                 }
             }
-            s.close();
+            p.close();
         } catch(SQLException e)
         {
         }
