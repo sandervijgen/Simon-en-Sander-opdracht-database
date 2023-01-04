@@ -15,6 +15,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class BeheerWedstrijdenController {
 
     @FXML
@@ -34,7 +36,7 @@ public class BeheerWedstrijdenController {
     @FXML
     private TableView tblConfigs;
 
-    private static Wedstrijd selectedWedstrijd;
+    private Wedstrijd selectedWedstrijd;
 
     public void initialize() {
         initTable();
@@ -114,7 +116,12 @@ public class BeheerWedstrijdenController {
         this.selectedWedstrijd = (Wedstrijd) tblConfigs.getSelectionModel().getSelectedItem();
         try {
             var stage = new Stage();
-            var root = (AnchorPane) FXMLLoader.load(getClass().getClassLoader().getResource("veranderWedstrijd.fxml"));
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getClassLoader().getResource("veranderWedstrijd.fxml")));
+            AnchorPane root = loader.load();
+
+            WedstrijdBewerkController controller = loader.getController();
+            controller.initialize(selectedWedstrijd);
+
             var scene = new Scene(root);
             stage.setScene(scene);
             stage.setTitle("wedstrijd bewerken");
@@ -125,10 +132,6 @@ public class BeheerWedstrijdenController {
         } catch (Exception e) {
             throw new RuntimeException("Kan beheerscherm wedstrijd bewerken niet vinden", e);
         }
-    }
-
-    public static Wedstrijd getSelectedWedstrijd() {
-        return selectedWedstrijd;
     }
 
     public void showAlert(String title, String content) {
@@ -166,7 +169,12 @@ public class BeheerWedstrijdenController {
         this.selectedWedstrijd = (Wedstrijd) tblConfigs.getSelectionModel().getSelectedItem();
         try {
             var stage = new Stage();
-            var root = (AnchorPane) FXMLLoader.load(getClass().getClassLoader().getResource("schrijfMedewerkerIn.fxml"));
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getClassLoader().getResource("schrijfMedewerkerIn.fxml")));
+            AnchorPane root = loader.load();
+
+            MedewerkerInschrijvenController controller = loader.getController();
+            controller.initialize(selectedWedstrijd);
+
             var scene = new Scene(root);
             stage.setScene(scene);
             stage.setTitle("inschrijven");
@@ -184,7 +192,12 @@ public class BeheerWedstrijdenController {
         if (LoperJDBC.getAantalLopers(selectedWedstrijd.getWedstrijdId()).size() > 0 && WedstrijdJDBC.getGelopen(selectedWedstrijd.getWedstrijdId())==0) {
             try {
                 var stage = new Stage();
-                var root = (AnchorPane) FXMLLoader.load(getClass().getClassLoader().getResource("loopWedstrijd.fxml"));
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getClassLoader().getResource("loopWedstrijd.fxml")));
+                AnchorPane root = loader.load();
+
+                LoopWedstrijdController controller = loader.getController();
+                controller.initialize(selectedWedstrijd);
+
                 var scene = new Scene(root);
                 stage.setScene(scene);
                 stage.setTitle("lopen");

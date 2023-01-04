@@ -33,8 +33,8 @@ public class LoopWedstrijdController {
     ArrayList<TextField> tijden = new ArrayList<TextField>();
     int teller = 0;
 
-    public void initialize() {
-        this.wedstrijd = BeheerWedstrijdenController.getSelectedWedstrijd();
+    public void initialize(Wedstrijd wedstrijd) {
+        this.wedstrijd = wedstrijd;
         etappeIds  = EtappeJDBC.getAantalEtappes(wedstrijd.getWedstrijdId());
         loperIds = LoperJDBC.getAantalLopers(wedstrijd.getWedstrijdId());
         aantalEtappes = etappeIds.size();

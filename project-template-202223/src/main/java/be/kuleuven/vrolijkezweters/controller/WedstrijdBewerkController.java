@@ -38,8 +38,8 @@ public class WedstrijdBewerkController {
         return wedstrijd;
     }
 
-    public void initialize() {
-        this.wedstrijd = BeheerWedstrijdenController.getSelectedWedstrijd();
+    public void initialize(Wedstrijd wedstrijd) {
+        this.wedstrijd = wedstrijd;
         wedstrijd_id_text.setText(String.valueOf(wedstrijd.getWedstrijdId()));
         plaats_text.setText(String.valueOf(wedstrijd.getPlaats()));
         afstand_text.setText(String.valueOf(wedstrijd.getAfstand()));
@@ -95,4 +95,5 @@ public class WedstrijdBewerkController {
         }
 
     }
+
 }

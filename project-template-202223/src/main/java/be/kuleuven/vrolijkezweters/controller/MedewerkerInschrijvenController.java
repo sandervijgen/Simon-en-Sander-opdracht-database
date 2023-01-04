@@ -27,8 +27,8 @@ public class MedewerkerInschrijvenController {
 
     private Wedstrijd wedstrijd;
 
-    public void initialize() {
-        this.wedstrijd = BeheerWedstrijdenController.getSelectedWedstrijd();
+    public void initialize(Wedstrijd wedstrijd) {
+        this.wedstrijd = wedstrijd;
         textWedstrijd.setText("wedstrijd in " +wedstrijd.getPlaats()+", op "+wedstrijd.getDatum());
         btnSchrijfIn.setOnAction(e->schrijfin());
     }
