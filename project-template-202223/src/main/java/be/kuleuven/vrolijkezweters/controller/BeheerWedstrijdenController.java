@@ -147,7 +147,7 @@ public class BeheerWedstrijdenController {
             showAlert("Fout", "Gelieve eerst een record te selecteren");
         }
     }
-    
+
     private void schrijfLoperIn() {
         this.selectedWedstrijd = (Wedstrijd) tblConfigs.getSelectionModel().getSelectedItem();
         try {
