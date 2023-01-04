@@ -3,6 +3,7 @@ package be.kuleuven.vrolijkezweters;
 import be.kuleuven.vrolijkezweters.connection.ConnectionManager;
 import be.kuleuven.vrolijkezweters.properties.Etappe;
 import be.kuleuven.vrolijkezweters.properties.KlassementLoper;
+import be.kuleuven.vrolijkezweters.properties.Loper;
 import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
 
 import java.sql.Connection;
@@ -212,6 +213,34 @@ public class WedstrijdJDBC {
         {
         }
     }
+    public static ArrayList<Loper> algemeenKlassement() {
+        ArrayList<Loper> lopers = new ArrayList<Loper>();
+        int i = 1;
+        try
+        {
+            var s = connection.createStatement();
+            ResultSet rs = s.executeQuery("SELECT * FROM Loper Order by punten DESC ");
+            while(rs.next()) {
+                int loperId = rs.getInt("loperId");
+                String naam = rs.getString("naam");
+                int leeftijd = rs.getInt("leeftijd");
+                String geslacht = rs.getString("geslacht");
+                int gewicht = rs.getInt("gewicht");
+                String fysiek = rs.getString("fysiek");
+                String club  = rs.getString("club");
+                int contactMedewerkerId = rs.getInt("contactMedewerkerId");
+                int punten = rs.getInt("punten");
+                Loper loper = new Loper(i, loperId, naam, leeftijd, geslacht, gewicht, fysiek,club,contactMedewerkerId,punten);
+                lopers.add(loper);
+                i++;
+            }
+            connection.commit();
+            s.close();
+        }
+        catch(SQLException e)
+        {
 
-
+        }
+        return lopers;
+    }
 }

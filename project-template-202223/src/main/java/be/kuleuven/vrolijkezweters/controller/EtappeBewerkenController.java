@@ -84,7 +84,6 @@ public class EtappeBewerkenController {
                     Etappe etappe = new Etappe(1, wedstrijd.getWedstrijdId(), afstand, beginKm);
                     etappes.add(etappe);
                     totaal += afstand;
-                    //TODO if beginKM > eindKM catchen
                 } else if (i == afstandWaardes.size()-1) {
                     TextField textFieldAfstand = afstandWaardes.get(i);
                     int afstand = Integer.parseInt(textFieldAfstand.getText());

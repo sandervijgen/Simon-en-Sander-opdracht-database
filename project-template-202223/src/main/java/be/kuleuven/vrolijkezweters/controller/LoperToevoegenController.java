@@ -2,12 +2,8 @@ package be.kuleuven.vrolijkezweters.controller;
 
 import be.kuleuven.vrolijkezweters.LoperJDBC;
 import be.kuleuven.vrolijkezweters.properties.Loper;
-import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 
 public class LoperToevoegenController {
@@ -57,7 +53,7 @@ public class LoperToevoegenController {
             if (naam == "" || geslacht == "" || fysiek == "" || club == ""){
                 throw new NullPointerException("veld leeg gelaten");
             }
-            Loper nieuweLoper = new Loper(loperId, naam, leeftijd, geslacht, gewicht, fysiek, club, contactMedewerkerId, punten);
+            Loper nieuweLoper = new Loper(0, loperId, naam, leeftijd, geslacht, gewicht, fysiek, club, contactMedewerkerId, punten);
 
             if (LoperJDBC.voegLoperToe(nieuweLoper) == false) {
                 statusBalk_text.setText("deze id bestaat al");

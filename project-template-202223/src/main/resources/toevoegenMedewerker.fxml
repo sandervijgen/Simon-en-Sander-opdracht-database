@@ -6,11 +6,12 @@
 <?import javafx.scene.text.Text?>
 
 
+<?import javafx.scene.control.ListView?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.vrolijkezweters.controller.MedewerkerToevoegenController">
    <children>
       <TextField fx:id="medewerker_id_text" layoutX="54.0" layoutY="69.0" />
       <TextField fx:id="naam_text" layoutX="54.0" layoutY="148.0" />
-      <TextField fx:id="functie_text" layoutX="54.0" layoutY="237.0" />
+      <ListView fx:id="functies" layoutX="54.0" layoutY="237.0" prefHeight="25.0" prefWidth="161.0"/>
       <TextField fx:id="leeftijd_text" layoutX="371.0" layoutY="69.0" />
       <TextField fx:id="uurloon_text" layoutX="371.0" layoutY="148.0" />
       <Text layoutX="54.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Medewerker ID" />

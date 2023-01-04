@@ -3,7 +3,6 @@ package be.kuleuven.vrolijkezweters.controller;
 import be.kuleuven.vrolijkezweters.LoperJDBC;
 import be.kuleuven.vrolijkezweters.ProjectMain;
 import be.kuleuven.vrolijkezweters.properties.Loper;
-import be.kuleuven.vrolijkezweters.properties.Medewerker;
 import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -73,17 +72,15 @@ public class BeheerLopersController {
 
         tblConfigs.getColumns().addAll(loperId,naam,leeftijd,geslacht,gewicht,fysiek,club,contactMedewerkerId,punten);
 
-
-        loperId.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("loperId"));
-        naam.setCellValueFactory(new PropertyValueFactory<Wedstrijd, String>("naam"));
-        leeftijd.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("leeftijd"));
-        geslacht.setCellValueFactory(new PropertyValueFactory<Wedstrijd, String>("geslacht"));
-        gewicht.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("gewicht"));
-        fysiek.setCellValueFactory(new PropertyValueFactory<Wedstrijd, String>("fysiek"));
-        club.setCellValueFactory(new PropertyValueFactory<Wedstrijd, String>("club"));
-        contactMedewerkerId.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("contactMedewerkerId"));
-        punten.setCellValueFactory(new PropertyValueFactory<Wedstrijd, Integer>("punten"));
-
+        loperId.setCellValueFactory(new PropertyValueFactory<Loper, Integer>("loperId"));
+        naam.setCellValueFactory(new PropertyValueFactory<Loper, String>("naam"));
+        leeftijd.setCellValueFactory(new PropertyValueFactory<Loper, Integer>("leeftijd"));
+        geslacht.setCellValueFactory(new PropertyValueFactory<Loper, String>("geslacht"));
+        gewicht.setCellValueFactory(new PropertyValueFactory<Loper, Integer>("gewicht"));
+        fysiek.setCellValueFactory(new PropertyValueFactory<Loper, String>("fysiek"));
+        club.setCellValueFactory(new PropertyValueFactory<Loper, String>("club"));
+        contactMedewerkerId.setCellValueFactory(new PropertyValueFactory<Loper, Integer>("contactMedewerkerId"));
+        punten.setCellValueFactory(new PropertyValueFactory<Loper, Integer>("punten"));
 
         ObservableList<Loper> loperLijst = FXCollections.observableArrayList(LoperJDBC.getLoper());
         tblConfigs.setItems(loperLijst);
@@ -99,7 +96,7 @@ public class BeheerLopersController {
 
     private void verifyOneRowSelected() {
         if(tblConfigs.getSelectionModel().getSelectedCells().size() == 0) {
-            showAlert("Hela!", "Eerst een record selecteren hé.");
+            showAlert("FOUT", "gelieve een loper te selecteren.");
         }
     }
 }

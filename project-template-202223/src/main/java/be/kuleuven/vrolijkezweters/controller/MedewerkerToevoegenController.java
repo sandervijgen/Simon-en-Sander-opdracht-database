@@ -1,10 +1,10 @@
 package be.kuleuven.vrolijkezweters.controller;
 
 import be.kuleuven.vrolijkezweters.MedewerkerJDBC;
-import be.kuleuven.vrolijkezweters.properties.Loper;
 import be.kuleuven.vrolijkezweters.properties.Medewerker;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
@@ -17,7 +17,7 @@ public class MedewerkerToevoegenController {
     private TextField naam_text;
 
     @FXML
-    private TextField functie_text;
+    private ListView functies;
 
     @FXML
     private TextField leeftijd_text;
@@ -32,6 +32,7 @@ public class MedewerkerToevoegenController {
     private Text statusbalk_text;
 
     public void initialize(){
+        functies.getItems().addAll("Contact medewerker","Sein gever", "Publicatie manager", "Wedstrijd verantwoordelijke");
         voeg_toe_button.setOnAction(e -> voegToe());
     }
 
@@ -43,11 +44,11 @@ public class MedewerkerToevoegenController {
             leeftijd = Integer.parseInt(leeftijd_text.getText());
             uurloon = Integer.parseInt(uurloon_text.getText());
             naam = naam_text.getText();
-            functie = functie_text.getText();
+            functie = functies.getSelectionModel().getSelectedItem().toString();
             if (naam == "" || functie == ""){
                 throw new NullPointerException("veld leeg gelaten");
             }
-            Medewerker nieuweMedewerker = new Medewerker(medewerkerId, naam, functie, leeftijd, uurloon);
+            Medewerker nieuweMedewerker = new Medewerker(medewerkerId, naam, functie, leeftijd, uurloon,0);
 
             if (MedewerkerJDBC.voegMedewerkerToe(nieuweMedewerker) == false) {
                 statusbalk_text.setText("deze id bestaat al");

@@ -17,8 +17,6 @@ public class ProjectMainController {
     @FXML
     private Button btnBeheerLopers;
     @FXML
-    private Button btnConfigAttaches;
-    @FXML
     private Button btnAlgemeenKlassement;
     @FXML
     private Button btnMedewerkers;
@@ -26,7 +24,6 @@ public class ProjectMainController {
     public void initialize() {
         btnBeheerLopers.setOnAction(e -> showBeheerScherm("lopers"));
         btnWedstrijden.setOnAction(e -> showBeheerScherm("wedstrijden"));
-        btnConfigAttaches.setOnAction(e -> showBeheerScherm("attaches"));
         btnAlgemeenKlassement.setOnAction(e -> showBeheerScherm("algemeenklassement"));
         btnMedewerkers.setOnAction(e -> showBeheerScherm("medewerkers"));
 

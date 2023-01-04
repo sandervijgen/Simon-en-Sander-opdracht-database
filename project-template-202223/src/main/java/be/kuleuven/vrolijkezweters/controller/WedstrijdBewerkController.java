@@ -12,9 +12,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import java.time.temporal.WeekFields;
-
 public class WedstrijdBewerkController {
     @FXML
     private Button btnBewerk;
@@ -58,9 +55,6 @@ public class WedstrijdBewerkController {
         try {
             bewerk();
             var stage = new Stage();
-            //FXMLLoader loader = new FXMLLoader(getClass().getResource("bewerkettappe.fxml"));
-            //EtappeBewerkenController etappeBewerkenController = loader.getController();
-            //etappeBewerkenController.setWedstrijd(wedstrijd);
             var root = (AnchorPane) FXMLLoader.load(getClass().getClassLoader().getResource("bewerkettappe.fxml"));
             var scene = new Scene(root);
             stage.setScene(scene);

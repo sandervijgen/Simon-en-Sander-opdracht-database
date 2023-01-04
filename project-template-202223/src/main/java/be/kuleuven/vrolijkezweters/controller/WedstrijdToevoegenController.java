@@ -1,25 +1,14 @@
 package be.kuleuven.vrolijkezweters.controller;
-
-import be.kuleuven.vrolijkezweters.ProjectMain;
 import be.kuleuven.vrolijkezweters.WedstrijdJDBC;
-import be.kuleuven.vrolijkezweters.connection.ConnectionManager;
 import be.kuleuven.vrolijkezweters.properties.Etappe;
 import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import java.util.ArrayList;
 
-/*
-* Problemen nog hier, afstand etappe is een int -> automatisch afstand bepalen als er meer etappes zijn dan de afstand geeft fout
-* als het totaal van etappes niet klopt zal wedstrijd toch worden toegevoegd, hierna gebeurt pas de etappe check
-*
-* */
 
 public class WedstrijdToevoegenController {
 
@@ -27,8 +16,6 @@ public class WedstrijdToevoegenController {
     private Button btnApply;
     @FXML
     private Button voeg_toe;
-    @FXML
-    private TextField wedstrijd_id_text;
     @FXML
     private TextField plaats_text;
     @FXML

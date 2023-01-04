@@ -18,7 +18,7 @@ public class MedewerkerJDBC {
         try
         {
             var s = connection.createStatement();
-            s.executeUpdate("INSERT INTO Medewerker( Naam, Functie, Leeftijd, Uurloon) VALUES ('" + medewerker.getNaam() + "','" + medewerker.getFunctie() + "'," + medewerker.getLeeftijd() + "," + medewerker.getUurloon() + ");");
+            s.executeUpdate("INSERT INTO Medewerker( Naam, Functie, Leeftijd, Uurloon, GeldTegoed) VALUES ('" + medewerker.getNaam() + "','" + medewerker.getFunctie() + "'," + medewerker.getLeeftijd() + "," + medewerker.getUurloon() + "," + medewerker.getGeldTegoed() + " );");
             connection.commit();
             s.close();
         } catch(SQLException e)
@@ -40,8 +40,9 @@ public class MedewerkerJDBC {
                 int leeftijd = rs.getInt("leeftijd");
                 String functie = rs.getString("functie");
                 int uurloon = rs.getInt("uurloon");
+                int geldTegoed = rs.getInt("geldTegoed");
 
-                Medewerker medewerker = new Medewerker(medewerkerId, naam, functie, leeftijd, uurloon);
+                Medewerker medewerker = new Medewerker(medewerkerId, naam, functie, leeftijd, uurloon, geldTegoed);
                 medewerkers.add(medewerker);
             }
             s.close();
@@ -98,5 +99,31 @@ public class MedewerkerJDBC {
         }
         return true;
     }
+    public static void berekenVergoeding(int wedstrijdId) {
+        try
+        {
+            var s = connection.createStatement();
+            ResultSet rs = s.executeQuery("Select MedewerkerId, BeginUur, EindUur From WedstrijdMedewerker where WedstrijdId = "+wedstrijdId+";");
+            ArrayList<WedstrijdMedewerker> wedstrijdMedewerkers = new ArrayList<WedstrijdMedewerker>();
+            while(rs.next()) {
+                int medewerkerId = rs.getInt("medewerkerId");
+                int beginUur = rs.getInt("BeginUur");
+                int eindUur = rs.getInt("EindUur");
+                wedstrijdMedewerkers.add(new WedstrijdMedewerker(0,0,medewerkerId,beginUur,eindUur,"" ));
+            }
+            for(var i = 0; i < wedstrijdMedewerkers.size(); i++ ) {
+                WedstrijdMedewerker medewerker = wedstrijdMedewerkers.get(i);
+                ResultSet rs2 = s.executeQuery("Select Uurloon, GeldTegoed From Medewerker where MedewerkerId = " + medewerker.getMedewerkerId() + ";");
+                int uurloon = rs2.getInt("Uurloon");
+                int geldTegoed = rs2.getInt("GeldTegoed");
+                geldTegoed = geldTegoed + (uurloon * (medewerker.getEindUur()- medewerker.getBeginUur()));
+                s.executeUpdate("Update Medewerker SET GeldTegoed = " + geldTegoed + " where MedewerkerId = " + medewerker.getMedewerkerId() + ";");
+            }
+            connection.commit();
+            s.close();
+        } catch(SQLException e)
+        {
+        }
 
+    }
 }

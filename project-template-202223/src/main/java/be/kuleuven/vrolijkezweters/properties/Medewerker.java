@@ -1,15 +1,24 @@
 package be.kuleuven.vrolijkezweters.properties;
 
 public class Medewerker {
-    private int medewerkerId, leeftijd, uurloon;
+    private int medewerkerId, leeftijd, uurloon, geldTegoed;
     private String naam, functie;
 
-    public Medewerker(int medewerkerId, String naam, String functie, int leeftijd, int uurloon) {
+    public Medewerker(int medewerkerId, String naam, String functie, int leeftijd, int uurloon, int geldTegoed) {
         this.medewerkerId = medewerkerId;
         this.naam = naam;
         this.functie = functie;
         this.leeftijd = leeftijd;
         this.uurloon = uurloon;
+        this.geldTegoed = geldTegoed;
+    }
+
+    public int getGeldTegoed() {
+        return geldTegoed;
+    }
+
+    public void setGeldTegoed(int geldTegoed) {
+        this.geldTegoed = geldTegoed;
     }
 
     public int getMedewerkerId() {

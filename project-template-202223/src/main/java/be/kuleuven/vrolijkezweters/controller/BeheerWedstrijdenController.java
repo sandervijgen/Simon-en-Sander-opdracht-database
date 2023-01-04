@@ -4,7 +4,6 @@ import be.kuleuven.vrolijkezweters.LoperJDBC;
 import be.kuleuven.vrolijkezweters.ProjectMain;
 import be.kuleuven.vrolijkezweters.WedstrijdJDBC;
 import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

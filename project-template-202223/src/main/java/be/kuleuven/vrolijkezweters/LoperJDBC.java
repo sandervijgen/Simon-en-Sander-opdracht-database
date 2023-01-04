@@ -18,7 +18,16 @@ public class LoperJDBC {
     public static boolean voegLoperToe(Loper loper) {
         try
         {
-            //var s = connection.createStatement();
+            var s = connection.createStatement();
+            ResultSet rs = s.executeQuery("SELECT MedewerkerId from Medewerker where Functie = 'Contact medewerker';");
+            ArrayList<Integer> medewerkersIds = new ArrayList<Integer>();
+            while(rs.next()) {
+                    medewerkersIds.add(rs.getInt("medewerkerId"));
+            }
+            int random_int = (int)Math.floor(Math.random()*(medewerkersIds.size()));
+            int medewerkersId = medewerkersIds.get(random_int);
+            s.close();
+
             String sql = "INSERT INTO Loper( Naam, Leeftijd, Geslacht, Gewicht, Fysiek, Club, ContactMedewerkerId, Punten) VALUES (?,?,?,?,?,?,?,?)";
             PreparedStatement p = connection.prepareStatement(sql);
             p.setString(1,loper.getNaam());
@@ -27,10 +36,10 @@ public class LoperJDBC {
             p.setInt(4,loper.getGewicht());
             p.setString(5,loper.getFysiek());
             p.setString(6,loper.getClub());
-            p.setInt(7,loper.getContactMedewerkerId());
+            p.setInt(7, medewerkersId);
             p.setInt(8,loper.getPunten());
             p.executeUpdate();
-            //s.executeUpdate("INSERT INTO Loper( Naam, Leeftijd, Geslacht, Gewicht, Fysiek, Club, ContactMedewerkerId, Punten) VALUES ('" + loper.getNaam() + "'," + loper.getLeeftijd() + ",'" + loper.getGeslacht() + "'," + loper.getGewicht() + ",'" + loper.getFysiek() + "','" + loper.getClub() + "'," + loper.getContactMedewerkerId() + "," + loper.getPunten() + ");");
+
             connection.commit();
             p.close();
         } catch(SQLException e)
@@ -56,7 +65,7 @@ public class LoperJDBC {
                 String club  = rs.getString("club");
                 int contactMedewerkerId = rs.getInt("contactMedewerkerId");
                 int punten = rs.getInt("punten");
-                Loper loper = new Loper(loperId, naam, leeftijd, geslacht, gewicht, fysiek,club,contactMedewerkerId,punten);
+                Loper loper = new Loper(0,loperId, naam, leeftijd, geslacht, gewicht, fysiek,club,contactMedewerkerId,punten);
                 lopers.add(loper);
             }
             s.close();

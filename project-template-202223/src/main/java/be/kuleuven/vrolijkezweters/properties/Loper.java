@@ -1,9 +1,10 @@
 package be.kuleuven.vrolijkezweters.properties;
 
 public class Loper {
-    private int loperId, leeftijd, gewicht, contactMedewerkerId, punten;
+    private int plaats, loperId, leeftijd, gewicht, contactMedewerkerId, punten;
     private String naam, geslacht, fysiek, club;
-    public Loper(int loperId, String naam, int leeftijd, String geslacht, int gewicht, String fysiek, String club, int contactMedewerkerId, int punten) {
+    public Loper(int plaats, int loperId, String naam, int leeftijd, String geslacht, int gewicht, String fysiek, String club, int contactMedewerkerId, int punten) {
+        this.plaats = plaats;
         this.loperId = loperId;
         this.naam = naam;
         this.leeftijd = leeftijd;
@@ -13,6 +14,14 @@ public class Loper {
         this.club = club;
         this.contactMedewerkerId = contactMedewerkerId;
         this.punten = punten;
+    }
+
+    public int getPlaats() {
+        return plaats;
+    }
+
+    public void setPlaats(int plaats) {
+        this.plaats = plaats;
     }
 
     public int getLoperId() {

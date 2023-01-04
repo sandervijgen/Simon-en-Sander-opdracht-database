@@ -7,13 +7,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 public class LoperInschrijfController {
     @FXML
     private Button btnSchrijfIn;
-    @FXML
-    private Button btnIsBetaald;
     @FXML
     private Text textWedstrijd;
     @FXML
@@ -57,6 +54,5 @@ public class LoperInschrijfController {
         catch(Exception e){
             statusBalk_text.setText("gelieve een geldige waarde voor het loop nummer op te geven");
         }
-        //todo checken of loper bestaat
     }
 }
