@@ -12,8 +12,8 @@ public class LoperToevoegenController {
     private ListView geslacht_text;
     @FXML
     private ListView fysiek_text;
-    @FXML
-    private TextField loper_id_text;
+    //@FXML
+    //private TextField loper_id_text;
     @FXML
     private TextField leeftijd_text;
     @FXML
@@ -24,8 +24,8 @@ public class LoperToevoegenController {
     private TextField club_text;
     @FXML
     private TextField contact_medewerkers_id_text;
-    @FXML
-    private TextField punten_text;
+    //@FXML
+    //private TextField punten_text;
     @FXML
     private Button voeg_toe;
     @FXML
@@ -38,14 +38,14 @@ public class LoperToevoegenController {
     }
 
     private void voegToe() {
-        int loperId, leeftijd, gewicht, contactMedewerkerId, punten;
+        int leeftijd, gewicht, contactMedewerkerId, punten;
         String naam, geslacht, fysiek, club;
         try {
-            loperId = Integer.parseInt(loper_id_text.getText());
+            //loperId = Integer.parseInt(loper_id_text.getText());
             leeftijd = Integer.parseInt(leeftijd_text.getText());
             gewicht = Integer.parseInt(gewicht_text.getText());
             contactMedewerkerId = Integer.parseInt(contact_medewerkers_id_text.getText());
-            punten = Integer.parseInt(punten_text.getText());
+            //punten = Integer.parseInt(punten_text.getText());
             naam = naam_text.getText();
             geslacht = geslacht_text.getSelectionModel().getSelectedItem().toString();
             fysiek = fysiek_text.getSelectionModel().getSelectedItem().toString();
@@ -53,10 +53,10 @@ public class LoperToevoegenController {
             if (naam == "" || geslacht == "" || fysiek == "" || club == ""){
                 throw new NullPointerException("veld leeg gelaten");
             }
-            Loper nieuweLoper = new Loper(0, loperId, naam, leeftijd, geslacht, gewicht, fysiek, club, contactMedewerkerId, punten);
+            Loper nieuweLoper = new Loper(0, 0, naam, leeftijd, geslacht, gewicht, fysiek, club, contactMedewerkerId, 0);
 
             if (LoperJDBC.voegLoperToe(nieuweLoper) == false) {
-                statusBalk_text.setText("deze id bestaat al");
+                statusBalk_text.setText("error");
             }
             else{
                 statusBalk_text.setText("Loper succesvol toegevoegd");

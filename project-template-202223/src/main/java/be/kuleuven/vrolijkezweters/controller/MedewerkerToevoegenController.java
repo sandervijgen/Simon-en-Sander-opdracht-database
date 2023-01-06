@@ -10,8 +10,8 @@ import javafx.scene.text.Text;
 
 public class MedewerkerToevoegenController {
 
-    @FXML
-    private TextField medewerker_id_text;
+    //@FXML
+    //private TextField medewerker_id_text;
 
     @FXML
     private TextField naam_text;
@@ -40,7 +40,7 @@ public class MedewerkerToevoegenController {
         int medewerkerId, leeftijd, uurloon;
         String naam, functie;
         try {
-            medewerkerId = Integer.parseInt(medewerker_id_text.getText());
+            //medewerkerId = Integer.parseInt(medewerker_id_text.getText());
             leeftijd = Integer.parseInt(leeftijd_text.getText());
             uurloon = Integer.parseInt(uurloon_text.getText());
             naam = naam_text.getText();
@@ -48,10 +48,10 @@ public class MedewerkerToevoegenController {
             if (naam == "" || functie == ""){
                 throw new NullPointerException("veld leeg gelaten");
             }
-            Medewerker nieuweMedewerker = new Medewerker(medewerkerId, naam, functie, leeftijd, uurloon,0);
+            Medewerker nieuweMedewerker = new Medewerker(0, naam, functie, leeftijd, uurloon,0);
 
             if (MedewerkerJDBC.voegMedewerkerToe(nieuweMedewerker) == false) {
-                statusbalk_text.setText("deze id bestaat al");
+                statusbalk_text.setText("error");
             }
             else{
                 statusbalk_text.setText("Medewerker succesvol toegevoegd");

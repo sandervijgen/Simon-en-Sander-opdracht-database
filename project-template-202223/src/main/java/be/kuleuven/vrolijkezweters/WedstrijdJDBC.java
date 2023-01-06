@@ -7,6 +7,7 @@ import be.kuleuven.vrolijkezweters.properties.Loper;
 import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,17 +20,37 @@ public class WedstrijdJDBC {
     public static boolean voegWedstrijdToe(Wedstrijd wedstrijd, ArrayList<Etappe> etappes) {
         try
         {
-            var s = connection.createStatement();
-            int rs = s.executeUpdate("INSERT INTO Wedstrijd(Plaats, Afstand, InschrijvingsGeld, Datum, BeginUur, Gelopen) VALUES ('" + wedstrijd.getPlaats() + "'," + wedstrijd.getAfstand() + "," + wedstrijd.getInschrijvingsGeld() + ",'" + wedstrijd.getDatum() + "'," + wedstrijd.getBeginUur() + ", "+wedstrijd.isGelopen()+");");
-            int wedstrijdId = s.executeQuery("SELECT WedstrijdId FROM Wedstrijd WHERE Plaats = '"+wedstrijd.getPlaats()+"' AND Afstand = "+wedstrijd.getAfstand()+" AND Datum = '"+wedstrijd.getDatum()+"';").getInt("WedstrijdId");
+            //var s = connection.createStatement();
+            String sql = "INSERT INTO Wedstrijd(Plaats, Afstand, InschrijvingsGeld, Datum, BeginUur, Gelopen) VALUES (?,?,?,?,?,?)";
+            PreparedStatement p = connection.prepareStatement(sql);
+            p.setString(1, wedstrijd.getPlaats());
+            p.setInt(2, wedstrijd.getAfstand());
+            p.setInt(3, wedstrijd.getInschrijvingsGeld());
+            p.setString(4, wedstrijd.getDatum());
+            p.setInt(5, wedstrijd.getBeginUur());
+            p.setBoolean(6, wedstrijd.isGelopen());
+            p.executeUpdate();
+            //int rs = s.executeUpdate("INSERT INTO Wedstrijd(Plaats, Afstand, InschrijvingsGeld, Datum, BeginUur, Gelopen) VALUES ('" + wedstrijd.getPlaats() + "'," + wedstrijd.getAfstand() + "," + wedstrijd.getInschrijvingsGeld() + ",'" + wedstrijd.getDatum() + "'," + wedstrijd.getBeginUur() + ", "+wedstrijd.isGelopen()+");");
+            sql = "SELECT WedstrijdId FROM Wedstrijd WHERE Plaats = ? AND Afstand = ? AND Datum = ?";
+            p = connection.prepareStatement(sql);
+            p.setString(1, wedstrijd.getPlaats());
+            p.setInt(2, wedstrijd.getAfstand());
+            p.setString(3, wedstrijd.getDatum());
+            int wedstrijdId = p.executeQuery().getInt("WedstrijdId");
+            //int wedstrijdId = s.executeQuery("SELECT WedstrijdId FROM Wedstrijd WHERE Plaats = '"+wedstrijd.getPlaats()+"' AND Afstand = "+wedstrijd.getAfstand()+" AND Datum = '"+wedstrijd.getDatum()+"';").getInt("WedstrijdId");
             for(int i=0; i<etappes.size();i++) {
                 Etappe etappe = etappes.get(i);
-                s.executeUpdate("INSERT INTO Etappe( WedstrijdId, Afstand, BeginKm) VALUES (" + wedstrijdId + "," + etappe.getAfstand() + "," + etappe.getBeginKm() + ");");
+                sql = "INSERT INTO Etappe( WedstrijdId, Afstand, BeginKm) VALUES (?,?,?)";
+                p = connection.prepareStatement(sql);
+                p.setInt(1, wedstrijdId);
+                p.setInt(2, etappe.getAfstand());
+                p.setInt(3, etappe.getBeginKm());
+                p.executeQuery();
             }
             //Werkt niet als twee de zelfde wedstrijden gemaakt zijn want dan geeft die id door van de eerste
             //Todo check dat er geen twee de zelfde wedstrijden zijn
             connection.commit();
-            s.close();
+            p.close();
         } catch(SQLException e)
         {
             return false;
@@ -69,27 +90,51 @@ public class WedstrijdJDBC {
     public static Boolean bewerkWedstrijd(Wedstrijd wedstrijd) {
         try
         {
-            var s = connection.createStatement();
-            s.executeUpdate("UPDATE Wedstrijd SET Plaats = '"+wedstrijd.getPlaats()+"', Afstand = "+wedstrijd.getAfstand()+", InschrijvingsGeld = "+wedstrijd.getInschrijvingsGeld()+", Datum  = '"+wedstrijd.getDatum()+"', BeginUur= "+wedstrijd.getBeginUur()+" WHERE WedstrijdId = "+wedstrijd.getWedstrijdId() +";");
-
-            ResultSet rs = s.executeQuery("Select EtappeId, Max(BeginKm) FROM Etappe WHERE WedstrijdId = "+wedstrijd.getWedstrijdId()+";");
+            //var s = connection.createStatement();
+            String sql = "UPDATE Wedstrijd SET Plaats = ?, Afstand = ?, InschrijvingsGeld = ?, Datum  = ?, BeginUur= ? WHERE WedstrijdId = ?";
+            PreparedStatement p = connection.prepareStatement(sql);
+            p.setString(1, wedstrijd.getPlaats());
+            p.setInt(2, wedstrijd.getAfstand());
+            p.setInt(3, wedstrijd.getInschrijvingsGeld());
+            p.setString(4, wedstrijd.getDatum());
+            p.setInt(5, wedstrijd.getBeginUur());
+            p.setInt(6, wedstrijd.getWedstrijdId());
+            p.executeUpdate();
+            sql = "Select EtappeId, Max(BeginKm) FROM Etappe WHERE WedstrijdId = ?";
+            p = connection.prepareStatement(sql);
+            p.setInt(1, wedstrijd.getWedstrijdId());
+            ResultSet rs = p.executeQuery();
             int etappeId = rs.getInt("EtappeId");
             int beginKm = rs.getInt("Max(BeginKm)");
             int afstandEtappe = wedstrijd.getAfstand() - beginKm;
 
             while(afstandEtappe <=0){
-                s.executeUpdate("DELETE FROM Etappe WHERE EtappeId = "+ etappeId +";");
-                s.executeUpdate("DELETE FROM EtappeLoper WHERE EtappeId = "+ etappeId +";");
-                rs = s.executeQuery("Select EtappeId, Max(BeginKm) FROM Etappe WHERE WedstrijdId = "+wedstrijd.getWedstrijdId()+";");
+                sql = "DELETE FROM Etappe WHERE EtappeId = ?";
+                p = connection.prepareStatement(sql);
+                p.setInt(1, etappeId);
+                p.executeUpdate();
+                sql = "DELETE FROM EtappeLoper WHERE EtappeId = ?";
+                p = connection.prepareStatement(sql);
+                p.setInt(1, wedstrijd.getWedstrijdId());
+                p.executeUpdate();
+                //s.executeUpdate("DELETE FROM EtappeLoper WHERE EtappeId = "+ etappeId +";");
+                sql = "Select EtappeId, Max(BeginKm) FROM Etappe WHERE WedstrijdId = ?";
+                p = connection.prepareStatement(sql);
+                p.setInt(1, wedstrijd.getWedstrijdId());
+                rs = p.executeQuery();
                 etappeId = rs.getInt("EtappeId");
                 beginKm = rs.getInt("max(BeginKm)");
                 afstandEtappe = wedstrijd.getAfstand() - beginKm;
             }
-            s.executeUpdate("UPDATE Etappe SET afstand = "+afstandEtappe+" WHERE EtappeId = "+ etappeId +";");
+            sql = "UPDATE Etappe SET afstand = ? WHERE EtappeId = ?";
+            p = connection.prepareStatement(sql);
+            p.setInt(1, afstandEtappe);
+            p.setInt(1, etappeId);
+            p.executeUpdate();
             //dit is om de laatste etappe van de wedstrijd een grotere of kleinere afstand te geven moest de afstand van de volledige wedstrijd veranderen
 
             connection.commit();
-            s.close();
+            p.close();
         } catch(SQLException e)
         {
             return false;
@@ -100,19 +145,31 @@ public class WedstrijdJDBC {
         ArrayList<Integer> etappeIds = new ArrayList<Integer>();
         try
         {
-            var s = connection.createStatement();
-            s.executeUpdate("Delete From wedstrijd where wedstrijdId = "+wedstrijdId+";");
-            ResultSet rs = s.executeQuery("Select EtappeId From Etappe where wedstrijdId = "+wedstrijdId+";");
+            //var s = connection.createStatement();
+            String sql = "Delete From wedstrijd where wedstrijdId = ?";
+            PreparedStatement p = connection.prepareStatement(sql);
+            p.setInt(1, wedstrijdId);
+            p.executeUpdate();
+            sql = "Select EtappeId From Etappe where wedstrijdId = ?";
+            p = connection.prepareStatement(sql);
+            p.setInt(1, wedstrijdId);
+            ResultSet rs = p.executeQuery();
             while(rs.next()) {
                 int etappeId = rs.getInt("EtappeId");
                 etappeIds.add(etappeId);
             }
             for(int i=0; i < etappeIds.size(); i ++ ){
-                s.executeUpdate("Delete From EtappeLoper where EtappeId = "+etappeIds.get(i)+";");
+                sql = "Delete From EtappeLoper where EtappeId = ?";
+                p = connection.prepareStatement(sql);
+                p.setInt(1, etappeIds.get(i));
+                p.executeUpdate();
             }
-            s.executeUpdate("Delete From Etappe where wedstrijdId = "+wedstrijdId+";");
+            sql = "Delete From Etappe where wedstrijdId = ?";
+            p = connection.prepareStatement(sql);
+            p.setInt(1, wedstrijdId);
+            p.executeUpdate();
             connection.commit();
-            s.close();
+            p.close();
         } catch(SQLException e)
         {
             return false;
@@ -125,15 +182,21 @@ public class WedstrijdJDBC {
         ArrayList<KlassementLoper> wedstrijdKlassement = new ArrayList<KlassementLoper>();
         try
         {
-            var s = connection.createStatement();
-            ResultSet rs = s.executeQuery("SELECT LoperId FROM EtappeLoper inner join Etappe on Etappe.EtappeId = EtappeLoper.EtappeId WHERE WedstrijdId = "+wedstrijdId+" AND Tijd = 0;");
+            //var s = connection.createStatement();
+            String sql = "SELECT LoperId FROM EtappeLoper inner join Etappe on Etappe.EtappeId = EtappeLoper.EtappeId WHERE WedstrijdId = ? AND Tijd = 0;";
+            PreparedStatement p = connection.prepareStatement(sql);
+            p.setInt(1,wedstrijdId);
+            ResultSet rs = p.executeQuery();
             while(rs.next()) {
                 int nietUitgelopen = rs.getInt("LoperId");
                 if(!nietUitgelopenLopersId.contains(nietUitgelopen)){
                     nietUitgelopenLopersId.add(nietUitgelopen);
                 }
             }
-            ResultSet rs2 = s.executeQuery("SELECT LoperId FROM EtappeLoper inner join Etappe on Etappe.EtappeId = EtappeLoper.EtappeId WHERE WedstrijdId = "+wedstrijdId+";");
+            sql = "SELECT LoperId FROM EtappeLoper inner join Etappe on Etappe.EtappeId = EtappeLoper.EtappeId WHERE WedstrijdId = ?;";
+            p = connection.prepareStatement(sql);
+            p.setInt(1, wedstrijdId);
+            ResultSet rs2 = p.executeQuery();
             while(rs2.next()) {
                 int uitgelopen = rs2.getInt("LoperId");
                 if(!nietUitgelopenLopersId.contains(uitgelopen) && !uitgelopenLopersId.contains(uitgelopen)){
@@ -143,14 +206,18 @@ public class WedstrijdJDBC {
             for(int i = 0; i<uitgelopenLopersId.size();i++){
                 int lopersId = uitgelopenLopersId.get(i);
                 if(!nietUitgelopenLopersId.contains(i)){
-                    ResultSet rs3 = s.executeQuery("SELECT sum(Tijd) FROM EtappeLoper inner join Etappe on Etappe.EtappeId = EtappeLoper.EtappeId WHERE WedstrijdId = "+wedstrijdId+" AND LoperId = "+lopersId+" ;");
+                    sql = "SELECT sum(Tijd) FROM EtappeLoper inner join Etappe on Etappe.EtappeId = EtappeLoper.EtappeId WHERE WedstrijdId = ? AND LoperId = ?;";
+                    p = connection.prepareStatement(sql);
+                    p.setInt(1, wedstrijdId);
+                    p.setInt(2, lopersId);
+                    ResultSet rs3 = p.executeQuery();
                     KlassementLoper loper = new KlassementLoper(lopersId, rs3.getInt("sum(Tijd)"));
                     wedstrijdKlassement.add(loper);
                 }
             }
             Collections.sort(wedstrijdKlassement, Comparator.comparing(KlassementLoper::getTijd)); //sorteren op tijd
             connection.commit();
-            s.close();
+            p.close();
             geeftPunten(wedstrijdId,wedstrijdKlassement);
         } catch(SQLException e)
         {
@@ -160,19 +227,25 @@ public class WedstrijdJDBC {
     public static void geeftPunten(int wedstrijdId, ArrayList<KlassementLoper> wedstrijdKlassement) {
         try
         {
-            var s = connection.createStatement();
+            //var s = connection.createStatement();
             for(int i=0;i<wedstrijdKlassement.size(); i++){
                 int loperId = wedstrijdKlassement.get(i).getLoperId();
                 int punt = 50-i*5;
                 if(punt < 0 ){
                     punt = 0;
                 }
-                ResultSet rs = s.executeQuery("SELECT Punten FROM Loper WHERE LoperId = "+loperId+";");
+                String sql = "SELECT Punten FROM Loper WHERE LoperId = ?;";
+                PreparedStatement p = connection.prepareStatement(sql);
+                p.setInt(1, loperId);
+                ResultSet rs = p.executeQuery();
                 punt = rs.getInt("Punten") + punt;
-                s.executeUpdate("UPDATE Loper SET punten = "+punt+" WHERE loperId = "+loperId+";");
+                sql = "UPDATE Loper SET punten = "+punt+" WHERE loperId = ?;";
+                p = connection.prepareStatement(sql);
+                p.setInt(1, loperId);
+                p.executeUpdate();
+                connection.commit();
+                p.close();
             }
-            connection.commit();
-            s.close();
         } catch(SQLException e) {
         }
 
@@ -180,10 +253,15 @@ public class WedstrijdJDBC {
     public static void tijdIngeven(int etappeId, int loperId, int tijd) {
         try
         {
-            var s = connection.createStatement();
-            s.executeUpdate("UPDATE EtappeLoper SET TIJD = "+tijd+" WHERE EtappeId  = "+etappeId+" AND LoperId = "+loperId+";");
+            //var s = connection.createStatement();
+            String sql = "UPDATE EtappeLoper SET TIJD = ? WHERE EtappeId  = ? AND LoperId = ?;";
+            PreparedStatement p = connection.prepareStatement(sql);
+            p.setInt(1, tijd);
+            p.setInt(2, etappeId);
+            p.setInt(3,loperId);
+            p.executeUpdate();
             connection.commit();
-            s.close();
+            p.close();
         } catch(SQLException e)
         {
         }
@@ -192,11 +270,14 @@ public class WedstrijdJDBC {
         int isGelopen = 1;
         try
         {
-            var s = connection.createStatement();
-            ResultSet rs = s.executeQuery("Select Gelopen FROM Wedstrijd WHERE WedstrijdId = "+wedstrijdId+";");
+            //var s = connection.createStatement();
+            String sql = "Select Gelopen FROM Wedstrijd WHERE WedstrijdId = ?;";
+            PreparedStatement p = connection.prepareStatement(sql);
+            p.setInt(1, wedstrijdId);
+            ResultSet rs = p.executeQuery();
             isGelopen =  rs.getInt("Gelopen");
             connection.commit();
-            s.close();
+            p.close();
         } catch(SQLException e)
         {
         }
@@ -205,10 +286,13 @@ public class WedstrijdJDBC {
     public static void loopWedstrijd(int wedstrijdId){
         try
         {
-            var s = connection.createStatement();
-            s.executeUpdate("UPDATE Wedstrijd SET Gelopen = 1 WHERE WedstrijdId = "+wedstrijdId+";");
+            //var s = connection.createStatement();
+            String sql = "UPDATE Wedstrijd SET Gelopen = 1 WHERE WedstrijdId = ?;";
+            PreparedStatement p = connection.prepareStatement(sql);
+            p.setInt(1,wedstrijdId);
+            p.executeUpdate();
             connection.commit();
-            s.close();
+            p.close();
         } catch(SQLException e)
         {
         }

@@ -16,7 +16,6 @@
 
       <Button fx:id="btnVoeg_toe" layoutX="16.0" layoutY="304.0" mnemonicParsing="false" text="Voeg Toe" />
       <Button fx:id="btnModify" layoutX="104.0" layoutY="304.0" mnemonicParsing="false" text="Bewerk" />
-      <Button fx:id="btnClose" layoutX="520.0" layoutY="304.0" mnemonicParsing="false" text="Sluiten" />
       <Button fx:id="btnDelete" layoutX="431.0" layoutY="304.0" mnemonicParsing="false" text="Verwijder" />
       <Button fx:id="btnRefresh" layoutX="182.0" layoutY="304.0" mnemonicParsing="false" text="Refresh" />
    </children>
