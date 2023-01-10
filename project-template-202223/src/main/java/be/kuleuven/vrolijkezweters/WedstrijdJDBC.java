@@ -216,7 +216,13 @@ public class WedstrijdJDBC {
                     p.setInt(1, wedstrijdId);
                     p.setInt(2, lopersId);
                     rs3 = p.executeQuery();
-                    KlassementLoper loper = new KlassementLoper(i+1, 50-5*i, lopersId,naam, rs3.getInt("sum(Tijd)"));
+
+                    int punt = 50-i*5;
+                    if(punt < 0 ){
+                        punt = 0;
+                    }
+
+                    KlassementLoper loper = new KlassementLoper(i+1, punt, lopersId,naam, rs3.getInt("sum(Tijd)"));
                     wedstrijdKlassement.add(loper);
                 }
             }
@@ -235,11 +241,7 @@ public class WedstrijdJDBC {
             //var s = connection.createStatement();
             for(int i=0;i<wedstrijdKlassement.size(); i++){
                 int loperId = wedstrijdKlassement.get(i).getLoperId();
-                int punt = 50-i*5;
-                wedstrijdKlassement.get(i).setPunten(punt);
-                if(punt < 0 ){
-                    punt = 0;
-                }
+                int punt =  wedstrijdKlassement.get(i).getPunten();
                 String sql = "SELECT Punten FROM Loper WHERE LoperId = ?;";
                 PreparedStatement p = connection.prepareStatement(sql);
                 p.setInt(1, loperId);
