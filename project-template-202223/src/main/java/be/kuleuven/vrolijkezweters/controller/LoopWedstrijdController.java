@@ -77,7 +77,7 @@ public class LoopWedstrijdController {
         }
         statusBalk_text.setText("alle lopers ingevuld");
         WedstrijdJDBC.loopWedstrijd(wedstrijd.getWedstrijdId());
-        WedstrijdJDBC.wedstrijdKlassement(wedstrijd.getWedstrijdId());
+        WedstrijdJDBC.wedstrijdKlassement(wedstrijd.getWedstrijdId(), true);
         MedewerkerJDBC.berekenVergoeding(wedstrijd.getWedstrijdId());
     }
     private void laatZien(){

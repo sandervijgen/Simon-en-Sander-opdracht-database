@@ -1,6 +1,7 @@
 package be.kuleuven.vrolijkezweters;
 
 import be.kuleuven.vrolijkezweters.connection.ConnectionManager;
+import be.kuleuven.vrolijkezweters.properties.KlassementLoper;
 import be.kuleuven.vrolijkezweters.properties.Loper;
 import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
 
@@ -177,5 +178,4 @@ public class LoperJDBC {
         }
         return true;
     }
-
 }

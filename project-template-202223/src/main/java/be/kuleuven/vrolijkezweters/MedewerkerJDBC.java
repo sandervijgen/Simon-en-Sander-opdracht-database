@@ -96,7 +96,6 @@ public class MedewerkerJDBC {
         return true;
     }
     public static boolean verwijderMedewerker(int medewerkerId) {
-        //TODO: alle lopers die deze medewerker als contact medewerker hadden moeten een nieuwe toegewezen krijgen
         ArrayList<Integer> wedstrijdMedewerkersIds = new ArrayList<Integer>();
         try
         {

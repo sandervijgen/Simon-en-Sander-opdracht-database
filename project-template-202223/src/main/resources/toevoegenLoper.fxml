@@ -21,8 +21,6 @@
         <Text layoutX="229.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="kg" />
       <TextField fx:id="club_text" layoutX="447.0" layoutY="112.0" promptText="Belgie" text="Belgie" />
       <Text fx:id="wedstrijdText41" layoutX="447.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Club" wrappingWidth="137.13671875" />
-      <TextField fx:id="contact_medewerkers_id_text" layoutX="447.0" layoutY="186.0" promptText="0" text="1" />
-      <Text fx:id="wedstrijdText42" layoutX="447.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ContactMedewerkerId" wrappingWidth="137.13671875" />
       <ListView fx:id="geslacht_text" layoutX="262.0" layoutY="186.0" prefHeight="25.0" prefWidth="161.0" />
       <ListView fx:id="fysiek_text" layoutX="262.0" layoutY="267.0" prefHeight="25.0" prefWidth="161.0" />
       <Text fx:id="statusBalk_text" layoutX="216.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="318.1367492675781" />

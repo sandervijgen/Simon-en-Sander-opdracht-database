@@ -35,6 +35,8 @@ public class BeheerWedstrijdenController {
     private Button btnSchrijfMedewerkerIn;
     @FXML
     private TableView tblConfigs;
+    @FXML
+    private Button btnKlassement;
 
     private Wedstrijd selectedWedstrijd;
 
@@ -43,26 +45,68 @@ public class BeheerWedstrijdenController {
         btnAdd.setOnAction(e -> addNewRow());
         btnModify.setOnAction(e -> {
             verifyOneRowSelected();
-            modifyCurrentRow();
+            if(selectedWedstrijd !=null) {
+                if (!selectedWedstrijd.isGelopen()) {
+                    modifyCurrentRow();
+                }
+                else{
+                    showAlert("Fout", "Wedstrijd is al gelopen");
+                }
+            }
         });
         btnDelete.setOnAction(e -> {
             verifyOneRowSelected();
-            deleteCurrentRow();
+            if(selectedWedstrijd !=null) {
+                if (!selectedWedstrijd.isGelopen()) {
+                    deleteCurrentRow();
+                }
+                else{
+                    showAlert("Fout", "Wedstrijd is al gelopen");
+                }
+            }
         });
         btnLoopWedstrijd.setOnAction(e -> {
             verifyOneRowSelected();
-            loopWedstrijd();
+            if(selectedWedstrijd !=null) {
+                loopWedstrijd();
+            }
         });
         btnRefresh.setOnAction(e->initTable());
         btnSchrijfLoperIn.setOnAction(e -> {
             verifyOneRowSelected();
-            schrijfLoperIn();
+            if(selectedWedstrijd !=null) {
+                if (!selectedWedstrijd.isGelopen()) {
+                    schrijfLoperIn();
+                }
+                else{
+                    showAlert("Fout", "Wedstrijd is al gelopen");
+                }
+            }
         });
         btnSchrijfMedewerkerIn.setOnAction(e -> {
             verifyOneRowSelected();
-            schrijfMedewerkerIn();
+            if(selectedWedstrijd !=null) {
+                if (!selectedWedstrijd.isGelopen()) {
+                    schrijfMedewerkerIn();
+                }
+                else{
+                    showAlert("Fout", "Wedstrijd is al gelopen");
+                }
+            }
+        });
+        btnKlassement.setOnAction(e -> {
+            verifyOneRowSelected();
+            if(selectedWedstrijd !=null) {
+                if (selectedWedstrijd.isGelopen()) {
+                    klassement();
+                } else {
+                    showAlert("Fout", "Wedstrijd nog niet gelopen");
+                }
+            }
         });
     }
+
+
 
     private void initTable() {
         tblConfigs.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -113,8 +157,7 @@ public class BeheerWedstrijdenController {
     }
 
     private void modifyCurrentRow() {
-        this.selectedWedstrijd = (Wedstrijd) tblConfigs.getSelectionModel().getSelectedItem();
-        try {
+         try {
             var stage = new Stage();
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getClassLoader().getResource("veranderWedstrijd.fxml")));
             AnchorPane root = loader.load();
@@ -133,7 +176,27 @@ public class BeheerWedstrijdenController {
             throw new RuntimeException("Kan beheerscherm wedstrijd bewerken niet vinden", e);
         }
     }
+    private void klassement() {
+        try {
+            var stage = new Stage();
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getClassLoader().getResource("wedstrijdKlassement.fxml")));
+            AnchorPane root = loader.load();
 
+            WedstrijdKlassementController controller = loader.getController();
+            controller.initialize(selectedWedstrijd);
+
+            var scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("klassement");
+            stage.initOwner(ProjectMain.getRootStage());
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.show();
+
+        } catch (Exception e) {
+            throw new RuntimeException("Kan beheerscherm klassement niet vinden", e);
+        }
+
+    }
     public void showAlert(String title, String content) {
         var alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(title);
@@ -145,6 +208,8 @@ public class BeheerWedstrijdenController {
     private void verifyOneRowSelected() {
         if(tblConfigs.getSelectionModel().getSelectedCells().size() == 0) {
             showAlert("Fout", "Gelieve eerst een record te selecteren");
+        }
+        else{this.selectedWedstrijd = (Wedstrijd) tblConfigs.getSelectionModel().getSelectedItem();
         }
     }
 

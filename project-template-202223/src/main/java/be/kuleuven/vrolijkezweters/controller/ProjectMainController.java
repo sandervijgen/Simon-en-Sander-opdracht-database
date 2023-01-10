@@ -44,6 +44,5 @@ public class ProjectMainController {
         } catch (Exception e) {
             throw new RuntimeException("Kan beheerscherm " + resourceName + " niet vinden", e);
         }
-        WedstrijdJDBC.wedstrijdKlassement(1);
     }
 }

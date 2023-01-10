@@ -23,10 +23,6 @@ public class LoperToevoegenController {
     @FXML
     private TextField club_text;
     @FXML
-    private TextField contact_medewerkers_id_text;
-    //@FXML
-    //private TextField punten_text;
-    @FXML
     private Button voeg_toe;
     @FXML
     private Text statusBalk_text;
@@ -41,11 +37,8 @@ public class LoperToevoegenController {
         int leeftijd, gewicht, contactMedewerkerId, punten;
         String naam, geslacht, fysiek, club;
         try {
-            //loperId = Integer.parseInt(loper_id_text.getText());
             leeftijd = Integer.parseInt(leeftijd_text.getText());
             gewicht = Integer.parseInt(gewicht_text.getText());
-            contactMedewerkerId = Integer.parseInt(contact_medewerkers_id_text.getText());
-            //punten = Integer.parseInt(punten_text.getText());
             naam = naam_text.getText();
             geslacht = geslacht_text.getSelectionModel().getSelectedItem().toString();
             fysiek = fysiek_text.getSelectionModel().getSelectedItem().toString();
@@ -53,7 +46,7 @@ public class LoperToevoegenController {
             if (naam == "" || geslacht == "" || fysiek == "" || club == ""){
                 throw new NullPointerException("veld leeg gelaten");
             }
-            Loper nieuweLoper = new Loper(0, 0, naam, leeftijd, geslacht, gewicht, fysiek, club, contactMedewerkerId, 0);
+            Loper nieuweLoper = new Loper(0, 0, naam, leeftijd, geslacht, gewicht, fysiek, club, 0, 0);
 
             if (LoperJDBC.voegLoperToe(nieuweLoper) == false) {
                 statusBalk_text.setText("error");

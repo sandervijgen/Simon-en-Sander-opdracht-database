@@ -45,10 +45,8 @@ public class WedstrijdJDBC {
                 p.setInt(1, wedstrijdId);
                 p.setInt(2, etappe.getAfstand());
                 p.setInt(3, etappe.getBeginKm());
-                p.executeQuery();
+                p.executeUpdate();
             }
-            //Werkt niet als twee de zelfde wedstrijden gemaakt zijn want dan geeft die id door van de eerste
-            //Todo check dat er geen twee de zelfde wedstrijden zijn
             connection.commit();
             p.close();
         } catch(SQLException e)
@@ -176,7 +174,7 @@ public class WedstrijdJDBC {
         }
         return true;
     }
-    public static ArrayList wedstrijdKlassement(int wedstrijdId) {
+    public static ArrayList wedstrijdKlassement(int wedstrijdId, boolean puntenGeven) {
         ArrayList<Integer> nietUitgelopenLopersId = new ArrayList<Integer>();
         ArrayList<Integer> uitgelopenLopersId = new ArrayList<Integer>();
         ArrayList<KlassementLoper> wedstrijdKlassement = new ArrayList<KlassementLoper>();
@@ -205,20 +203,27 @@ public class WedstrijdJDBC {
             }
             for(int i = 0; i<uitgelopenLopersId.size();i++){
                 int lopersId = uitgelopenLopersId.get(i);
+
                 if(!nietUitgelopenLopersId.contains(i)){
+                    sql = "SELECT naam FROM Loper WHERE LoperId = ?;";
+                    p = connection.prepareStatement(sql);
+                    p.setInt(1, lopersId);
+                    ResultSet rs3 = p.executeQuery();
+                    String naam = rs3.getString("naam");
+
                     sql = "SELECT sum(Tijd) FROM EtappeLoper inner join Etappe on Etappe.EtappeId = EtappeLoper.EtappeId WHERE WedstrijdId = ? AND LoperId = ?;";
                     p = connection.prepareStatement(sql);
                     p.setInt(1, wedstrijdId);
                     p.setInt(2, lopersId);
-                    ResultSet rs3 = p.executeQuery();
-                    KlassementLoper loper = new KlassementLoper(lopersId, rs3.getInt("sum(Tijd)"));
+                    rs3 = p.executeQuery();
+                    KlassementLoper loper = new KlassementLoper(i+1, 50-5*i, lopersId,naam, rs3.getInt("sum(Tijd)"));
                     wedstrijdKlassement.add(loper);
                 }
             }
             Collections.sort(wedstrijdKlassement, Comparator.comparing(KlassementLoper::getTijd)); //sorteren op tijd
             connection.commit();
             p.close();
-            geeftPunten(wedstrijdId,wedstrijdKlassement);
+            if(puntenGeven){geeftPunten(wedstrijdId,wedstrijdKlassement);}
         } catch(SQLException e)
         {
         }
@@ -231,6 +236,7 @@ public class WedstrijdJDBC {
             for(int i=0;i<wedstrijdKlassement.size(); i++){
                 int loperId = wedstrijdKlassement.get(i).getLoperId();
                 int punt = 50-i*5;
+                wedstrijdKlassement.get(i).setPunten(punt);
                 if(punt < 0 ){
                     punt = 0;
                 }
