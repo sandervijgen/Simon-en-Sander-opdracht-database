@@ -10,16 +10,16 @@
 <AnchorPane prefHeight="475.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.vrolijkezweters.controller.LoperToevoegenController">
     <children>
         <Button fx:id="voeg_toe" layoutX="342.0" layoutY="369.0" mnemonicParsing="false" text="Voeg Toe" />
-        <TextField fx:id="leeftijd_text" layoutX="169.0" layoutY="109.0" promptText="30" text="30" />
-        <Text fx:id="wedstrijdText2" layoutX="169.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Leeftijd" wrappingWidth="137.13671875" />
-        <TextField fx:id="gewicht_text" layoutX="175.0" layoutY="186.0" promptText="50" text="50" />
+        <TextField fx:id="leeftijd_text" layoutX="176.0" layoutY="109.0" />
+        <Text fx:id="wedstrijdText2" layoutX="175.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Leeftijd" wrappingWidth="137.13671875" />
+        <TextField fx:id="gewicht_text" layoutX="175.0" layoutY="186.0" />
         <Text fx:id="wedstrijdText3" layoutX="175.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gewicht" wrappingWidth="137.13671875" />
-        <TextField fx:id="naam_text" layoutX="423.0" layoutY="109.0" prefHeight="25.0" prefWidth="161.0" promptText="Sander Vijgen" text="Sander" />
+        <TextField fx:id="naam_text" layoutX="423.0" layoutY="109.0" prefHeight="25.0" prefWidth="161.0" />
         <Text fx:id="wedstrijdText4" layoutX="423.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Naam" wrappingWidth="137.13671875" />
         <Text fx:id="wedstrijdText5" layoutX="423.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Geslacht" wrappingWidth="137.13671875" />
         <Text fx:id="wedstrijdText6" layoutX="423.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fysiek" wrappingWidth="137.13671875" />
         <Text layoutX="335.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="kg" />
-      <TextField fx:id="club_text" layoutX="176.0" layoutY="267.0" promptText="Belgie" text="Belgie" />
+      <TextField fx:id="club_text" layoutX="176.0" layoutY="267.0" />
       <Text fx:id="wedstrijdText41" layoutX="181.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Club" wrappingWidth="137.13671875" />
       <ListView fx:id="geslacht_text" layoutX="423.0" layoutY="186.0" prefHeight="25.0" prefWidth="161.0" />
       <ListView fx:id="fysiek_text" layoutX="423.0" layoutY="267.0" prefHeight="25.0" prefWidth="161.0" />

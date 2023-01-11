@@ -72,8 +72,13 @@ public class WedstrijdToevoegenController {
         Wedstrijd wedstrijd;
         try {
             wedstrijd =  maakWedstrijd();
-            WedstrijdJDBC.voegWedstrijdToe(wedstrijd,voegEtappesToe(0));
-            statusBalk_text.setText("Wedstrijd succesvol toegevoegd");
+            if (WedstrijdJDBC.voegWedstrijdToe(wedstrijd,voegEtappesToe(0)) == false){
+                statusBalk_text.setText("er is al een wedstrijd op deze plaats op dezelfde datum");
+            }
+            else {
+                //WedstrijdJDBC.voegWedstrijdToe(wedstrijd,voegEtappesToe(0));
+                statusBalk_text.setText("Wedstrijd succesvol toegevoegd");
+            }
         }
         catch(NumberFormatException n){
             statusBalk_text.setText("Gelieve een geldig getal in te geven waar dit nodig is");

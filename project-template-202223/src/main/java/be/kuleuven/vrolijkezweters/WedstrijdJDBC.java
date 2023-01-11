@@ -20,8 +20,17 @@ public class WedstrijdJDBC {
     public static boolean voegWedstrijdToe(Wedstrijd wedstrijd, ArrayList<Etappe> etappes) {
         try
         {
-            String sql = "INSERT INTO Wedstrijd(Plaats, Afstand, InschrijvingsGeld, Datum, BeginUur, Gelopen) VALUES (?,?,?,?,?,?)";
+            String sql = "SELECT WedstrijdId FROM Wedstrijd WHERE Plaats = ? AND Afstand = ? AND Datum = ?";
             PreparedStatement p = connection.prepareStatement(sql);
+            p.setString(1, wedstrijd.getPlaats());
+            p.setInt(2, wedstrijd.getAfstand());
+            p.setString(3, wedstrijd.getDatum());
+            ResultSet rs = p.executeQuery();
+            if (rs.next() != false){
+                return false;
+            }
+            sql = "INSERT INTO Wedstrijd(Plaats, Afstand, InschrijvingsGeld, Datum, BeginUur, Gelopen) VALUES (?,?,?,?,?,?)";
+            p = connection.prepareStatement(sql);
             p.setString(1, wedstrijd.getPlaats());
             p.setInt(2, wedstrijd.getAfstand());
             p.setInt(3, wedstrijd.getInschrijvingsGeld());
