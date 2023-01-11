@@ -7,6 +7,6 @@
 <AnchorPane fx:id="scherm" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.kuleuven.vrolijkezweters.controller.LoopWedstrijdController">
    <children>
       <Button fx:id="btn_volgendeLoper" layoutX="211.0" layoutY="34.0" mnemonicParsing="false" text="tijden opslaan voor deze loper" />
-      <Text fx:id="statusBalk_text" layoutX="160.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="287.9999694824219" />
+      <Text fx:id="statusBalk_text" layoutX="156.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="287.9999694824219" />
    </children>
 </AnchorPane>
