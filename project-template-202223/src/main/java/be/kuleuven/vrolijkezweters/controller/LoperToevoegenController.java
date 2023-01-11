@@ -5,6 +5,7 @@ import be.kuleuven.vrolijkezweters.properties.Loper;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 public class LoperToevoegenController {
 
@@ -28,6 +29,7 @@ public class LoperToevoegenController {
     private Text statusBalk_text;
 
     public void initialize(){
+        statusBalk_text.setTextAlignment(TextAlignment.CENTER);
         geslacht_text.getItems().addAll("man","vrouw", "x");
         fysiek_text.getItems().addAll("beginnende loper","middelmatige loper", "gevorderde loper");
         voeg_toe.setOnAction(e -> voegToe());

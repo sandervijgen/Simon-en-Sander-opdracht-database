@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class MedewerkerInschrijvenController {
@@ -28,6 +29,8 @@ public class MedewerkerInschrijvenController {
     private Wedstrijd wedstrijd;
 
     public void initialize(Wedstrijd wedstrijd) {
+        statusBalk_text.setTextAlignment(TextAlignment.CENTER);
+        textWedstrijd.setTextAlignment(TextAlignment.CENTER);
         this.wedstrijd = wedstrijd;
         textWedstrijd.setText("wedstrijd in " +wedstrijd.getPlaats()+", op "+wedstrijd.getDatum());
         btnSchrijfIn.setOnAction(e->schrijfin());

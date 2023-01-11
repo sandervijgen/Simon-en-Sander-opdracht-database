@@ -4,13 +4,13 @@ import be.kuleuven.vrolijkezweters.EtappeJDBC;
 import be.kuleuven.vrolijkezweters.LoperJDBC;
 import be.kuleuven.vrolijkezweters.MedewerkerJDBC;
 import be.kuleuven.vrolijkezweters.WedstrijdJDBC;
-import be.kuleuven.vrolijkezweters.properties.Medewerker;
 import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 import java.util.ArrayList;
 
@@ -35,6 +35,7 @@ public class LoopWedstrijdController {
 
     public void initialize(Wedstrijd wedstrijd) {
         this.wedstrijd = wedstrijd;
+        statusBalk_text.setTextAlignment(TextAlignment.CENTER);
         etappeIds  = EtappeJDBC.getAantalEtappes(wedstrijd.getWedstrijdId());
         loperIds = LoperJDBC.getAantalLopers(wedstrijd.getWedstrijdId());
         aantalEtappes = etappeIds.size();
@@ -83,7 +84,7 @@ public class LoopWedstrijdController {
     private void laatZien(){
         scherm.getChildren().removeAll(tijden);
         tijden.clear();
-        header.setLayoutX(261.0);
+        header.setLayoutX(205.0);
         header.setLayoutY(100);
         header.setText("Etappe tijden van loper met loperId: " + loperIds.get(teller));
         if (teller == 0) {
@@ -93,7 +94,7 @@ public class LoopWedstrijdController {
             TextField textField = new TextField();
             tijden.add(textField);
             textField.setPromptText("tijd etappe " + i + " in seconden");
-            textField.setLayoutX(261.0);
+            textField.setLayoutX(225.0);
             textField.setLayoutY(120 + (30 * i));
             scherm.getChildren().add(textField);
         }

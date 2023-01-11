@@ -16,7 +16,6 @@ public class EtappeJDBC {
     public static boolean bewerkEtappes(int wedstrijdId, ArrayList<Etappe> etappesLijst) {
         try
         {
-            //var s = connection.createStatement();
             String sql = "DELETE FROM Etappe WHERE WedstrijdId = ?";
             PreparedStatement p = connection.prepareStatement(sql);
             p.setInt(1, wedstrijdId);
@@ -29,7 +28,6 @@ public class EtappeJDBC {
                 p.setInt(1, etappe.getAfstand());
                 p.setInt(1, etappe.getBeginKm());
                 p.executeUpdate();
-                //s.executeUpdate("INSERT INTO Etappe( WedstrijdId, Afstand, BeginKm) VALUES (" + etappe.getWedstrijdId() + "," + etappe.getAfstand() + "," + etappe.getBeginKm() + ");");
             }
             connection.commit();
             p.close();
@@ -43,7 +41,6 @@ public class EtappeJDBC {
         ArrayList<Integer> etappeIds = new ArrayList<>();
         try
         {
-            //var s = connection.createStatement();
             String sql = "SELECT EtappeId from Etappe WHERE WedstrijdId = ?";
             PreparedStatement p = connection.prepareStatement(sql);
             p.setInt(1, wedstrijdId);

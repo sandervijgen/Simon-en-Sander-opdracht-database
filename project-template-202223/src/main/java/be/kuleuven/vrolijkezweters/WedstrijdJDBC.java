@@ -20,7 +20,6 @@ public class WedstrijdJDBC {
     public static boolean voegWedstrijdToe(Wedstrijd wedstrijd, ArrayList<Etappe> etappes) {
         try
         {
-            //var s = connection.createStatement();
             String sql = "INSERT INTO Wedstrijd(Plaats, Afstand, InschrijvingsGeld, Datum, BeginUur, Gelopen) VALUES (?,?,?,?,?,?)";
             PreparedStatement p = connection.prepareStatement(sql);
             p.setString(1, wedstrijd.getPlaats());
@@ -30,14 +29,12 @@ public class WedstrijdJDBC {
             p.setInt(5, wedstrijd.getBeginUur());
             p.setBoolean(6, wedstrijd.isGelopen());
             p.executeUpdate();
-            //int rs = s.executeUpdate("INSERT INTO Wedstrijd(Plaats, Afstand, InschrijvingsGeld, Datum, BeginUur, Gelopen) VALUES ('" + wedstrijd.getPlaats() + "'," + wedstrijd.getAfstand() + "," + wedstrijd.getInschrijvingsGeld() + ",'" + wedstrijd.getDatum() + "'," + wedstrijd.getBeginUur() + ", "+wedstrijd.isGelopen()+");");
             sql = "SELECT WedstrijdId FROM Wedstrijd WHERE Plaats = ? AND Afstand = ? AND Datum = ?";
             p = connection.prepareStatement(sql);
             p.setString(1, wedstrijd.getPlaats());
             p.setInt(2, wedstrijd.getAfstand());
             p.setString(3, wedstrijd.getDatum());
             int wedstrijdId = p.executeQuery().getInt("WedstrijdId");
-            //int wedstrijdId = s.executeQuery("SELECT WedstrijdId FROM Wedstrijd WHERE Plaats = '"+wedstrijd.getPlaats()+"' AND Afstand = "+wedstrijd.getAfstand()+" AND Datum = '"+wedstrijd.getDatum()+"';").getInt("WedstrijdId");
             for(int i=0; i<etappes.size();i++) {
                 Etappe etappe = etappes.get(i);
                 sql = "INSERT INTO Etappe( WedstrijdId, Afstand, BeginKm) VALUES (?,?,?)";
@@ -88,7 +85,6 @@ public class WedstrijdJDBC {
     public static Boolean bewerkWedstrijd(Wedstrijd wedstrijd) {
         try
         {
-            //var s = connection.createStatement();
             String sql = "UPDATE Wedstrijd SET Plaats = ?, Afstand = ?, InschrijvingsGeld = ?, Datum  = ?, BeginUur= ? WHERE WedstrijdId = ?";
             PreparedStatement p = connection.prepareStatement(sql);
             p.setString(1, wedstrijd.getPlaats());
@@ -143,7 +139,6 @@ public class WedstrijdJDBC {
         ArrayList<Integer> etappeIds = new ArrayList<Integer>();
         try
         {
-            //var s = connection.createStatement();
             String sql = "Delete From wedstrijd where wedstrijdId = ?";
             PreparedStatement p = connection.prepareStatement(sql);
             p.setInt(1, wedstrijdId);
@@ -180,7 +175,6 @@ public class WedstrijdJDBC {
         ArrayList<KlassementLoper> wedstrijdKlassement = new ArrayList<KlassementLoper>();
         try
         {
-            //var s = connection.createStatement();
             String sql = "SELECT LoperId FROM EtappeLoper inner join Etappe on Etappe.EtappeId = EtappeLoper.EtappeId WHERE WedstrijdId = ? AND Tijd = 0;";
             PreparedStatement p = connection.prepareStatement(sql);
             p.setInt(1,wedstrijdId);
@@ -238,7 +232,6 @@ public class WedstrijdJDBC {
     public static void geeftPunten(int wedstrijdId, ArrayList<KlassementLoper> wedstrijdKlassement) {
         try
         {
-            //var s = connection.createStatement();
             for(int i=0;i<wedstrijdKlassement.size(); i++){
                 int loperId = wedstrijdKlassement.get(i).getLoperId();
                 int punt =  wedstrijdKlassement.get(i).getPunten();
@@ -261,7 +254,6 @@ public class WedstrijdJDBC {
     public static void tijdIngeven(int etappeId, int loperId, int tijd) {
         try
         {
-            //var s = connection.createStatement();
             String sql = "UPDATE EtappeLoper SET TIJD = ? WHERE EtappeId  = ? AND LoperId = ?;";
             PreparedStatement p = connection.prepareStatement(sql);
             p.setInt(1, tijd);
@@ -278,7 +270,6 @@ public class WedstrijdJDBC {
         int isGelopen = 1;
         try
         {
-            //var s = connection.createStatement();
             String sql = "Select Gelopen FROM Wedstrijd WHERE WedstrijdId = ?;";
             PreparedStatement p = connection.prepareStatement(sql);
             p.setInt(1, wedstrijdId);
@@ -294,7 +285,6 @@ public class WedstrijdJDBC {
     public static void loopWedstrijd(int wedstrijdId){
         try
         {
-            //var s = connection.createStatement();
             String sql = "UPDATE Wedstrijd SET Gelopen = 1 WHERE WedstrijdId = ?;";
             PreparedStatement p = connection.prepareStatement(sql);
             p.setInt(1,wedstrijdId);

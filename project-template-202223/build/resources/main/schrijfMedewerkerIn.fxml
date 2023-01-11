@@ -9,9 +9,9 @@
     <children>
         <TextField fx:id="textMedewerkerNr" layoutX="260.0" layoutY="109.0" promptText="medewerker nummer" />
         <Text fx:id="schrijfIn" layoutX="260.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="medewerker nummer" wrappingWidth="137.13671875" />
-        <Text fx:id="statusBalk_text" layoutX="175.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="318.1367492675781" />
+        <Text fx:id="statusBalk_text" layoutX="175.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="334.0000712076823" />
         <Button fx:id="btnSchrijfIn" layoutX="464.0" layoutY="109.0" mnemonicParsing="false" text="Schrijf In" />
-        <Text fx:id="textWedstrijd" layoutX="315.0" layoutY="398.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5 km" />
+        <Text fx:id="textWedstrijd" layoutX="175.0" layoutY="396.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5 km" wrappingWidth="334.00007120768237" />
       <TextField fx:id="textBeginUur" layoutX="260.0" layoutY="186.0" promptText="begin uur" />
       <TextField fx:id="textEindUur" layoutX="260.0" layoutY="264.0" promptText="eind uur" />
       <TextField fx:id="textPositie" layoutX="260.0" layoutY="339.0" promptText="positie" />

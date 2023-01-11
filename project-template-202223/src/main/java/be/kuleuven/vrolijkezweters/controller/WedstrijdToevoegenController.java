@@ -7,6 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+
 import java.util.ArrayList;
 
 
@@ -38,6 +40,7 @@ public class WedstrijdToevoegenController {
     ArrayList<TextField> afstandWaardes = new ArrayList<TextField>();
 
     public void initialize() {
+        statusBalk_text.setTextAlignment(TextAlignment.CENTER);
         voeg_toe.setOnAction(e -> voegToe());
         btnApply.setOnAction(e -> applyEtappe());
     }

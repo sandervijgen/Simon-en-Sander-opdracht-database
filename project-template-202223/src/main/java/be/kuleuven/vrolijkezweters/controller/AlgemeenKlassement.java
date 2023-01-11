@@ -1,19 +1,15 @@
 package be.kuleuven.vrolijkezweters.controller;
 
-import be.kuleuven.vrolijkezweters.LoperJDBC;
 import be.kuleuven.vrolijkezweters.WedstrijdJDBC;
 import be.kuleuven.vrolijkezweters.properties.Loper;
-import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.util.ArrayList;
 
 public class AlgemeenKlassement {
     @FXML

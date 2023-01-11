@@ -79,7 +79,6 @@ public class LoperJDBC {
         ArrayList<Integer> loperIds = new ArrayList<>();
         try
         {
-            //var s = connection.createStatement();
             String sql = "SELECT LoperId FROM EtappeLoper inner join Etappe on Etappe.EtappeId = EtappeLoper.EtappeId WHERE WedstrijdId = ?";
             PreparedStatement p = connection.prepareStatement(sql);
             p.setInt(1, wedstrijdId);
@@ -147,7 +146,6 @@ public class LoperJDBC {
         ArrayList<Integer> etappeLoperIds = new ArrayList<Integer>();
         try
         {
-            //var s = connection.createStatement();
             String sql = "Delete From Loper where loperId = ?";
             PreparedStatement p = connection.prepareStatement(sql);
             p.setInt(1,loperId);

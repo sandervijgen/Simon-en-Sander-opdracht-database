@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 public class LoperInschrijfController {
     @FXML
@@ -25,6 +26,7 @@ public class LoperInschrijfController {
     private Wedstrijd wedstrijd;
 
     public void initialize(Wedstrijd wedstrijd) {
+        statusBalk_text.setTextAlignment(TextAlignment.CENTER);
         this.wedstrijd = wedstrijd;
         textWedstrijd.setText("wedstrijd in " +wedstrijd.getPlaats()+", op "+wedstrijd.getDatum());
         btnSchrijfIn.setOnAction(e->schrijfin());

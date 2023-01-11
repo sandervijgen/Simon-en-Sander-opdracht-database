@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 public class WedstrijdBewerkController {
@@ -39,6 +40,7 @@ public class WedstrijdBewerkController {
     }
 
     public void initialize(Wedstrijd wedstrijd) {
+        statusBalk_text.setTextAlignment(TextAlignment.CENTER);
         this.wedstrijd = wedstrijd;
         wedstrijd_id_text.setText(String.valueOf(wedstrijd.getWedstrijdId()));
         plaats_text.setText(String.valueOf(wedstrijd.getPlaats()));

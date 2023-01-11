@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 public class MedewerkerToevoegenController {
 
@@ -32,15 +33,15 @@ public class MedewerkerToevoegenController {
     private Text statusbalk_text;
 
     public void initialize(){
+        statusbalk_text.setTextAlignment(TextAlignment.CENTER);
         functies.getItems().addAll("Contact medewerker","Sein gever", "Publicatie manager", "Wedstrijd verantwoordelijke");
         voeg_toe_button.setOnAction(e -> voegToe());
     }
 
     private void voegToe() {
-        int medewerkerId, leeftijd, uurloon;
+        int leeftijd, uurloon;
         String naam, functie;
         try {
-            //medewerkerId = Integer.parseInt(medewerker_id_text.getText());
             leeftijd = Integer.parseInt(leeftijd_text.getText());
             uurloon = Integer.parseInt(uurloon_text.getText());
             naam = naam_text.getText();

@@ -22,8 +22,6 @@ public class BeheerMedewerkersController {
     @FXML
     private Button btnRefresh;
     @FXML
-    private Button btnModify;
-    @FXML
     private Button btnDelete;
     @FXML
     private TableView tblConfigs;

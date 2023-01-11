@@ -37,7 +37,6 @@ public class ConnectionManager {
 
     private ConnectionManager() {
         try {
-            // auto-creates if not exists
             connection = DriverManager.getConnection(ConnectionString);
             connection.setAutoCommit(false);
             initTables();
@@ -52,8 +51,6 @@ public class ConnectionManager {
 
         var uri = ConnectionManager.class.getResource("/dbcreate.sql").toURI();
         var sql = new String(Files.readAllBytes(Paths.get(uri)));
-
-        //System.out.println(sql);
 
         var s = connection.createStatement();
         s.executeUpdate(sql);
