@@ -1,45 +1,45 @@
 be/kuleuven/vrolijkezweters/controller/ProjectMainController.java
  be.kuleuven.vrolijkezweters.controller.ProjectMainController
-be/kuleuven/vrolijkezweters/properties/WedstrijdMedewerker.java
- be.kuleuven.vrolijkezweters.properties.WedstrijdMedewerker
-be/kuleuven/vrolijkezweters/properties/Loper.java
- be.kuleuven.vrolijkezweters.properties.Loper
-be/kuleuven/vrolijkezweters/properties/KlassementLoper.java
- be.kuleuven.vrolijkezweters.properties.KlassementLoper
-be/kuleuven/vrolijkezweters/connection/ConnectionManager.java
- be.kuleuven.vrolijkezweters.connection.ConnectionManager
-be/kuleuven/vrolijkezweters/properties/Etappe.java
- be.kuleuven.vrolijkezweters.properties.Etappe
-be/kuleuven/vrolijkezweters/properties/Medewerker.java
- be.kuleuven.vrolijkezweters.properties.Medewerker
-be/kuleuven/vrolijkezweters/properties/Wedstrijd.java
- be.kuleuven.vrolijkezweters.properties.Wedstrijd
-be/kuleuven/vrolijkezweters/properties/EtappeLoper.java
- be.kuleuven.vrolijkezweters.properties.EtappeLoper
-be/kuleuven/vrolijkezweters/ProjectMain.java
- be.kuleuven.vrolijkezweters.ProjectMain
-be/kuleuven/vrolijkezweters/controller/BeheerMedewerkersController.java
- be.kuleuven.vrolijkezweters.controller.BeheerMedewerkersController
-be/kuleuven/vrolijkezweters/controller/WedstrijdKlassementController.java
- be.kuleuven.vrolijkezweters.controller.WedstrijdKlassementController
 be/kuleuven/vrolijkezweters/controller/AlgemeenKlassement.java
  be.kuleuven.vrolijkezweters.controller.AlgemeenKlassement
-be/kuleuven/vrolijkezweters/controller/WedstrijdBewerkController.java
- be.kuleuven.vrolijkezweters.controller.WedstrijdBewerkController
+be/kuleuven/vrolijkezweters/controller/MedewerkerToevoegenController.java
+ be.kuleuven.vrolijkezweters.controller.MedewerkerToevoegenController
 be/kuleuven/vrolijkezweters/EtappeJDBC.java
  be.kuleuven.vrolijkezweters.EtappeJDBC
 be/kuleuven/vrolijkezweters/controller/MedewerkerInschrijvenController.java
  be.kuleuven.vrolijkezweters.controller.MedewerkerInschrijvenController
-be/kuleuven/vrolijkezweters/WedstrijdJDBC.java
- be.kuleuven.vrolijkezweters.WedstrijdJDBC
-be/kuleuven/vrolijkezweters/controller/WedstrijdToevoegenController.java
- be.kuleuven.vrolijkezweters.controller.WedstrijdToevoegenController
+be/kuleuven/vrolijkezweters/ProjectMain.java
+ be.kuleuven.vrolijkezweters.ProjectMain
 be/kuleuven/vrolijkezweters/MedewerkerJDBC.java
  be.kuleuven.vrolijkezweters.MedewerkerJDBC
 be/kuleuven/vrolijkezweters/controller/EtappeBewerkenController.java
  be.kuleuven.vrolijkezweters.controller.EtappeBewerkenController
-be/kuleuven/vrolijkezweters/controller/MedewerkerToevoegenController.java
- be.kuleuven.vrolijkezweters.controller.MedewerkerToevoegenController
+be/kuleuven/vrolijkezweters/controller/WedstrijdBewerkController.java
+ be.kuleuven.vrolijkezweters.controller.WedstrijdBewerkController
+be/kuleuven/vrolijkezweters/properties/Etappe.java
+ be.kuleuven.vrolijkezweters.properties.Etappe
+be/kuleuven/vrolijkezweters/controller/BeheerMedewerkersController.java
+ be.kuleuven.vrolijkezweters.controller.BeheerMedewerkersController
+be/kuleuven/vrolijkezweters/properties/Medewerker.java
+ be.kuleuven.vrolijkezweters.properties.Medewerker
+be/kuleuven/vrolijkezweters/WedstrijdJDBC.java
+ be.kuleuven.vrolijkezweters.WedstrijdJDBC
+be/kuleuven/vrolijkezweters/controller/WedstrijdToevoegenController.java
+ be.kuleuven.vrolijkezweters.controller.WedstrijdToevoegenController
+be/kuleuven/vrolijkezweters/properties/Loper.java
+ be.kuleuven.vrolijkezweters.properties.Loper
+be/kuleuven/vrolijkezweters/controller/WedstrijdKlassementController.java
+ be.kuleuven.vrolijkezweters.controller.WedstrijdKlassementController
+be/kuleuven/vrolijkezweters/properties/WedstrijdMedewerker.java
+ be.kuleuven.vrolijkezweters.properties.WedstrijdMedewerker
+be/kuleuven/vrolijkezweters/connection/ConnectionManager.java
+ be.kuleuven.vrolijkezweters.connection.ConnectionManager
+be/kuleuven/vrolijkezweters/properties/Wedstrijd.java
+ be.kuleuven.vrolijkezweters.properties.Wedstrijd
+be/kuleuven/vrolijkezweters/properties/EtappeLoper.java
+ be.kuleuven.vrolijkezweters.properties.EtappeLoper
+be/kuleuven/vrolijkezweters/properties/KlassementLoper.java
+ be.kuleuven.vrolijkezweters.properties.KlassementLoper
 be/kuleuven/vrolijkezweters/controller/BeheerWedstrijdenController.java
  be.kuleuven.vrolijkezweters.controller.BeheerWedstrijdenController
 be/kuleuven/vrolijkezweters/controller/LoperToevoegenController.java

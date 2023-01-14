@@ -23,8 +23,8 @@ CREATE TABLE IF NOT EXISTS "Medewerker" (
 	"MedewerkerId"	INTEGER NOT NULL UNIQUE,
 	"Naam"	TEXT NOT NULL,
 	"Functie"	TEXT NOT NULL,
-	"Leeftijd"	INTEGER NOT NULL CHECK("Leeftijd" > 0),
-	"Uurloon"	INTEGER NOT NULL CHECK("Uurloon" > 0),
+	"Leeftijd"	INTEGER NOT NULL CHECK("Leeftijd" >= 15),
+	"Uurloon"	INTEGER NOT NULL CHECK("Uurloon" >= 10),
 	"GeldTegoed"	INTEGER NOT NULL,
 	PRIMARY KEY("MedewerkerId" AUTOINCREMENT)
 );
@@ -39,9 +39,9 @@ CREATE TABLE IF NOT EXISTS "Etappe" (
 CREATE TABLE IF NOT EXISTS "Loper" (
 	"LoperId"	INTEGER NOT NULL UNIQUE,
 	"Naam"	TEXT NOT NULL,
-	"Leeftijd"	INTEGER NOT NULL CHECK("Leeftijd" > 0),
+	"Leeftijd"	INTEGER NOT NULL CHECK("Leeftijd" >= 3),
 	"Geslacht"	TEXT NOT NULL,
-	"Gewicht"	INTEGER NOT NULL CHECK("Gewicht" > 0),
+	"Gewicht"	INTEGER NOT NULL CHECK("Gewicht" >= 30),
 	"Fysiek"	TEXT NOT NULL,
 	"Club"	TEXT NOT NULL,
 	"ContactMedewerkerId"	INTEGER NOT NULL,

@@ -69,7 +69,7 @@ public class MedewerkerToevoegenController {
             statusbalk_text.setText("gelieve voor alle selectievelden een keuze op te geven");
         }
         catch(IllegalArgumentException e){
-            statusBalk_text.setText("Leeftijd moet groter zijn dan 15 jaar of uurloon moet groter zijn dan 10 euro");
+            statusbalk_text.setText("Leeftijd moet groter zijn dan 15 jaar en uurloon moet groter zijn dan 10 euro");
         }
     }
 }

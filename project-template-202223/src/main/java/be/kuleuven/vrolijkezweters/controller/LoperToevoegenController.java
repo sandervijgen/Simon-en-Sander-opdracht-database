@@ -56,11 +56,11 @@ public class LoperToevoegenController {
             }
 
             Loper nieuweLoper = new Loper(0, 0, naam, leeftijd, geslacht, gewicht, fysiek, club, 0, 0);
-
-            if (LoperJDBC.voegLoperToe(nieuweLoper) == 1) {
+            int status = LoperJDBC.voegLoperToe(nieuweLoper);
+            if (status == 1) {
                 statusBalk_text.setText("error er is iets misgelopen met de connectie");
             }
-            else if (LoperJDBC.voegLoperToe(nieuweLoper) == 2) {
+            else if (status == 2) {
                 statusBalk_text.setText("error er zijn nog geen medewerkers dus de inschrijvingen zijn nog niet open");
             }
             else{
