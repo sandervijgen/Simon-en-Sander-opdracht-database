@@ -123,7 +123,6 @@ public class WedstrijdToevoegenController {
                     TextField textFieldAfstand = afstandWaardes.get(i);
                     int beginKm = 0;
                     int afstand = Integer.parseInt(textFieldAfstand.getText());
-                    System.out.println(afstand);
                     Etappe etappe = new Etappe(1, wedstrijdId, afstand, beginKm);
                     etappes.add(etappe);
                     totaal += afstand;
