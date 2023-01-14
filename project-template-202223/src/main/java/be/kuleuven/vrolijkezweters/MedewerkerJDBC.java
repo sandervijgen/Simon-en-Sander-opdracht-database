@@ -53,8 +53,7 @@ public class MedewerkerJDBC {
                 medewerkers.add(medewerker);
             }
             s.close();
-        } catch (
-                SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return medewerkers;
@@ -162,6 +161,7 @@ public class MedewerkerJDBC {
             p.close();
         } catch(SQLException e)
         {
+            e.printStackTrace();
         }
 
     }

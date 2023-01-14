@@ -92,6 +92,7 @@ public class LoperJDBC {
             p.close();
         } catch(SQLException e)
         {
+            e.printStackTrace();
         }
         return loperIds;
     }

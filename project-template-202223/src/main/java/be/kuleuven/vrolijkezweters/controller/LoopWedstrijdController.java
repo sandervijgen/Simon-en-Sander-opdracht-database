@@ -36,7 +36,7 @@ public class LoopWedstrijdController {
     public void initialize(Wedstrijd wedstrijd) {
         this.wedstrijd = wedstrijd;
         statusBalk_text.setTextAlignment(TextAlignment.CENTER);
-        etappeIds  = EtappeJDBC.getAantalEtappes(wedstrijd.getWedstrijdId());
+        etappeIds = EtappeJDBC.getAantalEtappes(wedstrijd.getWedstrijdId());
         loperIds = LoperJDBC.getAantalLopers(wedstrijd.getWedstrijdId());
         aantalEtappes = etappeIds.size();
         aantalLopers = loperIds.size();

@@ -54,6 +54,7 @@ public class EtappeJDBC {
             p.close();
         } catch(SQLException e)
         {
+            e.printStackTrace();
         }
         return etappeIds;
     }

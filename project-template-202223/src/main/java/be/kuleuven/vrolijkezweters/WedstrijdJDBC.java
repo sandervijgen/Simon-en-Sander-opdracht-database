@@ -85,8 +85,7 @@ public class WedstrijdJDBC {
 
             s.close();
 
-        } catch (
-                SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return wedstrijds;
@@ -235,6 +234,7 @@ public class WedstrijdJDBC {
             if(puntenGeven){geeftPunten(wedstrijdId,wedstrijdKlassement);}
         } catch(SQLException e)
         {
+            e.printStackTrace();
         }
         return wedstrijdKlassement;
     }
@@ -257,6 +257,7 @@ public class WedstrijdJDBC {
                 p.close();
             }
         } catch(SQLException e) {
+            e.printStackTrace();
         }
 
     }
@@ -273,6 +274,7 @@ public class WedstrijdJDBC {
             p.close();
         } catch(SQLException e)
         {
+            e.printStackTrace();
         }
     }
     public static int getGelopen(int wedstrijdId) {
@@ -288,6 +290,7 @@ public class WedstrijdJDBC {
             p.close();
         } catch(SQLException e)
         {
+            e.printStackTrace();
         }
         return isGelopen;
     }
@@ -302,6 +305,7 @@ public class WedstrijdJDBC {
             p.close();
         } catch(SQLException e)
         {
+            e.printStackTrace();
         }
     }
     public static ArrayList<Loper> algemeenKlassement() {
@@ -330,7 +334,7 @@ public class WedstrijdJDBC {
         }
         catch(SQLException e)
         {
-
+            e.printStackTrace();
         }
         return lopers;
     }
