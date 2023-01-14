@@ -18,8 +18,8 @@ be/kuleuven/vrolijkezweters/properties/EtappeLoper.java
  be.kuleuven.vrolijkezweters.properties.EtappeLoper
 be/kuleuven/vrolijkezweters/ProjectMain.java
  be.kuleuven.vrolijkezweters.ProjectMain
-be/kuleuven/vrolijkezweters/controller/WedstrijdToevoegenController.java
- be.kuleuven.vrolijkezweters.controller.WedstrijdToevoegenController
+be/kuleuven/vrolijkezweters/controller/BeheerMedewerkersController.java
+ be.kuleuven.vrolijkezweters.controller.BeheerMedewerkersController
 be/kuleuven/vrolijkezweters/controller/WedstrijdKlassementController.java
  be.kuleuven.vrolijkezweters.controller.WedstrijdKlassementController
 be/kuleuven/vrolijkezweters/controller/AlgemeenKlassement.java
@@ -32,8 +32,8 @@ be/kuleuven/vrolijkezweters/LoperJDBC.java
  be.kuleuven.vrolijkezweters.LoperJDBC
 be/kuleuven/vrolijkezweters/controller/LoopWedstrijdController.java
  be.kuleuven.vrolijkezweters.controller.LoopWedstrijdController
-be/kuleuven/vrolijkezweters/controller/BeheerLopersController.java
- be.kuleuven.vrolijkezweters.controller.BeheerLopersController
+be/kuleuven/vrolijkezweters/controller/WedstrijdToevoegenController.java
+ be.kuleuven.vrolijkezweters.controller.WedstrijdToevoegenController
 be/kuleuven/vrolijkezweters/MedewerkerJDBC.java
  be.kuleuven.vrolijkezweters.MedewerkerJDBC
 be/kuleuven/vrolijkezweters/controller/EtappeBewerkenController.java
@@ -48,7 +48,7 @@ be/kuleuven/vrolijkezweters/controller/MedewerkerInschrijvenController.java
  be.kuleuven.vrolijkezweters.controller.MedewerkerInschrijvenController
 be/kuleuven/vrolijkezweters/controller/LoperInschrijfController.java
  be.kuleuven.vrolijkezweters.controller.LoperInschrijfController
-be/kuleuven/vrolijkezweters/controller/BeheerMedewerkersController.java
- be.kuleuven.vrolijkezweters.controller.BeheerMedewerkersController
 be/kuleuven/vrolijkezweters/WedstrijdJDBC.java
  be.kuleuven.vrolijkezweters.WedstrijdJDBC
+be/kuleuven/vrolijkezweters/controller/BeheerLopersController.java
+ be.kuleuven.vrolijkezweters.controller.BeheerLopersController

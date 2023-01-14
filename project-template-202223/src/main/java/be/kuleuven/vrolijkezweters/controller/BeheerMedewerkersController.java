@@ -31,8 +31,9 @@ public class BeheerMedewerkersController {
         btnVoeg_toe.setOnAction(e -> addNewMedewerker());
         btnRefresh.setOnAction(e -> initTable());
         btnDelete.setOnAction(e -> {
-            verifyOneRowSelected();
-            deleteCurrentRow();
+            if (verifyOneRowSelected()) {
+                deleteCurrentRow();
+            }
         });
     }
 
@@ -89,9 +90,11 @@ public class BeheerMedewerkersController {
         alert.showAndWait();
     }
 
-    private void verifyOneRowSelected() {
+    private boolean verifyOneRowSelected() {
         if(tblConfigs.getSelectionModel().getSelectedCells().size() == 0) {
             showAlert("Fout", "gelieve een medewerker te selecteren!!!");
+            return false;
         }
+        return true;
     }
 }

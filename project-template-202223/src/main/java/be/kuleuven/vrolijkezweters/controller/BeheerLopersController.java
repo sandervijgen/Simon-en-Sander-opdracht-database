@@ -31,8 +31,9 @@ public class BeheerLopersController {
         btnVoeg_toe.setOnAction(e -> addNewLoper());
         btnRefresh.setOnAction(e -> initTable());
         btnDelete.setOnAction(e -> {
-            verifyOneRowSelected();
-            deleteCurrentRow();
+            if (verifyOneRowSelected()) {
+                deleteCurrentRow();
+            }
         });
     }
 
@@ -94,9 +95,11 @@ public class BeheerLopersController {
         alert.showAndWait();
     }
 
-    private void verifyOneRowSelected() {
+    private boolean verifyOneRowSelected() {
         if(tblConfigs.getSelectionModel().getSelectedCells().size() == 0) {
             showAlert("FOUT", "gelieve een loper te selecteren.");
+            return false;
         }
+        return true;
     }
 }

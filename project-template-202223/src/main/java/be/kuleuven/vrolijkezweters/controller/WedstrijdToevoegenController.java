@@ -76,7 +76,6 @@ public class WedstrijdToevoegenController {
                 statusBalk_text.setText("er is al een wedstrijd op deze plaats op dezelfde datum");
             }
             else {
-                //WedstrijdJDBC.voegWedstrijdToe(wedstrijd,voegEtappesToe(0));
                 statusBalk_text.setText("Wedstrijd succesvol toegevoegd");
             }
         }
