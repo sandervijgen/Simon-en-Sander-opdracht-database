@@ -47,6 +47,12 @@ public class MedewerkerToevoegenController {
             if (naam == "" || functie == ""){
                 throw new NullPointerException("veld leeg gelaten");
             }
+            if (leeftijd < 15 ){
+                throw new IllegalArgumentException("Leeftijd moet groter zijn dan 15 jaar");
+            }
+            if (uurloon < 10){
+                throw new IllegalArgumentException("Uurloon moet groter zijn dan 10 euro");
+            }
             Medewerker nieuweMedewerker = new Medewerker(0, naam, functie, leeftijd, uurloon,0);
 
             if (MedewerkerJDBC.voegMedewerkerToe(nieuweMedewerker) == false) {
@@ -61,6 +67,9 @@ public class MedewerkerToevoegenController {
         }
         catch(NullPointerException e){
             statusbalk_text.setText("gelieve voor alle selectievelden een keuze op te geven");
+        }
+        catch(IllegalArgumentException e){
+            statusBalk_text.setText("Leeftijd moet groter zijn dan 15 jaar of uurloon moet groter zijn dan 10 euro");
         }
     }
 }

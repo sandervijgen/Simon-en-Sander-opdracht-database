@@ -48,10 +48,20 @@ public class LoperToevoegenController {
             if (naam == "" || geslacht == "" || fysiek == "" || club == ""){
                 throw new NullPointerException("veld leeg gelaten");
             }
+            if (leeftijd < 3 ){
+                throw new IllegalArgumentException("Leeftijd moet groter zijn dan 3 jaar");
+            }
+            if (gewicht < 30){
+                throw new IllegalArgumentException("Gewicht moet groter zijn dan 30 kg");
+            }
+
             Loper nieuweLoper = new Loper(0, 0, naam, leeftijd, geslacht, gewicht, fysiek, club, 0, 0);
 
-            if (LoperJDBC.voegLoperToe(nieuweLoper) == false) {
-                statusBalk_text.setText("error");
+            if (LoperJDBC.voegLoperToe(nieuweLoper) == 1) {
+                statusBalk_text.setText("error er is iets misgelopen met de connectie");
+            }
+            else if (LoperJDBC.voegLoperToe(nieuweLoper) == 2) {
+                statusBalk_text.setText("error er zijn nog geen medewerkers dus de inschrijvingen zijn nog niet open");
             }
             else{
                 statusBalk_text.setText("Loper succesvol toegevoegd");
@@ -62,6 +72,9 @@ public class LoperToevoegenController {
         }
         catch(NullPointerException e){
             statusBalk_text.setText("gelieve voor alle selectievelden een keuze op te geven");
+        }
+        catch(IllegalArgumentException e){
+            statusBalk_text.setText("Leeftijd moet groter zijn dan 3 jaar of gewicht moet groter zijn dan 30 kg");
         }
     }
 }
