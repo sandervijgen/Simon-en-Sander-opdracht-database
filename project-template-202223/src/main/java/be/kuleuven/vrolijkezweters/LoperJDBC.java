@@ -45,6 +45,10 @@ public class LoperJDBC {
             p.close();
         } catch(SQLException e)
         {
+
+            return false;
+        }
+        catch(ArrayIndexOutOfBoundsException  e){
             return false;
         }
         return true;
