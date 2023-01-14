@@ -106,6 +106,10 @@ public class WedstrijdToevoegenController {
                 etappes.add(new Etappe(i+1, wedstrijdId, deling, totaal));
                 totaal += deling;
             }
+            if (aantalEtappes == 1){
+                etappes.add(new Etappe(0, wedstrijdId, eindKm, 0));
+                totaal = eindKm;
+            }
         }
         else {
             for (int i = 0; i < afstandWaardes.size(); i++) {
@@ -139,7 +143,6 @@ public class WedstrijdToevoegenController {
                 }
             }
         }
-        System.out.println(totaal + ", " + Integer.parseInt(afstand_text.getText()));
         for (int i = 0; i < etappes.size(); i++){
             if (etappes.get(i).getAfstand() <= 0 ){
                 throw new IllegalArgumentException("negatieve afstand voor etappe");

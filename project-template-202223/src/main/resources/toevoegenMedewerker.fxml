@@ -15,7 +15,7 @@
       <TextField fx:id="uurloon_text" layoutX="371.0" layoutY="237.0" />
       <Text layoutX="54.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Naam" />
       <Text layoutX="54.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Functie" />
-      <Text layoutX="371.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Leeftijd" />
+      <Text layoutX="371.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Leeftijd " />
       <Text layoutX="369.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Uurloon" />
       <Button fx:id="voeg_toe_button" layoutX="274.0" layoutY="332.0" mnemonicParsing="false" text="Voeg toe" />
       <Text fx:id="statusbalk_text" layoutX="168.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="275.4700622558594" />

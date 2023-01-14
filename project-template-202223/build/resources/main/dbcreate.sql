@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS "Medewerker" (
 	"MedewerkerId"	INTEGER NOT NULL UNIQUE,
 	"Naam"	TEXT NOT NULL,
 	"Functie"	TEXT NOT NULL,
-	"Leeftijd"	INTEGER NOT NULL CHECK("Leeftijd" > 15),
+	"Leeftijd"	INTEGER NOT NULL CHECK("Leeftijd" > 0),
 	"Uurloon"	INTEGER NOT NULL CHECK("Uurloon" > 0),
 	"GeldTegoed"	INTEGER NOT NULL,
 	PRIMARY KEY("MedewerkerId" AUTOINCREMENT)
@@ -32,16 +32,16 @@ CREATE TABLE IF NOT EXISTS "Etappe" (
 	"EtappeId"	INTEGER NOT NULL UNIQUE,
 	"WedstrijdId"	INTEGER NOT NULL,
 	"Afstand"	INTEGER NOT NULL CHECK("Afstand" > 0),
-	"BeginKm" INTEGER NOT NULL CHECK("BeginKm" > 0),
+	"BeginKm" INTEGER NOT NULL CHECK("BeginKm" >= 0),
 	PRIMARY KEY("EtappeId" AUTOINCREMENT),
 	FOREIGN KEY("WedstrijdId") REFERENCES "Wedstrijd"("WedstrijdId")
 );
 CREATE TABLE IF NOT EXISTS "Loper" (
 	"LoperId"	INTEGER NOT NULL UNIQUE,
 	"Naam"	TEXT NOT NULL,
-	"Leeftijd"	INTEGER NOT NULL CHECK("Leeftijd" > 3),
+	"Leeftijd"	INTEGER NOT NULL CHECK("Leeftijd" > 0),
 	"Geslacht"	TEXT NOT NULL,
-	"Gewicht"	INTEGER NOT NULL CHECK("Gewicht" > 15),
+	"Gewicht"	INTEGER NOT NULL CHECK("Gewicht" > 0),
 	"Fysiek"	TEXT NOT NULL,
 	"Club"	TEXT NOT NULL,
 	"ContactMedewerkerId"	INTEGER NOT NULL,
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS "EtappeLoper" (
 	"EtappeLoperId"	INTEGER NOT NULL UNIQUE,
 	"LoperId"	INTEGER NOT NULL,
 	"EtappeId"	INTEGER NOT NULL,
-	"Tijd"	INTEGER NOT NULL CHECK("Tijd" > 0),
+	"Tijd"	INTEGER NOT NULL CHECK("Tijd" >= 0),
 	PRIMARY KEY("EtappeLoperId" AUTOINCREMENT),
 	FOREIGN KEY("LoperId") REFERENCES "Loper"("LoperId"),
 	FOREIGN KEY("EtappeId") REFERENCES "Etappe"("EtappeId")

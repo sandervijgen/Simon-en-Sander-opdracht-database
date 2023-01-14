@@ -1,7 +1,5 @@
 package be.kuleuven.vrolijkezweters;
 
-import be.kuleuven.vrolijkezweters.connection.ConnectionManager;
-import be.kuleuven.vrolijkezweters.properties.KlassementLoper;
 import be.kuleuven.vrolijkezweters.properties.Loper;
 import be.kuleuven.vrolijkezweters.properties.Wedstrijd;
 
@@ -45,10 +43,9 @@ public class LoperJDBC {
             p.close();
         } catch(SQLException e)
         {
-
             return false;
         }
-        catch(ArrayIndexOutOfBoundsException  e){
+        catch(IndexOutOfBoundsException e){
             return false;
         }
         return true;
@@ -123,7 +120,7 @@ public class LoperJDBC {
             }
             for(int i = 0; i< etappeIds.size(); i++) {
                 int etappeId = etappeIds.get(i);
-                sql = "select Tijd from EtappeLoper where LoperId = ? AND etappeId = ?";
+                sql = "select * from EtappeLoper where LoperId = ? AND etappeId = ?";
                 p = connection.prepareStatement(sql);
                 p.setInt(1, loperId);
                 p.setInt(2, etappeId);

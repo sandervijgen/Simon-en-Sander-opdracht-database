@@ -11,8 +11,6 @@ import javafx.scene.text.TextAlignment;
 
 public class MedewerkerToevoegenController {
 
-    //@FXML
-    //private TextField medewerker_id_text;
 
     @FXML
     private TextField naam_text;
